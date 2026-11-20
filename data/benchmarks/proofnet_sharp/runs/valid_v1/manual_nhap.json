@@ -1,0 +1,73 @@
+{
+ "_ghi_chu": "BẢN NHÁP do Claude chấm sơ bộ. Người gán nhãn cần đọc review.md, sửa nhãn nếu không đồng ý, rồi đổi tên file thành manual.json để lệnh report dùng. true = mệnh đề đúng nghĩa đề.",
+ "Pugh|exercise_3_4": {
+  "ly_do": "Đề nói dãy n → ∞; mệnh đề dùng dãy n ∈ ℕ, đúng đề (tham chiếu lại dùng biến thực).",
+  "top": true,
+  "confirmed": true
+ },
+ "Putnam|exercise_1998_a3": {
+  "ly_do": "Lean chứng minh tương đương với tham chiếu.",
+  "top": true,
+  "confirmed": true
+ },
+ "Rudin|exercise_3_1a": {
+  "ly_do": "Lean chứng minh tương đương với tham chiếu.",
+  "top": true,
+  "confirmed": true
+ },
+ "Rudin|exercise_3_3": {
+  "ly_do": "Dãy đánh số từ s₁ như sách Rudin; chỉ lệch chỉ số so với tham chiếu.",
+  "top": true,
+  "confirmed": true
+ },
+ "Rudin|exercise_4_19": {
+  "ly_do": "'x nằm giữa a và b' viết bằng khoảng giữa min, max (hoặc uIcc); đúng đề.",
+  "top": true,
+  "confirmed": true
+ },
+ "Rudin|exercise_4_24": {
+  "ly_do": "f liên tục trên (a, b) đúng như đề (tham chiếu đòi liên tục trên ℝ); Lean: sinh ⇒ chuẩn.",
+  "top": true,
+  "confirmed": true
+ },
+ "Rudin|exercise_5_2": {
+  "ly_do": "g là hàm ngược viết bằng g(f(x)) = x; đúng đề (tham chiếu viết g = f⁻¹ là nghịch đảo 1/f).",
+  "top": true,
+  "confirmed": true
+ },
+ "Rudin|exercise_5_4": {
+  "ly_do": "Thêm giả thiết n ≥ 1 không có trong đề.",
+  "top": false,
+  "confirmed": false
+ },
+ "Rudin|exercise_5_6": {
+  "ly_do": "Khả vi tại mọi x > 0 tương đương khả vi trên (0, ∞) (tập mở).",
+  "top": true,
+  "confirmed": true
+ },
+ "Rudin|exercise_5_15": {
+  "ly_do": "M₀, M₁, M₂ viết bằng IsLUB (cận trên đúng tồn tại), chặt hơn sSup của tham chiếu; đúng đề.",
+  "top": true,
+  "confirmed": true
+ },
+ "Pugh|exercise_2_12a": {
+  "ly_do": "Thu hẹp về dãy số thực và thêm các ý giới hạn ±∞.",
+  "top": false,
+  "confirmed": false
+ },
+ "Rudin|exercise_1_5": {
+  "ly_do": "inf, sup viết bằng IsGLB/IsLUB có tồn tại; đúng đề. Lean: sinh ⇒ chuẩn.",
+  "top": true,
+  "confirmed": true
+ },
+ "Rudin|exercise_3_6a": {
+  "ly_do": "Lean chứng minh tương đương với tham chiếu.",
+  "top": true,
+  "confirmed": true
+ },
+ "Rudin|exercise_4_8b": {
+  "ly_do": "Thêm E ≠ ∅ và đổi thành liên tục đều trên toàn ℝ. Đề tiếng Anh của ProofNet# chép sai (phát biểu sai về toán): nên loại khỏi thống kê.",
+  "top": false,
+  "confirmed": false
+ }
+}

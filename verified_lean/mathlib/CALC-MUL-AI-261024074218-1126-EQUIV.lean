@@ -1,0 +1,46 @@
+import Mathlib.Tactic
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Analysis.Calculus.Taylor
+import Mathlib.Analysis.Calculus.LHopital
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.Topology.Algebra.InfiniteSum.Real
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.LinearAlgebra.Matrix.Rank
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
+import MathExam
+set_option autoImplicit false
+
+section Chk0
+open Real
+theorem equiv_0_1 (m : ℕ) (hm_lo : 2 ≤ m) (hm_hi : m ≤ 9) :
+    (∀ (f : ℝ × ℝ → ℝ), (f = fun p : ℝ × ℝ => p.1 ^ 2 * p.2 + p.1 * p.2 ^ 2 - (m : ℝ) * p.1 * p.2) → ∀ x₀ y₀ : ℝ, IsLocalMin f (x₀, y₀) → (deriv (fun x : ℝ => deriv (fun t : ℝ => f (t, y₀)) x) x₀) * (deriv (fun y : ℝ => deriv (fun t : ℝ => f (x₀, t)) y) y₀) - (MathExam.partialXY f (x₀, y₀)) ^ 2 + f (x₀, y₀) = (((((-1 : ℝ) / 27) * ((m : ℝ) ^ (3 : ℕ))) + (((1 : ℝ) / 3) * ((m : ℝ) ^ (2 : ℕ)))))) ↔ (∀ f : ℝ × ℝ → ℝ, (∀ q : ℝ × ℝ, f q = q.1^2 * q.2 + q.1 * q.2^2 - (m:ℝ) * q.1 * q.2) → ∀ p : ℝ × ℝ, IsLocalMin f p → (deriv (fun x : ℝ => deriv (fun t : ℝ => f (t, p.2)) x) p.1 * deriv (fun y : ℝ => deriv (fun t : ℝ => f (p.1, t)) y) p.2 - (MathExam.partialXY f p)^2) + f p = (((((-1 : ℝ) / 27) * ((m : ℝ) ^ (3 : ℕ))) + (((1 : ℝ) / 3) * ((m : ℝ) ^ (2 : ℕ)))))) := by
+  first
+    | exact Iff.rfl
+    | (simp; done)
+    | (constructor <;> intro h <;> first | (simpa using h) | (simp_all; done) | (linarith; done) | (nlinarith; done) | (norm_num at *; done) | (tauto; done) | (aesop; done))
+end Chk0
+section Chk1
+open Real MathExam
+theorem equiv_0_2 (m : ℕ) (hm_lo : 2 ≤ m) (hm_hi : m ≤ 9) :
+    (∀ (f : ℝ × ℝ → ℝ), (f = fun p : ℝ × ℝ => p.1 ^ 2 * p.2 + p.1 * p.2 ^ 2 - (m : ℝ) * p.1 * p.2) → ∀ x₀ y₀ : ℝ, IsLocalMin f (x₀, y₀) → (deriv (fun x : ℝ => deriv (fun t : ℝ => f (t, y₀)) x) x₀) * (deriv (fun y : ℝ => deriv (fun t : ℝ => f (x₀, t)) y) y₀) - (MathExam.partialXY f (x₀, y₀)) ^ 2 + f (x₀, y₀) = (((((-1 : ℝ) / 27) * ((m : ℝ) ^ (3 : ℕ))) + (((1 : ℝ) / 3) * ((m : ℝ) ^ (2 : ℕ)))))) ↔ (∀ f : ℝ × ℝ → ℝ, f = (fun p : ℝ × ℝ => p.1^2 * p.2 + p.1 * p.2^2 - (m:ℝ) * p.1 * p.2) → (∃ p : ℝ × ℝ, IsLocalMin f p) ∧ ∀ p : ℝ × ℝ, IsLocalMin f p → (partialX (partialX f) p * partialY (partialY f) p - (partialXY f p)^2 + f p = (((((-1 : ℝ) / 27) * ((m : ℝ) ^ (3 : ℕ))) + (((1 : ℝ) / 3) * ((m : ℝ) ^ (2 : ℕ))))))) := by
+  first
+    | exact Iff.rfl
+    | (simp; done)
+    | (constructor <;> intro h <;> first | (simpa using h) | (simp_all; done) | (linarith; done) | (nlinarith; done) | (norm_num at *; done) | (tauto; done) | (aesop; done))
+end Chk1
+section Chk2
+open MathExam
+theorem equiv_1_2 (m : ℕ) (hm_lo : 2 ≤ m) (hm_hi : m ≤ 9) :
+    (∀ f : ℝ × ℝ → ℝ, (∀ q : ℝ × ℝ, f q = q.1^2 * q.2 + q.1 * q.2^2 - (m:ℝ) * q.1 * q.2) → ∀ p : ℝ × ℝ, IsLocalMin f p → (deriv (fun x : ℝ => deriv (fun t : ℝ => f (t, p.2)) x) p.1 * deriv (fun y : ℝ => deriv (fun t : ℝ => f (p.1, t)) y) p.2 - (MathExam.partialXY f p)^2) + f p = (((((-1 : ℝ) / 27) * ((m : ℝ) ^ (3 : ℕ))) + (((1 : ℝ) / 3) * ((m : ℝ) ^ (2 : ℕ)))))) ↔ (∀ f : ℝ × ℝ → ℝ, f = (fun p : ℝ × ℝ => p.1^2 * p.2 + p.1 * p.2^2 - (m:ℝ) * p.1 * p.2) → (∃ p : ℝ × ℝ, IsLocalMin f p) ∧ ∀ p : ℝ × ℝ, IsLocalMin f p → (partialX (partialX f) p * partialY (partialY f) p - (partialXY f p)^2 + f p = (((((-1 : ℝ) / 27) * ((m : ℝ) ^ (3 : ℕ))) + (((1 : ℝ) / 3) * ((m : ℝ) ^ (2 : ℕ))))))) := by
+  first
+    | exact Iff.rfl
+    | (simp; done)
+    | (constructor <;> intro h <;> first | (simpa using h) | (simp_all; done) | (linarith; done) | (nlinarith; done) | (norm_num at *; done) | (tauto; done) | (aesop; done))
+end Chk2

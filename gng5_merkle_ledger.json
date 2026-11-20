@@ -1,0 +1,3406 @@
+{
+  "system": "Gemini-3.8-Flash-High Sovereign Epistemic Gate (@gng5 Apex Dual-Core Native Mode: @gng4 Prover + @gng3 Refuter)",
+  "merkle_root": "dfce310095c4d14c37b3f485b2f4da18785337bd03b03664c0439674da03b24f",
+  "total_nodes": 152,
+  "updated_at": 1792812860.3718743,
+  "nodes": [
+    {
+      "node_id": "gng5-agent_15_verification-1791959426502-1",
+      "node_type": "AGENT_15_VERIFICATION",
+      "parent_hashes": [
+        "d8fc794dff9b4bc36b2bd74b5c0b72aee76811dbf8a9b0a223855aa0831b0f71",
+        "ed5a3934a894dff6093f29c9450ed722377ac81de40f5e203e531c7efb16c75c",
+        "fc13f1b5f6f7e1cea9740178fc22aa02c7c34a750fbe28bcded41acf66d1d424"
+      ],
+      "payload": {
+        "agent_id": 15,
+        "agent_code": "AGENT-15",
+        "agent_name": "Agent-15 (Đại số: Không gian con & Grassmann)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 2,
+        "elapsed_ms": 50133.11
+      },
+      "timestamp": 1791959426.5020218,
+      "hash": "f4a9d518d9463b1e218bb5608d8b05949cc83fd12439f8ac09c063693700e671"
+    },
+    {
+      "node_id": "gng5-agent_06_verification-1791959426671-2",
+      "node_type": "AGENT_06_VERIFICATION",
+      "parent_hashes": [
+        "2aeadc9ca21a316ec6a359dfe6c82cf9a9843c346b408e1708c7170359d0dab9",
+        "5fe812fd275a4064f694e7ba421b7d4f781e71a7c7cf82a06e832d34e5315546",
+        "80a113b324386978729462fd43eb042837106fd17b0875108678bf8fc7cab0b6"
+      ],
+      "payload": {
+        "agent_id": 6,
+        "agent_code": "AGENT-06",
+        "agent_name": "Agent-06 (Giải tích: Vi phân hàm nhiều biến)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 3,
+        "elapsed_ms": 50291.71
+      },
+      "timestamp": 1791959426.6719768,
+      "hash": "3e3c9f6b38fceb7b61a1871158df47f4a827de50ee103f37052494e1ce1c7835"
+    },
+    {
+      "node_id": "gng5-agent_18_verification-1791959426726-3",
+      "node_type": "AGENT_18_VERIFICATION",
+      "parent_hashes": [
+        "3689b66338c57c4d0882e701ccc8278913c284fa4438233c3fe32ef3e7a0434a",
+        "f10f03a135de72df5911eeaded114e048d49bef7d8f80fff9814505eec620158",
+        "f95117a8f847f294f19a5df5758f737d3d66645ee700f1ac17bca586dc47c14d"
+      ],
+      "payload": {
+        "agent_id": 18,
+        "agent_code": "AGENT-18",
+        "agent_name": "Agent-18 (Đại số: Chéo hóa & Cayley-Hamilton)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 50342.69
+      },
+      "timestamp": 1791959426.7268734,
+      "hash": "5be94827f20a99a2471cfa7da3e1ced32c29e5c8e3100b96f19fecd87981b6ec"
+    },
+    {
+      "node_id": "gng5-agent_16_verification-1791959426834-4",
+      "node_type": "AGENT_16_VERIFICATION",
+      "parent_hashes": [
+        "217578b8dbee4a65fd324105f0c53f6c0df67799f21f335f69a673456573eed8",
+        "c07c98ccf2da4ccbd9feb7b62aed39b4e0f8bc95f1395dcae728bc63a0c9840d",
+        "f27052f0efea74f8237aceb3cab7645c19184ffeab0d1e6ca0749059298f9f6f"
+      ],
+      "payload": {
+        "agent_id": 16,
+        "agent_code": "AGENT-16",
+        "agent_name": "Agent-16 (Đại số: Ánh xạ tuyến tính, Ker & Im)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 50453.9
+      },
+      "timestamp": 1791959426.8349645,
+      "hash": "61b4241a4a5dc500589341e372a8a4d19535dbe081090677e2ced150e5bdb3d9"
+    },
+    {
+      "node_id": "gng5-agent_10_verification-1791959426853-5",
+      "node_type": "AGENT_10_VERIFICATION",
+      "parent_hashes": [
+        "1a8a1c33cd4394625bbc16fb56d945279033eda48a23de8b3224293343cdd162",
+        "8ffe22840a297b63eb16f1f69dcea56ee4f4189f071c3af2a72463dedc7c43ea",
+        "edc4bfea13fe69c37ec0c6296badc1ec6d1b5e76d186d0376e24e91791edb7f0"
+      ],
+      "payload": {
+        "agent_id": 10,
+        "agent_code": "AGENT-10",
+        "agent_name": "Agent-10 (Giải tích: Phương trình vi phân)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 0,
+        "python_verified": 3,
+        "elapsed_ms": 50475.74
+      },
+      "timestamp": 1791959426.8534422,
+      "hash": "bfabc38ae5288cd78a514636130f6f289a5043d8ce7beca97e42daca5b72b994"
+    },
+    {
+      "node_id": "gng5-agent_19_verification-1791959426902-6",
+      "node_type": "AGENT_19_VERIFICATION",
+      "parent_hashes": [
+        "1e81eb18904a80c585a3383d0f779677c65dbf1d82fe768d1b794ec1cf8cc23d",
+        "d652ccb05c1ca2f155d34ddbd44670391ae7cc76ec76268ab8a7ac64a9d34da6",
+        "e3c22f450ee6c66dd2a53f78dc63d3bc044b37d344e9afc6991d457b74e1b2b5"
+      ],
+      "payload": {
+        "agent_id": 19,
+        "agent_code": "AGENT-19",
+        "agent_name": "Agent-19 (Đại số: Dạng toàn phương & Sylvester)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 50519.08
+      },
+      "timestamp": 1791959426.902252,
+      "hash": "d95a7493334c8455858546fbb9df1f4ca497928ee2a903c7e68d3d08e483f93f"
+    },
+    {
+      "node_id": "gng5-agent_12_verification-1791959426923-7",
+      "node_type": "AGENT_12_VERIFICATION",
+      "parent_hashes": [
+        "14f48145f3158bf457abb4bf3915b37dc44fe01098bdd206c92b0068b18354d6",
+        "951b1129ac61c866569481204f9c5befb107fcb308d8ac9dbbfe7454f653ddac",
+        "a1f826dd4ee3f81def032c948d0bf58fed8f5a21f769c38885a4008582606f3f"
+      ],
+      "payload": {
+        "agent_id": 12,
+        "agent_code": "AGENT-12",
+        "agent_name": "Agent-12 (Đại số: Hạng của ma trận)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 50528.62
+      },
+      "timestamp": 1791959426.923154,
+      "hash": "64bc94f61401661b75933a6431bb94815ed743909e6f8653394f2024c02449e1"
+    },
+    {
+      "node_id": "gng5-agent_20_verification-1791959427130-8",
+      "node_type": "AGENT_20_VERIFICATION",
+      "parent_hashes": [
+        "b219c8a167f701437c88f97c8ac36334640788326c298ce588bbd9e011651714",
+        "cfb35e8522adf9d00a6337905176b070ee67914ca55df3d0770e014b645b3a34",
+        "d8fc3714e4c2b0faf63139b376915972f1895f9eb95eb918297c0670e22629e8"
+      ],
+      "payload": {
+        "agent_id": 20,
+        "agent_code": "AGENT-20",
+        "agent_name": "Agent-20 (Đại số: Không gian Euclid & Gram-Schmidt)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 0,
+        "python_verified": 3,
+        "elapsed_ms": 50706.03
+      },
+      "timestamp": 1791959427.1305842,
+      "hash": "f922117efffff9408991781a70958659e210653c71e3a154dc6c8a7c58b68dff"
+    },
+    {
+      "node_id": "gng5-agent_08_verification-1791959427226-9",
+      "node_type": "AGENT_08_VERIFICATION",
+      "parent_hashes": [
+        "15152e0d16ca675e842cfaadfabaee314445513d330d68614c3f501051fc06c2",
+        "71a24d22c0724935764c03ecb2e077ab10ecf2f047c40380ec37f22b8bb308fd",
+        "d495b9c42bd2d8df2f74bafe735df55855d45d350fa76f43914838b99bbb3c76"
+      ],
+      "payload": {
+        "agent_id": 8,
+        "agent_code": "AGENT-08",
+        "agent_name": "Agent-08 (Giải tích: Tích phân kép & bội ba)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 50844.7
+      },
+      "timestamp": 1791959427.2266908,
+      "hash": "31f1ffc8527cf3aa7d39323d97713a7ccd6c5df0221ff438a8ac3692605a0371"
+    },
+    {
+      "node_id": "gng5-agent_11_verification-1791959427355-10",
+      "node_type": "AGENT_11_VERIFICATION",
+      "parent_hashes": [
+        "0d57a05354261105b90bb57033d3ca2a5e0608e8e3eda116e489b86b72431d18",
+        "3fc8253accfb1dd1226c8ba3046242a922a764d50be3feab13b2b168da49a3be",
+        "7cef6e22943b1de14e5d88e98865a0905a2db02eadb58013d5cf5a86447cde99"
+      ],
+      "payload": {
+        "agent_id": 11,
+        "agent_code": "AGENT-11",
+        "agent_name": "Agent-11 (Đại số: Ma trận & Định thức)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 50971.97
+      },
+      "timestamp": 1791959427.3557541,
+      "hash": "24d3de8a9ee0a340f253072a443668c8f89c5a8aac203214de121d771e27d683"
+    },
+    {
+      "node_id": "gng5-agent_17_verification-1791959427375-11",
+      "node_type": "AGENT_17_VERIFICATION",
+      "parent_hashes": [
+        "6389e1b76960b2595bfcb1d78c43f6615932e107ea289414d1cbe9ca2a2731d3",
+        "ba338236fb677ce4693b728ff0bdc8cffd761a47b82df5a2a36e71cec82c5562",
+        "bfd6a21b774ce7a2d48d98131653b12a0c34cc194751c9d75495c206ee02028c"
+      ],
+      "payload": {
+        "agent_id": 17,
+        "agent_code": "AGENT-17",
+        "agent_name": "Agent-17 (Đại số: Trị riêng & Vector riêng)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 3,
+        "elapsed_ms": 50981.51
+      },
+      "timestamp": 1791959427.3756232,
+      "hash": "6cf5e6ee7fdc220f6c4c57bf7b194e652199755a44e516aa5c86ea518a955ff3"
+    },
+    {
+      "node_id": "gng5-agent_13_verification-1791959427505-12",
+      "node_type": "AGENT_13_VERIFICATION",
+      "parent_hashes": [
+        "5c866e28a7c1266b8d198566ac7fa5853f89a03962c9dc02639c59f8cc0e4e51",
+        "745ef940b1e8a6d671591c5150b1a71baad777320d72bc06ae741243182f1d80",
+        "8aeb655fb6f88787abc7717921a73fc7fa04ba17e53654388bfd83f28e4fabfd"
+      ],
+      "payload": {
+        "agent_id": 13,
+        "agent_code": "AGENT-13",
+        "agent_name": "Agent-13 (Đại số: Hệ phương trình tuyến tính)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 51125.51
+      },
+      "timestamp": 1791959427.50538,
+      "hash": "7b2a182a44aeaff0c74d3f944ec9f14436203947921d1e7ad308c973fc9e87b2"
+    },
+    {
+      "node_id": "gng5-agent_14_verification-1791959427547-13",
+      "node_type": "AGENT_14_VERIFICATION",
+      "parent_hashes": [
+        "20c2924733ec23dcc6556452271bd781667807cef4735c7428cd6816bedd726b",
+        "4318c0856c7db1f0fcb9e66e9a6f4a7602d6a07f7b86cca4be19918606976053",
+        "a6a85159c1c26b7e5a1f495508800750c2af13ff0e575e11c03c9192654d6c15"
+      ],
+      "payload": {
+        "agent_id": 14,
+        "agent_code": "AGENT-14",
+        "agent_name": "Agent-14 (Đại số: Không gian Vector & Cơ sở)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 3,
+        "elapsed_ms": 51161.4
+      },
+      "timestamp": 1791959427.5477874,
+      "hash": "80b6b2feb1b44c855f891b00e58202905ded05c4e5b487b71e2cb76090d7c181"
+    },
+    {
+      "node_id": "gng5-agent_02_verification-1791959427560-14",
+      "node_type": "AGENT_02_VERIFICATION",
+      "parent_hashes": [
+        "3bde19a8e3f3dbf076848d93b7208b8202e6cc40ca42a7ad10b78b6e7beb059c",
+        "a352a34de492e8c9517b9ed6ca48dfef416ad835e35e0f82d90a0c084eb2578d",
+        "b9455792fa3743dc60c01d6fa0d0d190676c7fd3e68611eee427b409f2472a48"
+      ],
+      "payload": {
+        "agent_id": 2,
+        "agent_code": "AGENT-02",
+        "agent_name": "Agent-02 (Giải tích: Đạo hàm cấp cao & Cực trị)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 0,
+        "python_verified": 3,
+        "elapsed_ms": 51182.44
+      },
+      "timestamp": 1791959427.5608854,
+      "hash": "e32cf791dbcf6e15f1f826731e981952bca2345b76de3176538a2f6e08854d7b"
+    },
+    {
+      "node_id": "gng5-agent_09_verification-1791959427627-15",
+      "node_type": "AGENT_09_VERIFICATION",
+      "parent_hashes": [
+        "44764a8d593b04ab40e96b4f16fec9f2819d88b3facd2a1a7a05bee6bb984a96",
+        "4f8c8a5ac538fcff27646ccea784a20698d5e2552773d4e039ebbf8f526c1654",
+        "59bbe8c3f6bf188c24565b44bfc6ad5d0869f8189ba374b7b7c43decf8e70a7c"
+      ],
+      "payload": {
+        "agent_id": 9,
+        "agent_code": "AGENT-09",
+        "agent_name": "Agent-09 (Giải tích: Giải tích Vector)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 51239.46
+      },
+      "timestamp": 1791959427.6271634,
+      "hash": "85765c50282fe43ff6e74640a9fee36ed8ce8840077fe4857dc7d20b4ef843dc"
+    },
+    {
+      "node_id": "gng5-agent_07_verification-1791959427672-16",
+      "node_type": "AGENT_07_VERIFICATION",
+      "parent_hashes": [
+        "37ec3bbbe3156ebe3f8231ee5718dd698d00faf0998b7d6b876b0075a474a436",
+        "40a8e8e7ba0fe8f8f01367bfc12c973c7dfb82ec8dba018f41cafabcc975c5dd",
+        "eec41baf377f63085764a66886e0a92d796fb148571c1093676cf222c0e19a29"
+      ],
+      "payload": {
+        "agent_id": 7,
+        "agent_code": "AGENT-07",
+        "agent_name": "Agent-07 (Giải tích: Nhân tử Lagrange)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 3,
+        "elapsed_ms": 51293.78
+      },
+      "timestamp": 1791959427.672497,
+      "hash": "c7c0b5da68a0daed247966ebed740c8485b9fb71beed51264acdcb20ece82c9a"
+    },
+    {
+      "node_id": "gng5-agent_01_verification-1791959427780-17",
+      "node_type": "AGENT_01_VERIFICATION",
+      "parent_hashes": [
+        "5c62eee908c793b01b7c76871a63e526dc1705adb3ba61538e690b90a0e7cca0",
+        "cf6b2ddb114ac55bc9754fd71a7edd8d706545c32f6a6a838c17a57b9bb3e092",
+        "d2e2cddff14f4679ca309b6e4b47b85665e40dacca6b856b62823435fdfa2490"
+      ],
+      "payload": {
+        "agent_id": 1,
+        "agent_code": "AGENT-01",
+        "agent_name": "Agent-01 (Giải tích: Giới hạn & Taylor)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 51399.98
+      },
+      "timestamp": 1791959427.78026,
+      "hash": "dbdad10af5af42dd7ec9ace93d2590d8d240803f48869985c3fbf136b21a839b"
+    },
+    {
+      "node_id": "gng5-agent_04_verification-1791959428961-18",
+      "node_type": "AGENT_04_VERIFICATION",
+      "parent_hashes": [
+        "3760091d86f1f6ca1862b0eca72950e06ae820926d2f2cf30c33fe1efc39cfe1",
+        "3e27a0dc65d154ee1075fb9b52e6926e94f9cbfca5fd68a96138a823314bb4b4",
+        "516ca699dd3c002c628bb75a8ec90a026a7387f8b71267553bf2208f935e96bb"
+      ],
+      "payload": {
+        "agent_id": 4,
+        "agent_code": "AGENT-04",
+        "agent_name": "Agent-04 (Giải tích: Tích phân suy rộng)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 52586.18
+      },
+      "timestamp": 1791959428.9615526,
+      "hash": "84c3c1bdec02e7a3feaf2339784d17e2f8dcbf31ad9597c739d4309dfa668f29"
+    },
+    {
+      "node_id": "gng5-agent_03_verification-1791959429685-19",
+      "node_type": "AGENT_03_VERIFICATION",
+      "parent_hashes": [
+        "19e392843b188f37e1e230cc16872000ebc3158f82bdd4f72ed84da4eaa74f55",
+        "340124bec1004b5ec6fa75fa58ac1c6dda018aeba315c3f584b82a870f30047a",
+        "87f32133776c4e9472b1f2f472d84388724cc1051b4877108d40b6886b00f9bf"
+      ],
+      "payload": {
+        "agent_id": 3,
+        "agent_code": "AGENT-03",
+        "agent_name": "Agent-03 (Giải tích: Tích phân xác định & Tham số)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 53264.09
+      },
+      "timestamp": 1791959429.6854603,
+      "hash": "acccba1bff0d195736b5b103899984be8e5add2871bef85e17502659664b51ac"
+    },
+    {
+      "node_id": "gng5-agent_05_verification-1791959430153-20",
+      "node_type": "AGENT_05_VERIFICATION",
+      "parent_hashes": [
+        "15e44087d450706e755e189910d5fd112fd56348bfd27c01a8867a17197f919c",
+        "36def2948c68eb2040d41b7c2ad35056ee80888ca01f19d37c2590a921816e88",
+        "950bfb9384f649213c064b230dcc20a6823dabde08071b13a88c2c2f57e4b63d"
+      ],
+      "payload": {
+        "agent_id": 5,
+        "agent_code": "AGENT-05",
+        "agent_name": "Agent-05 (Giải tích: Chuỗi số & Chuỗi lũy thừa)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 3,
+        "elapsed_ms": 53779.6
+      },
+      "timestamp": 1791959430.1538851,
+      "hash": "a78016415205e26e91d30566f58dee6ef0944c1c81d0df6aae6f0e60e51f57c6"
+    },
+    {
+      "node_id": "gng5-sovereign_20_agent_swarm_settlement-1791959430171-21",
+      "node_type": "SOVEREIGN_20_AGENT_SWARM_SETTLEMENT",
+      "parent_hashes": [
+        "24d3de8a9ee0a340f253072a443668c8f89c5a8aac203214de121d771e27d683",
+        "31f1ffc8527cf3aa7d39323d97713a7ccd6c5df0221ff438a8ac3692605a0371",
+        "3e3c9f6b38fceb7b61a1871158df47f4a827de50ee103f37052494e1ce1c7835",
+        "5be94827f20a99a2471cfa7da3e1ced32c29e5c8e3100b96f19fecd87981b6ec",
+        "61b4241a4a5dc500589341e372a8a4d19535dbe081090677e2ced150e5bdb3d9",
+        "64bc94f61401661b75933a6431bb94815ed743909e6f8653394f2024c02449e1",
+        "6cf5e6ee7fdc220f6c4c57bf7b194e652199755a44e516aa5c86ea518a955ff3",
+        "7b2a182a44aeaff0c74d3f944ec9f14436203947921d1e7ad308c973fc9e87b2",
+        "80b6b2feb1b44c855f891b00e58202905ded05c4e5b487b71e2cb76090d7c181",
+        "84c3c1bdec02e7a3feaf2339784d17e2f8dcbf31ad9597c739d4309dfa668f29",
+        "85765c50282fe43ff6e74640a9fee36ed8ce8840077fe4857dc7d20b4ef843dc",
+        "a78016415205e26e91d30566f58dee6ef0944c1c81d0df6aae6f0e60e51f57c6",
+        "acccba1bff0d195736b5b103899984be8e5add2871bef85e17502659664b51ac",
+        "bfabc38ae5288cd78a514636130f6f289a5043d8ce7beca97e42daca5b72b994",
+        "c7c0b5da68a0daed247966ebed740c8485b9fb71beed51264acdcb20ece82c9a",
+        "d95a7493334c8455858546fbb9df1f4ca497928ee2a903c7e68d3d08e483f93f",
+        "dbdad10af5af42dd7ec9ace93d2590d8d240803f48869985c3fbf136b21a839b",
+        "e32cf791dbcf6e15f1f826731e981952bca2345b76de3176538a2f6e08854d7b",
+        "f4a9d518d9463b1e218bb5608d8b05949cc83fd12439f8ac09c063693700e671",
+        "f922117efffff9408991781a70958659e210653c71e3a154dc6c8a7c58b68dff"
+      ],
+      "payload": {
+        "swarm_size": 20,
+        "total_questions": 60,
+        "lean4_verified": 29,
+        "python_verified": 59,
+        "wall_clock_ms": 53803.5,
+        "verdict": "PARTIAL",
+        "signature": "Gemini-3.8-Flash-High Sovereign Epistemic Gate (@gng5 Apex Dual-Core Native Mode: @gng4 Prover + @gng3 Refuter)"
+      },
+      "timestamp": 1791959430.1718135,
+      "hash": "8036dcdbcc78cde34320f3ccefbc4d2641d6af7a425f1077d52b61265338f9c1"
+    },
+    {
+      "node_id": "gng5-agent_01_sovereign_seal-1791959977531-22",
+      "node_type": "AGENT_01_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 1,
+        "agent_code": "AGENT-01",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.531817,
+      "hash": "26e848870460cb01d0ccad1827f6fcc46ff22541471982e354317698fa76a93a"
+    },
+    {
+      "node_id": "gng5-agent_02_sovereign_seal-1791959977632-23",
+      "node_type": "AGENT_02_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 2,
+        "agent_code": "AGENT-02",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.6321008,
+      "hash": "9c1957dbdc94e0c0f834df09f61a45853048a0cd94c9b2876144bde1e3523cb3"
+    },
+    {
+      "node_id": "gng5-agent_03_sovereign_seal-1791959977649-24",
+      "node_type": "AGENT_03_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 3,
+        "agent_code": "AGENT-03",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.649103,
+      "hash": "2c28f9959cffc1b042d6b002a690bd54fd85a400739725647bd037644a5d1a6a"
+    },
+    {
+      "node_id": "gng5-agent_04_sovereign_seal-1791959977673-25",
+      "node_type": "AGENT_04_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 4,
+        "agent_code": "AGENT-04",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.673155,
+      "hash": "c274242d422bf63b36b7da3246ac56f56ffb62315095f3009c5009ed749959d9"
+    },
+    {
+      "node_id": "gng5-agent_05_sovereign_seal-1791959977695-26",
+      "node_type": "AGENT_05_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 5,
+        "agent_code": "AGENT-05",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.695061,
+      "hash": "4e44678007f45116f5e3367f94cb200bf558e803ed87754ac342ad40bed3b54a"
+    },
+    {
+      "node_id": "gng5-agent_06_sovereign_seal-1791959977715-27",
+      "node_type": "AGENT_06_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 6,
+        "agent_code": "AGENT-06",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.715604,
+      "hash": "75eb1354a883499823996a404c0de819c398c4e41f0bd286a6839d9223195ef7"
+    },
+    {
+      "node_id": "gng5-agent_07_sovereign_seal-1791959977740-28",
+      "node_type": "AGENT_07_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 7,
+        "agent_code": "AGENT-07",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.7402723,
+      "hash": "f2e41a59ed235d53cf3d5a2c55c5741e54157811fc9cd928bcf2c48d7f65f10b"
+    },
+    {
+      "node_id": "gng5-agent_08_sovereign_seal-1791959977760-29",
+      "node_type": "AGENT_08_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 8,
+        "agent_code": "AGENT-08",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.7608328,
+      "hash": "d9225e19c2c4fd1488763445749f0716027343661212f688d3b4f7698a16508d"
+    },
+    {
+      "node_id": "gng5-agent_09_sovereign_seal-1791959977782-30",
+      "node_type": "AGENT_09_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 9,
+        "agent_code": "AGENT-09",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.7823458,
+      "hash": "e18d94a43ae77d22d428e97b31b55077b8366428466d7bdc55d8d089bd511579"
+    },
+    {
+      "node_id": "gng5-agent_10_sovereign_seal-1791959977802-31",
+      "node_type": "AGENT_10_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 10,
+        "agent_code": "AGENT-10",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.8023226,
+      "hash": "a04fc732f8448fc6cd7d026b0fd0f64b3c9bad3bc7ef01c4cd572f234d3dfbb4"
+    },
+    {
+      "node_id": "gng5-agent_11_sovereign_seal-1791959977827-32",
+      "node_type": "AGENT_11_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 11,
+        "agent_code": "AGENT-11",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.8273423,
+      "hash": "1f21079d5783a929d2e20255869abdecc93cf4cb5edea8eee6331fa5c2020d0d"
+    },
+    {
+      "node_id": "gng5-agent_12_sovereign_seal-1791959977849-33",
+      "node_type": "AGENT_12_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 12,
+        "agent_code": "AGENT-12",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.849609,
+      "hash": "3e48c80dd8834e026a1d59b0c4f76900691fc1b0b87af2785b459cf2b003f9ed"
+    },
+    {
+      "node_id": "gng5-agent_13_sovereign_seal-1791959977887-34",
+      "node_type": "AGENT_13_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 13,
+        "agent_code": "AGENT-13",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.8877985,
+      "hash": "711522019a15d1f70b5ce6f2fa6acfcc4b4d61a7ec24eefe71b1c6bbc10f2222"
+    },
+    {
+      "node_id": "gng5-agent_14_sovereign_seal-1791959977914-35",
+      "node_type": "AGENT_14_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 14,
+        "agent_code": "AGENT-14",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.914664,
+      "hash": "758044ee5fdec732c0a6f6a3bbf39de335229ebbe3f998497f1176af99211877"
+    },
+    {
+      "node_id": "gng5-agent_15_sovereign_seal-1791959977937-36",
+      "node_type": "AGENT_15_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 15,
+        "agent_code": "AGENT-15",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.937148,
+      "hash": "eb6ac1a7f59f697f199d9d783c723000604acbdc09482b85d31f42cc07ae8340"
+    },
+    {
+      "node_id": "gng5-agent_16_sovereign_seal-1791959977959-37",
+      "node_type": "AGENT_16_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 16,
+        "agent_code": "AGENT-16",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.9592195,
+      "hash": "0d8bdd8913704b9766da333795c352af76f8055ec1d62efe39a7c294a952fa0d"
+    },
+    {
+      "node_id": "gng5-agent_17_sovereign_seal-1791959977982-38",
+      "node_type": "AGENT_17_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 17,
+        "agent_code": "AGENT-17",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959977.9823189,
+      "hash": "b522a3aab50092d6600373bace92c1455bec05db58b1b9e20857b43369e0a9a6"
+    },
+    {
+      "node_id": "gng5-agent_18_sovereign_seal-1791959978004-39",
+      "node_type": "AGENT_18_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 18,
+        "agent_code": "AGENT-18",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959978.0045118,
+      "hash": "c77a2ca485d00011a153422b2976415b648679fc762f987c9ef8f3ec4da8fe97"
+    },
+    {
+      "node_id": "gng5-agent_19_sovereign_seal-1791959978030-40",
+      "node_type": "AGENT_19_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 19,
+        "agent_code": "AGENT-19",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959978.030486,
+      "hash": "d0566d2844d23bb25b31491b38c488a17c14def28f271f4ac44b9e1a248066c3"
+    },
+    {
+      "node_id": "gng5-agent_20_sovereign_seal-1791959978059-41",
+      "node_type": "AGENT_20_SOVEREIGN_SEAL",
+      "parent_hashes": [],
+      "payload": {
+        "agent_id": 20,
+        "agent_code": "AGENT-20",
+        "questions": 3,
+        "lean4": 3,
+        "python": 3
+      },
+      "timestamp": 1791959978.0596068,
+      "hash": "fc73a5ed58c3a330f5250173ca5676a0fddc56dfba804d0cab42c66688d8686f"
+    },
+    {
+      "node_id": "gng5-exam_generated-1791960102559-42",
+      "node_type": "EXAM_GENERATED",
+      "parent_hashes": [
+        "02f9028d8079411dfba3ccbec3bbcc76ca3e1f313818a4dc7a9c95f2e812fd69",
+        "0788320f1a52ab56e8b211f319b9dcadb473e656851fa45818150c0383f58204",
+        "17daa38dd1e1fe7da75a2ebcef729f8ca44615902e06a912b4692dc26bd71e06",
+        "19e392843b188f37e1e230cc16872000ebc3158f82bdd4f72ed84da4eaa74f55",
+        "2aeadc9ca21a316ec6a359dfe6c82cf9a9843c346b408e1708c7170359d0dab9",
+        "30297df7cf2408efdf96ec4d5238141b68957795997d5a04cfa8d3ae7337900b",
+        "565e2d6d740b1ccec67707cc52b6013ef372958ba6f5d4a0804d4da46fdfe42d",
+        "59bbe8c3f6bf188c24565b44bfc6ad5d0869f8189ba374b7b7c43decf8e70a7c",
+        "5c62eee908c793b01b7c76871a63e526dc1705adb3ba61538e690b90a0e7cca0",
+        "637b679100fe4a1eb013b7a46e6108ca5a0adc96576b341c98f8c1b37b6684f3",
+        "6389e1b76960b2595bfcb1d78c43f6615932e107ea289414d1cbe9ca2a2731d3",
+        "66ef319b1e5f73e2299bbe708be736f8a61547c0c5f3c8b5623d2bb431fcdfe7",
+        "7cef6e22943b1de14e5d88e98865a0905a2db02eadb58013d5cf5a86447cde99",
+        "889251a87ef56b99be272ef97d61469ef5f675c9e5fbeb7772d7ea9eb6b19c69",
+        "ac39d0942547dda336c6689d3f7e5c4565ebda41679e3fbd4bc38df0bba1c4f1",
+        "ec86560b3712b129e2fa7cffb390f74a53a024489053fae2e065028d87929e77"
+      ],
+      "payload": {
+        "exam_code": "EXAM-20261014-134142-845",
+        "title": "Đề Thi Kết Thúc Học Phần Toán Cao Cấp (Giải Tích & Đại Số) - Mã Đề 101",
+        "total_questions": 16,
+        "mcq_count": 12,
+        "essay_count": 4,
+        "parametric_count": 16,
+        "parameter_mode": "dual"
+      },
+      "timestamp": 1791960102.5598123,
+      "hash": "09f310c83f8d021a6b38c413b37dc7aa7b55a8e8eb2a90d5c98a90a46eca0a00"
+    },
+    {
+      "node_id": "gng5-exam_generated-1791960102785-43",
+      "node_type": "EXAM_GENERATED",
+      "parent_hashes": [
+        "02f9028d8079411dfba3ccbec3bbcc76ca3e1f313818a4dc7a9c95f2e812fd69",
+        "0f0fc646ddba0d5b83bc5399f846e2cfe303d4838d9114743a33ee65568c5a7c",
+        "30297df7cf2408efdf96ec4d5238141b68957795997d5a04cfa8d3ae7337900b",
+        "32fdacf3f27b9c2ad69f842ca169263fdf088824f8ced5b57b8bb0fbbc3f4cfb",
+        "340124bec1004b5ec6fa75fa58ac1c6dda018aeba315c3f584b82a870f30047a",
+        "36def2948c68eb2040d41b7c2ad35056ee80888ca01f19d37c2590a921816e88",
+        "4f8c8a5ac538fcff27646ccea784a20698d5e2552773d4e039ebbf8f526c1654",
+        "5c62eee908c793b01b7c76871a63e526dc1705adb3ba61538e690b90a0e7cca0",
+        "7dd1c3b6244fdd15d25371b6b216b53b814d2b7478bf21b1cdea722c182497fe",
+        "a74cdda7c500d88e52a27c8d2fc6a4e6aa3a170dae33747ed91bef0d914ab901",
+        "ad38cbf10725afab4531079af7b1e7905fe2c22004016f82c7b38ffef389c0b5",
+        "b5017bc61c61de1f8a7617f2956a7abdd5a4607eafc18cc0c01d6fc5cadbc78f",
+        "d9230dab28ad7d4ecdb0109fb64bfaf6ed48132e8910db8f0a243aaacb96eceb"
+      ],
+      "payload": {
+        "exam_code": "EXAM-20261014-134142-139",
+        "title": "Đề Thi Giữa Kỳ Giải Tích Cao Cấp (I, II, III & PTVP) - Mã Đề 202",
+        "total_questions": 13,
+        "mcq_count": 10,
+        "essay_count": 3,
+        "parametric_count": 13,
+        "parameter_mode": "dual"
+      },
+      "timestamp": 1791960102.7853692,
+      "hash": "34e99698297dca205b19a790cbaad6da5c2151691958158059ae0353e1563e89"
+    },
+    {
+      "node_id": "gng5-exam_generated-1791960102872-44",
+      "node_type": "EXAM_GENERATED",
+      "parent_hashes": [
+        "14f48145f3158bf457abb4bf3915b37dc44fe01098bdd206c92b0068b18354d6",
+        "17daa38dd1e1fe7da75a2ebcef729f8ca44615902e06a912b4692dc26bd71e06",
+        "3146fe121bbe9f9e02031109b2a3fb15950f1d7b4b6a609f195d9d01b3dec1d5",
+        "420e26438115102c74f33e498af2bf330f2bbaa6d1b3fe6d0a93679aa2b8a650",
+        "565e2d6d740b1ccec67707cc52b6013ef372958ba6f5d4a0804d4da46fdfe42d",
+        "6389e1b76960b2595bfcb1d78c43f6615932e107ea289414d1cbe9ca2a2731d3",
+        "8aeb655fb6f88787abc7717921a73fc7fa04ba17e53654388bfd83f28e4fabfd",
+        "a1f826dd4ee3f81def032c948d0bf58fed8f5a21f769c38885a4008582606f3f",
+        "ac39d0942547dda336c6689d3f7e5c4565ebda41679e3fbd4bc38df0bba1c4f1",
+        "ace1213ffd0f1a5855bb9e21795c34a7dce3c7ede2955fdc9f4f88745d749fb6",
+        "c07c98ccf2da4ccbd9feb7b62aed39b4e0f8bc95f1395dcae728bc63a0c9840d",
+        "c57ecc00a533aedd618773f5929bd4005f0e301c28c3177cdfc1632c22f1f74e",
+        "f27052f0efea74f8237aceb3cab7645c19184ffeab0d1e6ca0749059298f9f6f"
+      ],
+      "payload": {
+        "exam_code": "EXAM-20261014-134142-829",
+        "title": "Đề Thi Giữa Kỳ Đại Số Tuyến Tính & Dạng Toàn Phương - Mã Đề 303",
+        "total_questions": 13,
+        "mcq_count": 10,
+        "essay_count": 3,
+        "parametric_count": 13,
+        "parameter_mode": "numeric"
+      },
+      "timestamp": 1791960102.872868,
+      "hash": "bb0299d38926e138f12e1cec706908e98f665f2d4fb05dce5fc29f11bc473b77"
+    },
+    {
+      "node_id": "gng5-sandbox_dual_verification-1792134986514-45",
+      "node_type": "SANDBOX_DUAL_VERIFICATION",
+      "parent_hashes": [],
+      "payload": {
+        "code_id": "SANDBOX-LIVE",
+        "lean4_status": "VERIFIED_PASS",
+        "python_status": "VERIFIED_PASS",
+        "verdict": "SOVEREIGN_PASSED"
+      },
+      "timestamp": 1792134986.5146227,
+      "hash": "75952c3c7cfd9862fa5322d194b27b643d11688532928ae242acd30d03d7df0a"
+    },
+    {
+      "node_id": "gng5-agent_10_verification-1792390836884-46",
+      "node_type": "AGENT_10_VERIFICATION",
+      "parent_hashes": [
+        "1a8a1c33cd4394625bbc16fb56d945279033eda48a23de8b3224293343cdd162",
+        "8ffe22840a297b63eb16f1f69dcea56ee4f4189f071c3af2a72463dedc7c43ea",
+        "edc4bfea13fe69c37ec0c6296badc1ec6d1b5e76d186d0376e24e91791edb7f0"
+      ],
+      "payload": {
+        "agent_id": 10,
+        "agent_code": "AGENT-10",
+        "agent_name": "Agent-10 (Giải tích: Phương trình vi phân)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 0,
+        "python_verified": 3,
+        "elapsed_ms": 56815.45
+      },
+      "timestamp": 1792390836.884801,
+      "hash": "00ed28e0db849ea7c4c026de0ae882402305738bb0bf6a6a3902b3903189e42a"
+    },
+    {
+      "node_id": "gng5-agent_16_verification-1792390836915-47",
+      "node_type": "AGENT_16_VERIFICATION",
+      "parent_hashes": [
+        "217578b8dbee4a65fd324105f0c53f6c0df67799f21f335f69a673456573eed8",
+        "2b86049c6d2d8fb76c98185edec11522edd7cdb394ca6453b083e812abaa747d",
+        "8621ea6cac5cfe7fef7aeb9b7ddab5fdb5e091da80a142ccb04c9d1eea4dad86"
+      ],
+      "payload": {
+        "agent_id": 16,
+        "agent_code": "AGENT-16",
+        "agent_name": "Agent-16 (Đại số: Ánh xạ tuyến tính, Ker & Im)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 0,
+        "python_verified": 3,
+        "elapsed_ms": 56819.1
+      },
+      "timestamp": 1792390836.915354,
+      "hash": "d37a4baad1cf898487eb4d54b3eb870aa105e73c375b2831fcd9ef9b5c877c05"
+    },
+    {
+      "node_id": "gng5-agent_20_verification-1792390839316-48",
+      "node_type": "AGENT_20_VERIFICATION",
+      "parent_hashes": [
+        "5fd97ea3153f65d45c2378641297db40478a1aa73f1a0d9b8a1413e70f5a1ee4",
+        "87ab59f3659b515374fce615ff1e61c947976e467678855c47b3d31397b32c3b",
+        "ac477235980339a691f83d7b641cd9968799a0a87977bb06862ec6176c4d1d9e"
+      ],
+      "payload": {
+        "agent_id": 20,
+        "agent_code": "AGENT-20",
+        "agent_name": "Agent-20 (Đại số: Không gian Euclid & Gram-Schmidt)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 0,
+        "python_verified": 0,
+        "elapsed_ms": 59221.45
+      },
+      "timestamp": 1792390839.3163767,
+      "hash": "4904159b7aed16d7e1b23b92d54eec06346e87c15a8e9690869927850d829b36"
+    },
+    {
+      "node_id": "gng5-agent_02_verification-1792390841854-49",
+      "node_type": "AGENT_02_VERIFICATION",
+      "parent_hashes": [
+        "a352a34de492e8c9517b9ed6ca48dfef416ad835e35e0f82d90a0c084eb2578d",
+        "b9455792fa3743dc60c01d6fa0d0d190676c7fd3e68611eee427b409f2472a48",
+        "f2d2d54a719c12b417099098a866b69ae0235c75a39ce3974b7c874ea06358a6"
+      ],
+      "payload": {
+        "agent_id": 2,
+        "agent_code": "AGENT-02",
+        "agent_name": "Agent-02 (Giải tích: Đạo hàm cấp cao & Cực trị)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 0,
+        "python_verified": 2,
+        "elapsed_ms": 61780.14
+      },
+      "timestamp": 1792390841.8549142,
+      "hash": "17b20326e11436f15b0b6ae310168efdf2ea3719e56146f612d2480c2e991cc3"
+    },
+    {
+      "node_id": "gng5-agent_17_verification-1792390841903-50",
+      "node_type": "AGENT_17_VERIFICATION",
+      "parent_hashes": [
+        "adbe625d32a26a5b3490d8d45c70c4902e0c6a59a6cc316e25a2c3b1ce251cf4",
+        "af29a45cf678ecf767013d1fecaff7f9dc03586230c7efabba7b1d34b79fa6bb",
+        "bfd6a21b774ce7a2d48d98131653b12a0c34cc194751c9d75495c206ee02028c"
+      ],
+      "payload": {
+        "agent_id": 17,
+        "agent_code": "AGENT-17",
+        "agent_name": "Agent-17 (Đại số: Trị riêng & Vector riêng)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 0,
+        "python_verified": 1,
+        "elapsed_ms": 61810.86
+      },
+      "timestamp": 1792390841.9039383,
+      "hash": "c13ceafc477efc3ca0d9d02d2a4b2056016b1409ec55d3b9436b7e654dd89a28"
+    },
+    {
+      "node_id": "gng5-agent_05_verification-1792390843547-51",
+      "node_type": "AGENT_05_VERIFICATION",
+      "parent_hashes": [
+        "21c71f06a1232593dbd53f23340ed9e485022fedbb5976b12c2b3bd5e91ed4aa",
+        "6e11a942d1972b9e0d7e0f84c8f4256c8a986dc212e53ddd9a45821d48e6927b",
+        "9cb87535b7d6c1ee954e4b6d661dfee1057b6df9ed896c33ada2673289dede74"
+      ],
+      "payload": {
+        "agent_id": 5,
+        "agent_code": "AGENT-05",
+        "agent_name": "Agent-05 (Giải tích: Chuỗi số & Chuỗi lũy thừa)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 0,
+        "python_verified": 1,
+        "elapsed_ms": 63468.19
+      },
+      "timestamp": 1792390843.547561,
+      "hash": "03e7a83d3e8b8b0790edd422232e7cb13064e134f37ae2b4fdfbe2610c331b2b"
+    },
+    {
+      "node_id": "gng5-agent_19_verification-1792390860965-52",
+      "node_type": "AGENT_19_VERIFICATION",
+      "parent_hashes": [
+        "1592f7fb80e5bfec491eba2210897298c7620c348c68a1fabb40cf79f37c7eca",
+        "1e81eb18904a80c585a3383d0f779677c65dbf1d82fe768d1b794ec1cf8cc23d",
+        "af85da0e8a56f14ed6e71ce651ad8a341e219f1ed9532edf3e5ba182a2b0e5a2"
+      ],
+      "payload": {
+        "agent_id": 19,
+        "agent_code": "AGENT-19",
+        "agent_name": "Agent-19 (Đại số: Dạng toàn phương & Sylvester)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 2,
+        "elapsed_ms": 80887.83
+      },
+      "timestamp": 1792390860.9656985,
+      "hash": "61002de640cfca329f0dbc4613a2eff1fb0c78ce5db9c53d6ed6327fcabe7581"
+    },
+    {
+      "node_id": "gng5-agent_06_verification-1792390862131-53",
+      "node_type": "AGENT_06_VERIFICATION",
+      "parent_hashes": [
+        "2aeadc9ca21a316ec6a359dfe6c82cf9a9843c346b408e1708c7170359d0dab9",
+        "5fe812fd275a4064f694e7ba421b7d4f781e71a7c7cf82a06e832d34e5315546",
+        "ad38cbf10725afab4531079af7b1e7905fe2c22004016f82c7b38ffef389c0b5"
+      ],
+      "payload": {
+        "agent_id": 6,
+        "agent_code": "AGENT-06",
+        "agent_name": "Agent-06 (Giải tích: Vi phân hàm nhiều biến)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "elapsed_ms": 82056.17
+      },
+      "timestamp": 1792390862.1314943,
+      "hash": "425f68fd23d24dcb87383f7375a49d659d51d3e5e6a7b3cd2c2d3af305958e89"
+    },
+    {
+      "node_id": "gng5-agent_18_verification-1792390863089-54",
+      "node_type": "AGENT_18_VERIFICATION",
+      "parent_hashes": [
+        "3689b66338c57c4d0882e701ccc8278913c284fa4438233c3fe32ef3e7a0434a",
+        "779cb400dc22638ea48f527c2948352bc09cd19d8acb8f1acb379e5d7b69f503",
+        "f95117a8f847f294f19a5df5758f737d3d66645ee700f1ac17bca586dc47c14d"
+      ],
+      "payload": {
+        "agent_id": 18,
+        "agent_code": "AGENT-18",
+        "agent_name": "Agent-18 (Đại số: Chéo hóa & Cayley-Hamilton)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 2,
+        "elapsed_ms": 82994.74
+      },
+      "timestamp": 1792390863.0897393,
+      "hash": "ab40b27e6724e27d55139b0f8ddd24a1aa55c8821a0f7e59588c32aaa4c109ab"
+    },
+    {
+      "node_id": "gng5-agent_15_verification-1792390864224-55",
+      "node_type": "AGENT_15_VERIFICATION",
+      "parent_hashes": [
+        "637b679100fe4a1eb013b7a46e6108ca5a0adc96576b341c98f8c1b37b6684f3",
+        "8b12dc305b5e0901ac860785d18fb40dc2db68bcc2c8d40e7ba7e8ac05cbfc09",
+        "a6e30c0acb826164cca66ee92a83608f9587500910da160af0b0a105c62daedd"
+      ],
+      "payload": {
+        "agent_id": 15,
+        "agent_code": "AGENT-15",
+        "agent_name": "Agent-15 (Đại số: Không gian con & Grassmann)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 2,
+        "elapsed_ms": 84137.38
+      },
+      "timestamp": 1792390864.224383,
+      "hash": "5897cfdb7f655a31324a113a5b6f60b880eda9211c1a802e73eec0fee596398b"
+    },
+    {
+      "node_id": "gng5-agent_12_verification-1792390864604-56",
+      "node_type": "AGENT_12_VERIFICATION",
+      "parent_hashes": [
+        "39d5e8cc29ea1d529ce1f1f964493430a471714b705fbd2a8ed220aa038dc97a",
+        "a0418c3e8a7b89e50eb57447dfde2e35a73c1ec6bbdb398714c00c319c3dde80",
+        "a1f826dd4ee3f81def032c948d0bf58fed8f5a21f769c38885a4008582606f3f"
+      ],
+      "payload": {
+        "agent_id": 12,
+        "agent_code": "AGENT-12",
+        "agent_name": "Agent-12 (Đại số: Hạng của ma trận)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 2,
+        "elapsed_ms": 84521.51
+      },
+      "timestamp": 1792390864.6045291,
+      "hash": "e796444a646b7be27dc28c5fc3b2adf70a5ea8cebd3f1d15b68d2afa115a5972"
+    },
+    {
+      "node_id": "gng5-agent_09_verification-1792390864704-57",
+      "node_type": "AGENT_09_VERIFICATION",
+      "parent_hashes": [
+        "0528b4fa0500a780909b3db1b1f37a12b46b8f8e230a880673abaac6edcca662",
+        "44764a8d593b04ab40e96b4f16fec9f2819d88b3facd2a1a7a05bee6bb984a96",
+        "4f8c8a5ac538fcff27646ccea784a20698d5e2552773d4e039ebbf8f526c1654"
+      ],
+      "payload": {
+        "agent_id": 9,
+        "agent_code": "AGENT-09",
+        "agent_name": "Agent-09 (Giải tích: Giải tích Vector)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 3,
+        "elapsed_ms": 84612.98
+      },
+      "timestamp": 1792390864.70426,
+      "hash": "39343208ea80ac9423c2781f1887c71f81d3df55d4190eb7f781496844efe5cb"
+    },
+    {
+      "node_id": "gng5-agent_01_verification-1792390864726-58",
+      "node_type": "AGENT_01_VERIFICATION",
+      "parent_hashes": [
+        "262b8f22a7ded7eccd321f93cd08d86dc162418a6b6d3892a99c494fcef768ee",
+        "6d00ef5bc01d354055ddf2f22eb74f06d06be2b8ec18b2e6c6852d1dadfd31c0",
+        "cf6b2ddb114ac55bc9754fd71a7edd8d706545c32f6a6a838c17a57b9bb3e092"
+      ],
+      "payload": {
+        "agent_id": 1,
+        "agent_code": "AGENT-01",
+        "agent_name": "Agent-01 (Giải tích: Giới hạn & Taylor)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 1,
+        "elapsed_ms": 84646.2
+      },
+      "timestamp": 1792390864.7262015,
+      "hash": "e5d9665799480e78a5788cb6369f2e7950b52ecdfca6b3dc5225dcf63c62086f"
+    },
+    {
+      "node_id": "gng5-agent_14_verification-1792390865348-59",
+      "node_type": "AGENT_14_VERIFICATION",
+      "parent_hashes": [
+        "497a8b86b42ad957ce0b0fed035e3288d0c9d3b6cad9b25c519b0f98205bb803",
+        "7d27769d3597976ad413c012e651cd61452abbd5d521feab0cb7908c26cab714",
+        "f8eb988f3e5ae52be1f9ebc6b8fe11052e78e79d4e363650e933c85322f10221"
+      ],
+      "payload": {
+        "agent_id": 14,
+        "agent_code": "AGENT-14",
+        "agent_name": "Agent-14 (Đại số: Không gian Vector & Cơ sở)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 2,
+        "elapsed_ms": 85256.77
+      },
+      "timestamp": 1792390865.3481038,
+      "hash": "1e95b19027c8708e75eebb85a2c613e896ce3130ec4c2e1d86f984591e4de611"
+    },
+    {
+      "node_id": "gng5-agent_11_verification-1792390865442-60",
+      "node_type": "AGENT_11_VERIFICATION",
+      "parent_hashes": [
+        "3fc8253accfb1dd1226c8ba3046242a922a764d50be3feab13b2b168da49a3be",
+        "4094088c622e7d9bd72a7f044f34daf1e351cb6cbfb9c054a89cdc5e16069094",
+        "dd20d2796fa02789b87fb4ceccb43179920b48583bafc2c3a8cadcb1ce2124ee"
+      ],
+      "payload": {
+        "agent_id": 11,
+        "agent_code": "AGENT-11",
+        "agent_name": "Agent-11 (Đại số: Ma trận & Định thức)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 2,
+        "elapsed_ms": 85359.27
+      },
+      "timestamp": 1792390865.4420838,
+      "hash": "bf68be1bb24153871ef9d384ecc074763841cbd9146c00f7de834828ea16059e"
+    },
+    {
+      "node_id": "gng5-agent_13_verification-1792390865687-61",
+      "node_type": "AGENT_13_VERIFICATION",
+      "parent_hashes": [
+        "112dfbd95f3462306c35bb821c75a2def49543691e8f11d0cfd78457f488bf24",
+        "5c866e28a7c1266b8d198566ac7fa5853f89a03962c9dc02639c59f8cc0e4e51",
+        "6d0471968e48bc84add33e6504a09f8a523b7fc5a45082df0f081b03d642d27b"
+      ],
+      "payload": {
+        "agent_id": 13,
+        "agent_code": "AGENT-13",
+        "agent_name": "Agent-13 (Đại số: Hệ phương trình tuyến tính)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 1,
+        "elapsed_ms": 85593.92
+      },
+      "timestamp": 1792390865.6873534,
+      "hash": "2b16866ed268c67cbe38ca34c1f638ad61518d801e0b55bd88ff29e676f8e561"
+    },
+    {
+      "node_id": "gng5-agent_07_verification-1792390866289-62",
+      "node_type": "AGENT_07_VERIFICATION",
+      "parent_hashes": [
+        "045e7792ade5c9c1c4c7ca90209d03acde5a157672e4881cf4d3d2fd82c382e8",
+        "178eb3b7277d948828f900b1d8b527d4933fcff06b355141fa0b15aa921e713b",
+        "21f3f0808570551c3a956dc66e0ea1c9fb2c5b1e064a1fefac2cc1770176fe92"
+      ],
+      "payload": {
+        "agent_id": 7,
+        "agent_code": "AGENT-07",
+        "agent_name": "Agent-07 (Giải tích: Nhân tử Lagrange)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 2,
+        "elapsed_ms": 86216.46
+      },
+      "timestamp": 1792390866.2893891,
+      "hash": "e8ec551cf8500348a05d2d3fbda3dbec8bc11705c92fed3ae6f32ea2da11179e"
+    },
+    {
+      "node_id": "gng5-agent_08_verification-1792390868080-63",
+      "node_type": "AGENT_08_VERIFICATION",
+      "parent_hashes": [
+        "3c1a67833a23a2945ea2fa39bff6b092042d04411582dc48724ffe7caa6ca7c1",
+        "71a24d22c0724935764c03ecb2e077ab10ecf2f047c40380ec37f22b8bb308fd",
+        "e8e65220321b612f3d7078ee8a8484e03bde22b2b0d778ad1bd2846141e016a0"
+      ],
+      "payload": {
+        "agent_id": 8,
+        "agent_code": "AGENT-08",
+        "agent_name": "Agent-08 (Giải tích: Tích phân kép & bội ba)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 2,
+        "elapsed_ms": 88004.84
+      },
+      "timestamp": 1792390868.0805218,
+      "hash": "bbf2317973fcd880a2649f5fbec1905acc6b30428afa79b7532a71af338e4191"
+    },
+    {
+      "node_id": "gng5-agent_03_verification-1792390869095-64",
+      "node_type": "AGENT_03_VERIFICATION",
+      "parent_hashes": [
+        "19e392843b188f37e1e230cc16872000ebc3158f82bdd4f72ed84da4eaa74f55",
+        "340124bec1004b5ec6fa75fa58ac1c6dda018aeba315c3f584b82a870f30047a",
+        "6e7eb092be518721da95bf68399d23981f48cd5df3f230c58c6c8395b4a9e259"
+      ],
+      "payload": {
+        "agent_id": 3,
+        "agent_code": "AGENT-03",
+        "agent_name": "Agent-03 (Giải tích: Tích phân xác định & Tham số)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 2,
+        "python_verified": 2,
+        "elapsed_ms": 89023.46
+      },
+      "timestamp": 1792390869.0957606,
+      "hash": "a1781ad74ffe66885bb8b2e36f2423ad631bf01b1bfbef2e24c4777e96322c54"
+    },
+    {
+      "node_id": "gng5-agent_04_verification-1792390869609-65",
+      "node_type": "AGENT_04_VERIFICATION",
+      "parent_hashes": [
+        "516ca699dd3c002c628bb75a8ec90a026a7387f8b71267553bf2208f935e96bb",
+        "55095f93516568d953e76575b34e3d147b473e1f1fd396cd9fba0b11eac95714",
+        "d34d867cf8eea8a3ece8276fe21dcddee9313934819cca3e6684902a73ba4220"
+      ],
+      "payload": {
+        "agent_id": 4,
+        "agent_code": "AGENT-04",
+        "agent_name": "Agent-04 (Giải tích: Tích phân suy rộng)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 1,
+        "python_verified": 2,
+        "elapsed_ms": 89528.5
+      },
+      "timestamp": 1792390869.6098995,
+      "hash": "cfa1458bbce9f1952eb94a06d40b5277d5a3e29e6cc323e1fc09e74789ffc4be"
+    },
+    {
+      "node_id": "gng5-sovereign_20_agent_swarm_settlement-1792390869644-66",
+      "node_type": "SOVEREIGN_20_AGENT_SWARM_SETTLEMENT",
+      "parent_hashes": [
+        "00ed28e0db849ea7c4c026de0ae882402305738bb0bf6a6a3902b3903189e42a",
+        "03e7a83d3e8b8b0790edd422232e7cb13064e134f37ae2b4fdfbe2610c331b2b",
+        "17b20326e11436f15b0b6ae310168efdf2ea3719e56146f612d2480c2e991cc3",
+        "1e95b19027c8708e75eebb85a2c613e896ce3130ec4c2e1d86f984591e4de611",
+        "2b16866ed268c67cbe38ca34c1f638ad61518d801e0b55bd88ff29e676f8e561",
+        "39343208ea80ac9423c2781f1887c71f81d3df55d4190eb7f781496844efe5cb",
+        "425f68fd23d24dcb87383f7375a49d659d51d3e5e6a7b3cd2c2d3af305958e89",
+        "4904159b7aed16d7e1b23b92d54eec06346e87c15a8e9690869927850d829b36",
+        "5897cfdb7f655a31324a113a5b6f60b880eda9211c1a802e73eec0fee596398b",
+        "61002de640cfca329f0dbc4613a2eff1fb0c78ce5db9c53d6ed6327fcabe7581",
+        "a1781ad74ffe66885bb8b2e36f2423ad631bf01b1bfbef2e24c4777e96322c54",
+        "ab40b27e6724e27d55139b0f8ddd24a1aa55c8821a0f7e59588c32aaa4c109ab",
+        "bbf2317973fcd880a2649f5fbec1905acc6b30428afa79b7532a71af338e4191",
+        "bf68be1bb24153871ef9d384ecc074763841cbd9146c00f7de834828ea16059e",
+        "c13ceafc477efc3ca0d9d02d2a4b2056016b1409ec55d3b9436b7e654dd89a28",
+        "cfa1458bbce9f1952eb94a06d40b5277d5a3e29e6cc323e1fc09e74789ffc4be",
+        "d37a4baad1cf898487eb4d54b3eb870aa105e73c375b2831fcd9ef9b5c877c05",
+        "e5d9665799480e78a5788cb6369f2e7950b52ecdfca6b3dc5225dcf63c62086f",
+        "e796444a646b7be27dc28c5fc3b2adf70a5ea8cebd3f1d15b68d2afa115a5972",
+        "e8ec551cf8500348a05d2d3fbda3dbec8bc11705c92fed3ae6f32ea2da11179e"
+      ],
+      "payload": {
+        "swarm_size": 20,
+        "total_questions": 60,
+        "lean4_verified": 17,
+        "python_verified": 38,
+        "wall_clock_ms": 89584.04,
+        "verdict": "PARTIAL",
+        "signature": "Gemini-3.8-Flash-High Sovereign Epistemic Gate (@gng5 Apex Dual-Core Native Mode: @gng4 Prover + @gng3 Refuter)"
+      },
+      "timestamp": 1792390869.6443238,
+      "hash": "3b791118155a14904f6b7893b65174c8daa4f6dee6f071478f5f1a0bc6b75a2b"
+    },
+    {
+      "node_id": "gng5-agent_11_verification-1792430093673-67",
+      "node_type": "AGENT_11_VERIFICATION",
+      "parent_hashes": [
+        "3fc8253accfb1dd1226c8ba3046242a922a764d50be3feab13b2b168da49a3be",
+        "420e26438115102c74f33e498af2bf330f2bbaa6d1b3fe6d0a93679aa2b8a650",
+        "7cef6e22943b1de14e5d88e98865a0905a2db02eadb58013d5cf5a86447cde99"
+      ],
+      "payload": {
+        "agent_id": 11,
+        "agent_code": "AGENT-11",
+        "agent_name": "Agent-11 (Đại số: Ma trận & Định thức)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 18027.76
+      },
+      "timestamp": 1792430093.6731763,
+      "hash": "3e9fbf87d42d6264a56fa70f0325bdc702752dde088d122921a5c7daceb890c0"
+    },
+    {
+      "node_id": "gng5-agent_15_verification-1792430094119-68",
+      "node_type": "AGENT_15_VERIFICATION",
+      "parent_hashes": [
+        "637b679100fe4a1eb013b7a46e6108ca5a0adc96576b341c98f8c1b37b6684f3",
+        "66ef319b1e5f73e2299bbe708be736f8a61547c0c5f3c8b5623d2bb431fcdfe7",
+        "ed5a3934a894dff6093f29c9450ed722377ac81de40f5e203e531c7efb16c75c"
+      ],
+      "payload": {
+        "agent_id": 15,
+        "agent_code": "AGENT-15",
+        "agent_name": "Agent-15 (Đại số: Không gian con & Grassmann)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 18438.35
+      },
+      "timestamp": 1792430094.1190848,
+      "hash": "e83f7bbbe61fcb90736aaa6e0361a556a9d14365499ed83edd8d107cfc792736"
+    },
+    {
+      "node_id": "gng5-agent_13_verification-1792430095180-69",
+      "node_type": "AGENT_13_VERIFICATION",
+      "parent_hashes": [
+        "17daa38dd1e1fe7da75a2ebcef729f8ca44615902e06a912b4692dc26bd71e06",
+        "5c866e28a7c1266b8d198566ac7fa5853f89a03962c9dc02639c59f8cc0e4e51",
+        "8aeb655fb6f88787abc7717921a73fc7fa04ba17e53654388bfd83f28e4fabfd"
+      ],
+      "payload": {
+        "agent_id": 13,
+        "agent_code": "AGENT-13",
+        "agent_name": "Agent-13 (Đại số: Hệ phương trình tuyến tính)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 19518.79
+      },
+      "timestamp": 1792430095.1807153,
+      "hash": "3fc5e5e3eaa0c748140b77e5a783fbaf7829a32f24fa30f58db3a806e21f77f7"
+    },
+    {
+      "node_id": "gng5-agent_18_verification-1792430096324-70",
+      "node_type": "AGENT_18_VERIFICATION",
+      "parent_hashes": [
+        "3689b66338c57c4d0882e701ccc8278913c284fa4438233c3fe32ef3e7a0434a",
+        "c57ecc00a533aedd618773f5929bd4005f0e301c28c3177cdfc1632c22f1f74e",
+        "f95117a8f847f294f19a5df5758f737d3d66645ee700f1ac17bca586dc47c14d"
+      ],
+      "payload": {
+        "agent_id": 18,
+        "agent_code": "AGENT-18",
+        "agent_name": "Agent-18 (Đại số: Chéo hóa & Cayley-Hamilton)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 20661.03
+      },
+      "timestamp": 1792430096.3240674,
+      "hash": "f15e1baf42b39c35534c3dc9078ca8a91de885b7c0f652a5f34c7567951f27c2"
+    },
+    {
+      "node_id": "gng5-agent_02_verification-1792430096590-71",
+      "node_type": "AGENT_02_VERIFICATION",
+      "parent_hashes": [
+        "32fdacf3f27b9c2ad69f842ca169263fdf088824f8ced5b57b8bb0fbbc3f4cfb",
+        "56d58959317b9be6298e5d71684a54e5cda5c84e571da312802ed10b16eb0b39",
+        "7dd1c3b6244fdd15d25371b6b216b53b814d2b7478bf21b1cdea722c182497fe"
+      ],
+      "payload": {
+        "agent_id": 2,
+        "agent_code": "AGENT-02",
+        "agent_name": "Agent-02 (Giải tích: Đạo hàm cấp cao & Cực trị)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 20930.0
+      },
+      "timestamp": 1792430096.5904899,
+      "hash": "169e04b4399455fe316e77ca2ae53046c29250f585110f3444d6052f7b1f8ea3"
+    },
+    {
+      "node_id": "gng5-agent_01_verification-1792430096733-72",
+      "node_type": "AGENT_01_VERIFICATION",
+      "parent_hashes": [
+        "5c62eee908c793b01b7c76871a63e526dc1705adb3ba61538e690b90a0e7cca0",
+        "cf6b2ddb114ac55bc9754fd71a7edd8d706545c32f6a6a838c17a57b9bb3e092",
+        "ec86560b3712b129e2fa7cffb390f74a53a024489053fae2e065028d87929e77"
+      ],
+      "payload": {
+        "agent_id": 1,
+        "agent_code": "AGENT-01",
+        "agent_name": "Agent-01 (Giải tích: Giới hạn & Taylor)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 21078.64
+      },
+      "timestamp": 1792430096.7331808,
+      "hash": "c70d7284aa7b20a3ade82e4775659be3c1e30326ec681ea36fde5413942f560e"
+    },
+    {
+      "node_id": "gng5-agent_09_verification-1792430096755-73",
+      "node_type": "AGENT_09_VERIFICATION",
+      "parent_hashes": [
+        "0788320f1a52ab56e8b211f319b9dcadb473e656851fa45818150c0383f58204",
+        "4f8c8a5ac538fcff27646ccea784a20698d5e2552773d4e039ebbf8f526c1654",
+        "59bbe8c3f6bf188c24565b44bfc6ad5d0869f8189ba374b7b7c43decf8e70a7c"
+      ],
+      "payload": {
+        "agent_id": 9,
+        "agent_code": "AGENT-09",
+        "agent_name": "Agent-09 (Giải tích: Giải tích Vector)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 21086.54
+      },
+      "timestamp": 1792430096.7556546,
+      "hash": "f18ca09c2bdd2124167d919510cafe84d6c3b973cbf98ed8db71f8383dda82bd"
+    },
+    {
+      "node_id": "gng5-agent_20_verification-1792430097087-74",
+      "node_type": "AGENT_20_VERIFICATION",
+      "parent_hashes": [
+        "3146fe121bbe9f9e02031109b2a3fb15950f1d7b4b6a609f195d9d01b3dec1d5",
+        "565e2d6d740b1ccec67707cc52b6013ef372958ba6f5d4a0804d4da46fdfe42d",
+        "77669e47e3a48c904ef0e54abd12c34bfd00cbaeb8a0743bb1ae583440d7a99e"
+      ],
+      "payload": {
+        "agent_id": 20,
+        "agent_code": "AGENT-20",
+        "agent_name": "Agent-20 (Đại số: Không gian Euclid & Gram-Schmidt)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 21425.94
+      },
+      "timestamp": 1792430097.087025,
+      "hash": "e606dc4a6404d380bff70a526c7666d832cdbcf179eadc4593634400c199873f"
+    },
+    {
+      "node_id": "gng5-agent_08_verification-1792430097171-75",
+      "node_type": "AGENT_08_VERIFICATION",
+      "parent_hashes": [
+        "71a24d22c0724935764c03ecb2e077ab10ecf2f047c40380ec37f22b8bb308fd",
+        "d495b9c42bd2d8df2f74bafe735df55855d45d350fa76f43914838b99bbb3c76",
+        "d9230dab28ad7d4ecdb0109fb64bfaf6ed48132e8910db8f0a243aaacb96eceb"
+      ],
+      "payload": {
+        "agent_id": 8,
+        "agent_code": "AGENT-08",
+        "agent_name": "Agent-08 (Giải tích: Tích phân kép & bội ba)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 21514.33
+      },
+      "timestamp": 1792430097.171956,
+      "hash": "9c12893272016be7ad33c13b481ac19e45936a0fe56704cc296549fb53e03a2b"
+    },
+    {
+      "node_id": "gng5-agent_19_verification-1792430097195-76",
+      "node_type": "AGENT_19_VERIFICATION",
+      "parent_hashes": [
+        "1e81eb18904a80c585a3383d0f779677c65dbf1d82fe768d1b794ec1cf8cc23d",
+        "e3c22f450ee6c66dd2a53f78dc63d3bc044b37d344e9afc6991d457b74e1b2b5",
+        "ecf4e5a522fe072f294e345389caa21b52993fe07db6fe741c6b0e4c2b18bc2f"
+      ],
+      "payload": {
+        "agent_id": 19,
+        "agent_code": "AGENT-19",
+        "agent_name": "Agent-19 (Đại số: Dạng toàn phương & Sylvester)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 21521.95
+      },
+      "timestamp": 1792430097.1951852,
+      "hash": "0400fda41111e827c10d6cbb68d53e66e9f6740dfbd1aa2c355edec0f6d4817e"
+    },
+    {
+      "node_id": "gng5-agent_07_verification-1792430098300-77",
+      "node_type": "AGENT_07_VERIFICATION",
+      "parent_hashes": [
+        "178eb3b7277d948828f900b1d8b527d4933fcff06b355141fa0b15aa921e713b",
+        "be3a50444399d5ce47da1aed07af65cbd51f8c81113972e7bfd3b7c765369787",
+        "eec41baf377f63085764a66886e0a92d796fb148571c1093676cf222c0e19a29"
+      ],
+      "payload": {
+        "agent_id": 7,
+        "agent_code": "AGENT-07",
+        "agent_name": "Agent-07 (Giải tích: Nhân tử Lagrange)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 22641.52
+      },
+      "timestamp": 1792430098.3006127,
+      "hash": "660f360103bced7a0ad73f7d0a33e14a1a84c1a0c187d400f1c7e602c2b08de4"
+    },
+    {
+      "node_id": "gng5-agent_16_verification-1792430098402-78",
+      "node_type": "AGENT_16_VERIFICATION",
+      "parent_hashes": [
+        "ac39d0942547dda336c6689d3f7e5c4565ebda41679e3fbd4bc38df0bba1c4f1",
+        "c07c98ccf2da4ccbd9feb7b62aed39b4e0f8bc95f1395dcae728bc63a0c9840d",
+        "f27052f0efea74f8237aceb3cab7645c19184ffeab0d1e6ca0749059298f9f6f"
+      ],
+      "payload": {
+        "agent_id": 16,
+        "agent_code": "AGENT-16",
+        "agent_name": "Agent-16 (Đại số: Ánh xạ tuyến tính, Ker & Im)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 22746.0
+      },
+      "timestamp": 1792430098.4027612,
+      "hash": "94390cb22aaf9da8ea472c911f5c805e219c82b7336b395e0d4b55f24e795678"
+    },
+    {
+      "node_id": "gng5-agent_10_verification-1792430098651-79",
+      "node_type": "AGENT_10_VERIFICATION",
+      "parent_hashes": [
+        "0f0fc646ddba0d5b83bc5399f846e2cfe303d4838d9114743a33ee65568c5a7c",
+        "30297df7cf2408efdf96ec4d5238141b68957795997d5a04cfa8d3ae7337900b",
+        "889251a87ef56b99be272ef97d61469ef5f675c9e5fbeb7772d7ea9eb6b19c69"
+      ],
+      "payload": {
+        "agent_id": 10,
+        "agent_code": "AGENT-10",
+        "agent_name": "Agent-10 (Giải tích: Phương trình vi phân)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 22998.45
+      },
+      "timestamp": 1792430098.65196,
+      "hash": "6e1e467ea8c2c8bd5a30ba108a27e5e1f1af39e0dc4865f6734e97ce70ee34f8"
+    },
+    {
+      "node_id": "gng5-agent_06_verification-1792430099049-80",
+      "node_type": "AGENT_06_VERIFICATION",
+      "parent_hashes": [
+        "2aeadc9ca21a316ec6a359dfe6c82cf9a9843c346b408e1708c7170359d0dab9",
+        "445ed03601579c8be0c53e8a3177a4c2d389c0674a60dda0064344a8973fbfe4",
+        "ad38cbf10725afab4531079af7b1e7905fe2c22004016f82c7b38ffef389c0b5"
+      ],
+      "payload": {
+        "agent_id": 6,
+        "agent_code": "AGENT-06",
+        "agent_name": "Agent-06 (Giải tích: Vi phân hàm nhiều biến)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 23393.65
+      },
+      "timestamp": 1792430099.0490105,
+      "hash": "452d5478366208eb0db5bae8dd84df015b37dec5ea807b5ac6342579834ec5cb"
+    },
+    {
+      "node_id": "gng5-agent_17_verification-1792430099334-81",
+      "node_type": "AGENT_17_VERIFICATION",
+      "parent_hashes": [
+        "475b51517fc544375df42286cb7d7d506b5ea84bff6c1ab46a9cf4c0329f3ce4",
+        "6389e1b76960b2595bfcb1d78c43f6615932e107ea289414d1cbe9ca2a2731d3",
+        "ace1213ffd0f1a5855bb9e21795c34a7dce3c7ede2955fdc9f4f88745d749fb6"
+      ],
+      "payload": {
+        "agent_id": 17,
+        "agent_code": "AGENT-17",
+        "agent_name": "Agent-17 (Đại số: Trị riêng & Vector riêng)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 23678.87
+      },
+      "timestamp": 1792430099.3348303,
+      "hash": "013aafa24c21316ec0bd312b411b3b884c7e1aacc4ee94b9fa1edeb6fd33f812"
+    },
+    {
+      "node_id": "gng5-agent_12_verification-1792430099441-82",
+      "node_type": "AGENT_12_VERIFICATION",
+      "parent_hashes": [
+        "14f48145f3158bf457abb4bf3915b37dc44fe01098bdd206c92b0068b18354d6",
+        "a1f826dd4ee3f81def032c948d0bf58fed8f5a21f769c38885a4008582606f3f",
+        "b2f7ccef7632de5da0b54083f5b32b95404eda65e7ce3174009ad1fab83604ee"
+      ],
+      "payload": {
+        "agent_id": 12,
+        "agent_code": "AGENT-12",
+        "agent_name": "Agent-12 (Đại số: Hạng của ma trận)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 23787.2
+      },
+      "timestamp": 1792430099.4415803,
+      "hash": "00cf1cdff11d49f2ccba3e95e49abc310dfc7ebca2853e52272057910e7dbde9"
+    },
+    {
+      "node_id": "gng5-agent_14_verification-1792430099819-83",
+      "node_type": "AGENT_14_VERIFICATION",
+      "parent_hashes": [
+        "4318c0856c7db1f0fcb9e66e9a6f4a7602d6a07f7b86cca4be19918606976053",
+        "73fb0f23e8d4d58f9796c7fb4b8658022a88eeedacd31f425695acbbaf99319e",
+        "f8eb988f3e5ae52be1f9ebc6b8fe11052e78e79d4e363650e933c85322f10221"
+      ],
+      "payload": {
+        "agent_id": 14,
+        "agent_code": "AGENT-14",
+        "agent_name": "Agent-14 (Đại số: Không gian Vector & Cơ sở)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 24166.76
+      },
+      "timestamp": 1792430099.819544,
+      "hash": "5e89a2b4fdadc9c750f235616cf81032bcccabb8a6e2f6e99d79b76a3c551028"
+    },
+    {
+      "node_id": "gng5-agent_04_verification-1792430101411-84",
+      "node_type": "AGENT_04_VERIFICATION",
+      "parent_hashes": [
+        "3e27a0dc65d154ee1075fb9b52e6926e94f9cbfca5fd68a96138a823314bb4b4",
+        "516ca699dd3c002c628bb75a8ec90a026a7387f8b71267553bf2208f935e96bb",
+        "c8c29ffa8786ab3323853e3ba316a77c469de5f88c4173f2a43d259464e9e002"
+      ],
+      "payload": {
+        "agent_id": 4,
+        "agent_code": "AGENT-04",
+        "agent_name": "Agent-04 (Giải tích: Tích phân suy rộng)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 25757.26
+      },
+      "timestamp": 1792430101.4119582,
+      "hash": "96ca9aaa357f2eee86bc828806f7ca5b2913fb380c080cf747a62411b8b1cecc"
+    },
+    {
+      "node_id": "gng5-agent_03_verification-1792430102279-85",
+      "node_type": "AGENT_03_VERIFICATION",
+      "parent_hashes": [
+        "02f9028d8079411dfba3ccbec3bbcc76ca3e1f313818a4dc7a9c95f2e812fd69",
+        "19e392843b188f37e1e230cc16872000ebc3158f82bdd4f72ed84da4eaa74f55",
+        "340124bec1004b5ec6fa75fa58ac1c6dda018aeba315c3f584b82a870f30047a"
+      ],
+      "payload": {
+        "agent_id": 3,
+        "agent_code": "AGENT-03",
+        "agent_name": "Agent-03 (Giải tích: Tích phân xác định & Tham số)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 26630.17
+      },
+      "timestamp": 1792430102.279664,
+      "hash": "e2d00e87402d823b36fdc11075377838f9892cca1def2e7539983186979f0159"
+    },
+    {
+      "node_id": "gng5-agent_05_verification-1792430103413-86",
+      "node_type": "AGENT_05_VERIFICATION",
+      "parent_hashes": [
+        "36def2948c68eb2040d41b7c2ad35056ee80888ca01f19d37c2590a921816e88",
+        "a74cdda7c500d88e52a27c8d2fc6a4e6aa3a170dae33747ed91bef0d914ab901",
+        "b5017bc61c61de1f8a7617f2956a7abdd5a4607eafc18cc0c01d6fc5cadbc78f"
+      ],
+      "payload": {
+        "agent_id": 5,
+        "agent_code": "AGENT-05",
+        "agent_name": "Agent-05 (Giải tích: Chuỗi số & Chuỗi lũy thừa)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 27755.95
+      },
+      "timestamp": 1792430103.413024,
+      "hash": "9ed7902da43736a16c5089f1c698906214c229d258eb650e6ccbddbe7d9ea645"
+    },
+    {
+      "node_id": "gng5-sovereign_20_agent_swarm_settlement-1792430103449-87",
+      "node_type": "SOVEREIGN_20_AGENT_SWARM_SETTLEMENT",
+      "parent_hashes": [
+        "00cf1cdff11d49f2ccba3e95e49abc310dfc7ebca2853e52272057910e7dbde9",
+        "013aafa24c21316ec0bd312b411b3b884c7e1aacc4ee94b9fa1edeb6fd33f812",
+        "0400fda41111e827c10d6cbb68d53e66e9f6740dfbd1aa2c355edec0f6d4817e",
+        "169e04b4399455fe316e77ca2ae53046c29250f585110f3444d6052f7b1f8ea3",
+        "3e9fbf87d42d6264a56fa70f0325bdc702752dde088d122921a5c7daceb890c0",
+        "3fc5e5e3eaa0c748140b77e5a783fbaf7829a32f24fa30f58db3a806e21f77f7",
+        "452d5478366208eb0db5bae8dd84df015b37dec5ea807b5ac6342579834ec5cb",
+        "5e89a2b4fdadc9c750f235616cf81032bcccabb8a6e2f6e99d79b76a3c551028",
+        "660f360103bced7a0ad73f7d0a33e14a1a84c1a0c187d400f1c7e602c2b08de4",
+        "6e1e467ea8c2c8bd5a30ba108a27e5e1f1af39e0dc4865f6734e97ce70ee34f8",
+        "94390cb22aaf9da8ea472c911f5c805e219c82b7336b395e0d4b55f24e795678",
+        "96ca9aaa357f2eee86bc828806f7ca5b2913fb380c080cf747a62411b8b1cecc",
+        "9c12893272016be7ad33c13b481ac19e45936a0fe56704cc296549fb53e03a2b",
+        "9ed7902da43736a16c5089f1c698906214c229d258eb650e6ccbddbe7d9ea645",
+        "c70d7284aa7b20a3ade82e4775659be3c1e30326ec681ea36fde5413942f560e",
+        "e2d00e87402d823b36fdc11075377838f9892cca1def2e7539983186979f0159",
+        "e606dc4a6404d380bff70a526c7666d832cdbcf179eadc4593634400c199873f",
+        "e83f7bbbe61fcb90736aaa6e0361a556a9d14365499ed83edd8d107cfc792736",
+        "f15e1baf42b39c35534c3dc9078ca8a91de885b7c0f652a5f34c7567951f27c2",
+        "f18ca09c2bdd2124167d919510cafe84d6c3b973cbf98ed8db71f8383dda82bd"
+      ],
+      "payload": {
+        "swarm_size": 20,
+        "total_questions": 60,
+        "lean4_verified": 60,
+        "python_verified": 60,
+        "wall_clock_ms": 27799.62,
+        "verdict": "SOVEREIGN_PASSED",
+        "signature": "Gemini-3.8-Flash-High Sovereign Epistemic Gate (@gng5 Apex Dual-Core Native Mode: @gng4 Prover + @gng3 Refuter)"
+      },
+      "timestamp": 1792430103.4498162,
+      "hash": "1f8e774444c453b9100898fe4b84affa97316e552a9ac9ac179ae42d2ee21460"
+    },
+    {
+      "node_id": "gng5-exam_generated-1792430114879-88",
+      "node_type": "EXAM_GENERATED",
+      "parent_hashes": [
+        "02f9028d8079411dfba3ccbec3bbcc76ca3e1f313818a4dc7a9c95f2e812fd69",
+        "0f0fc646ddba0d5b83bc5399f846e2cfe303d4838d9114743a33ee65568c5a7c",
+        "3146fe121bbe9f9e02031109b2a3fb15950f1d7b4b6a609f195d9d01b3dec1d5",
+        "32fdacf3f27b9c2ad69f842ca169263fdf088824f8ced5b57b8bb0fbbc3f4cfb",
+        "3e27a0dc65d154ee1075fb9b52e6926e94f9cbfca5fd68a96138a823314bb4b4",
+        "3fc8253accfb1dd1226c8ba3046242a922a764d50be3feab13b2b168da49a3be",
+        "420e26438115102c74f33e498af2bf330f2bbaa6d1b3fe6d0a93679aa2b8a650",
+        "565e2d6d740b1ccec67707cc52b6013ef372958ba6f5d4a0804d4da46fdfe42d",
+        "6389e1b76960b2595bfcb1d78c43f6615932e107ea289414d1cbe9ca2a2731d3",
+        "a1f826dd4ee3f81def032c948d0bf58fed8f5a21f769c38885a4008582606f3f",
+        "a74cdda7c500d88e52a27c8d2fc6a4e6aa3a170dae33747ed91bef0d914ab901",
+        "c07c98ccf2da4ccbd9feb7b62aed39b4e0f8bc95f1395dcae728bc63a0c9840d",
+        "e3c22f450ee6c66dd2a53f78dc63d3bc044b37d344e9afc6991d457b74e1b2b5",
+        "f95117a8f847f294f19a5df5758f737d3d66645ee700f1ac17bca586dc47c14d"
+      ],
+      "payload": {
+        "exam_code": "EXAM-20261020-001514-918",
+        "title": "Đề Thi Toán Cao Cấp (Giải Tích & Đại Số) - ĐHBK",
+        "total_questions": 14,
+        "mcq_count": 10,
+        "essay_count": 4,
+        "parametric_count": 14,
+        "parameter_mode": "dual"
+      },
+      "timestamp": 1792430114.879849,
+      "hash": "844683a8f6cd20a88ea07e0dbf585cf3cf252beccf4493c71d84229a437bcfb4"
+    },
+    {
+      "node_id": "gng5-exam_generated-1792430828164-89",
+      "node_type": "EXAM_GENERATED",
+      "parent_hashes": [
+        "02f9028d8079411dfba3ccbec3bbcc76ca3e1f313818a4dc7a9c95f2e812fd69",
+        "17daa38dd1e1fe7da75a2ebcef729f8ca44615902e06a912b4692dc26bd71e06",
+        "30297df7cf2408efdf96ec4d5238141b68957795997d5a04cfa8d3ae7337900b",
+        "3146fe121bbe9f9e02031109b2a3fb15950f1d7b4b6a609f195d9d01b3dec1d5",
+        "32fdacf3f27b9c2ad69f842ca169263fdf088824f8ced5b57b8bb0fbbc3f4cfb",
+        "3fc8253accfb1dd1226c8ba3046242a922a764d50be3feab13b2b168da49a3be",
+        "59bbe8c3f6bf188c24565b44bfc6ad5d0869f8189ba374b7b7c43decf8e70a7c",
+        "71a24d22c0724935764c03ecb2e077ab10ecf2f047c40380ec37f22b8bb308fd",
+        "73fb0f23e8d4d58f9796c7fb4b8658022a88eeedacd31f425695acbbaf99319e",
+        "cf6b2ddb114ac55bc9754fd71a7edd8d706545c32f6a6a838c17a57b9bb3e092",
+        "d495b9c42bd2d8df2f74bafe735df55855d45d350fa76f43914838b99bbb3c76",
+        "ec86560b3712b129e2fa7cffb390f74a53a024489053fae2e065028d87929e77",
+        "ecf4e5a522fe072f294e345389caa21b52993fe07db6fe741c6b0e4c2b18bc2f",
+        "f27052f0efea74f8237aceb3cab7645c19184ffeab0d1e6ca0749059298f9f6f"
+      ],
+      "payload": {
+        "exam_code": "EXAM-20261020-002708-494",
+        "title": "Đề Thi Toán Cao Cấp (Giải Tích & Đại Số) - ĐHBK",
+        "total_questions": 14,
+        "mcq_count": 10,
+        "essay_count": 4,
+        "parametric_count": 14,
+        "parameter_mode": "dual"
+      },
+      "timestamp": 1792430828.1642702,
+      "hash": "44e8bc2e722ac28027d81f0387aea2b46cf73084c1d1432d10ef28bec29516db"
+    },
+    {
+      "node_id": "gng5-agent_24_verification-1792460553082-90",
+      "node_type": "AGENT_24_VERIFICATION",
+      "parent_hashes": [
+        "035e15d5bd417a29bcf93a61c80dfee4cde4b20db59790345f101ad09fd91395",
+        "51d5e0e40ddb079964c85d714ad883db03ac4be9eb32805058e4c2e294553bd3",
+        "cea1f9828a35657b114cbaa4a2dfcfe13be54e6fe72882949311490aa202f35e"
+      ],
+      "payload": {
+        "agent_id": 24,
+        "agent_code": "AGENT-24",
+        "agent_name": "Agent-24 (Giải tích: Hàm hợp, Hàm ẩn & Đạo hàm theo hướng)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 9526.86
+      },
+      "timestamp": 1792460553.082976,
+      "hash": "4ea1bfa85d3934713dc71b49fafe1c70d1962f4cfc33c63694e4a4a6a73aaf51"
+    },
+    {
+      "node_id": "gng5-agent_21_verification-1792460553340-91",
+      "node_type": "AGENT_21_VERIFICATION",
+      "parent_hashes": [
+        "51f661cd0b35723cd8e61072aa966b1da4aad897d8a53c1dc28b330fb5602ec0",
+        "6c64cb39020265c87f3456840e1923018a30cf9810f528c46decdb6086d7d873",
+        "d6de1c212c266c1a8164bcd2fca9022752fbbdb891692adf2a52301b80950b1d"
+      ],
+      "payload": {
+        "agent_id": 21,
+        "agent_code": "AGENT-21",
+        "agent_name": "Agent-21 (Giải tích: Ứng dụng của tích phân)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 9786.78
+      },
+      "timestamp": 1792460553.3407903,
+      "hash": "9509b220f7ccbb3b86df339e5e1dc81a21bcb42f8495895409085afe1c41bed6"
+    },
+    {
+      "node_id": "gng5-agent_22_verification-1792460553504-92",
+      "node_type": "AGENT_22_VERIFICATION",
+      "parent_hashes": [
+        "202c083f23bcd25f0f857dbe42ffd7e7ed75fe11d7dd776469520301befcf5b6",
+        "2dde97bcc968dcd14e7f3f8cb2b2f6458af0731837f9b5588f2170316d4be1f1",
+        "8e253e66312e7dce972f4fb0c27f96a387e5db91dec13110c3dfffe15fd572ae"
+      ],
+      "payload": {
+        "agent_id": 22,
+        "agent_code": "AGENT-22",
+        "agent_name": "Agent-22 (Giải tích: Giới hạn dãy, VCB & Liên tục)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 9940.55
+      },
+      "timestamp": 1792460553.5043466,
+      "hash": "1841bb339c330cc01a366fa534764db98056950cc15590ec7631a138e581779b"
+    },
+    {
+      "node_id": "gng5-agent_23_verification-1792460553685-93",
+      "node_type": "AGENT_23_VERIFICATION",
+      "parent_hashes": [
+        "38ffd3bc1a9e1d6ae224aa3bc3ebb3daa17c8947253050d58050eab407034332",
+        "7743b13c77a0fcf9928d540d189ae4bcc91a47d4037d792fd1c2037c5bffcced",
+        "fedd39d38cd27443c1f7302bf64405e750a83dcb3d3198ec84b0f3028e75dcac"
+      ],
+      "payload": {
+        "agent_id": 23,
+        "agent_code": "AGENT-23",
+        "agent_name": "Agent-23 (Giải tích: Định lý giá trị trung bình & Khảo sát hàm số)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 10121.46
+      },
+      "timestamp": 1792460553.6852477,
+      "hash": "d65b91886849a8be6f030a6cc6b5ce8f5cd6c910df21f7786186526e9745abba"
+    },
+    {
+      "node_id": "gng5-agent_25_verification-1792460554084-94",
+      "node_type": "AGENT_25_VERIFICATION",
+      "parent_hashes": [
+        "75f0d48643c62b9e522b36b9793a1572c08fa550270fc9f96c03faecf93f3e60",
+        "98dd7d97bcd1a3cef226455e09dacc78810ce31ccd2d65ca92f53d3be3b1a3ef",
+        "d007b19b1e3f06acd042cdc076b47d379135ecca78d38e15b44fc57fa1137ce4"
+      ],
+      "payload": {
+        "agent_id": 25,
+        "agent_code": "AGENT-25",
+        "agent_name": "Agent-25 (Giải tích: Nguyên hàm & Tích phân cận biến thiên)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "elapsed_ms": 10527.12
+      },
+      "timestamp": 1792460554.0840757,
+      "hash": "36f45d9d0febc43b2a898672464efaabdb3f45b5c62cbc6d8abb24982e19ed9a"
+    },
+    {
+      "node_id": "gng5-agent_22_verification-1792463732611-95",
+      "node_type": "AGENT_22_VERIFICATION",
+      "parent_hashes": [
+        "1f1b58b2cafad4bf28df9c84474e2f3d72d08ec30592dc8dc2e9d1ae0be6f98d",
+        "202c083f23bcd25f0f857dbe42ffd7e7ed75fe11d7dd776469520301befcf5b6",
+        "2dde97bcc968dcd14e7f3f8cb2b2f6458af0731837f9b5588f2170316d4be1f1",
+        "493be7a24b9eee4dac5d8335c725b66fb5747259a3b525dce2bedeb2479f259e",
+        "7d17530d352c818182d005ae87df441c62dabf45750571b62b06b48cfb011fae",
+        "8e253e66312e7dce972f4fb0c27f96a387e5db91dec13110c3dfffe15fd572ae"
+      ],
+      "payload": {
+        "agent_id": 22,
+        "agent_code": "AGENT-22",
+        "agent_name": "Agent-22 (Giải tích: Giới hạn dãy, VCB & Liên tục)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "elapsed_ms": 21575.5
+      },
+      "timestamp": 1792463732.6110034,
+      "hash": "d474af7dc2a53a8c6239b09a46dd6429679822e029f000eeb70bfb5023b2fc2f"
+    },
+    {
+      "node_id": "gng5-agent_01_verification-1792463732806-96",
+      "node_type": "AGENT_01_VERIFICATION",
+      "parent_hashes": [
+        "5c62eee908c793b01b7c76871a63e526dc1705adb3ba61538e690b90a0e7cca0",
+        "790dd52383fd1fa3e57a315613a22ea0a7c81f33ea77c0a9e25ac4adf1a0ad00",
+        "abf740f7d00b0c04d0aed361940f355730ce5cf797df2ce3e7c87aaf2f6246c9",
+        "b9401a553a3e6444303e8fc8c7d1616561ff5302d90d080e8518f304e9627cfe",
+        "cf6b2ddb114ac55bc9754fd71a7edd8d706545c32f6a6a838c17a57b9bb3e092",
+        "ec86560b3712b129e2fa7cffb390f74a53a024489053fae2e065028d87929e77"
+      ],
+      "payload": {
+        "agent_id": 1,
+        "agent_code": "AGENT-01",
+        "agent_name": "Agent-01 (Giải tích: Giới hạn & Taylor)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "elapsed_ms": 21768.44
+      },
+      "timestamp": 1792463732.806613,
+      "hash": "9447df5f3f05c5a96553dfd3a752f7cdf7ea722e193329bc4d606534ef75f0e2"
+    },
+    {
+      "node_id": "gng5-agent_21_verification-1792463734033-97",
+      "node_type": "AGENT_21_VERIFICATION",
+      "parent_hashes": [
+        "0d65c01162fbf83f08e9e0d917d0e3463f7eea73dd8d0b041a818d88756f4400",
+        "51f661cd0b35723cd8e61072aa966b1da4aad897d8a53c1dc28b330fb5602ec0",
+        "6c64cb39020265c87f3456840e1923018a30cf9810f528c46decdb6086d7d873",
+        "9c66ec7f1496a70c5bea83cd86b65baa7629191e88afa447a1fbb5e1aa1292cd",
+        "c2b62672137391447f55e6831284c73ff4d54844bb55ac076b5c26615e99dd57",
+        "d6de1c212c266c1a8164bcd2fca9022752fbbdb891692adf2a52301b80950b1d"
+      ],
+      "payload": {
+        "agent_id": 21,
+        "agent_code": "AGENT-21",
+        "agent_name": "Agent-21 (Giải tích: Ứng dụng của tích phân)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "elapsed_ms": 22995.72
+      },
+      "timestamp": 1792463734.0337074,
+      "hash": "15661fd1715c2ae5113082bd42e021b4467c7f9c1ca61fc2e9a2f623699ea8d4"
+    },
+    {
+      "node_id": "gng5-agent_06_verification-1792463734743-98",
+      "node_type": "AGENT_06_VERIFICATION",
+      "parent_hashes": [
+        "24e47ab425768fd09f2527b3732f0d3aed4bd02dc9500c1de57f5163c9fdd031",
+        "2aeadc9ca21a316ec6a359dfe6c82cf9a9843c346b408e1708c7170359d0dab9",
+        "445ed03601579c8be0c53e8a3177a4c2d389c0674a60dda0064344a8973fbfe4",
+        "7b8062431624836561cc4eee13addde6bbf80671e1e5397e8cec8e0f40c477d1",
+        "ad38cbf10725afab4531079af7b1e7905fe2c22004016f82c7b38ffef389c0b5",
+        "ee025ee5df5f29f6deb1c82ac076a196b995901a1ede55df7240f068f5bb87b1"
+      ],
+      "payload": {
+        "agent_id": 6,
+        "agent_code": "AGENT-06",
+        "agent_name": "Agent-06 (Giải tích: Vi phân hàm nhiều biến)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "elapsed_ms": 23704.66
+      },
+      "timestamp": 1792463734.7437377,
+      "hash": "2badfa61adce0df613372624d3b98bebd3e7040404f1538557b0f2f0f1891258"
+    },
+    {
+      "node_id": "gng5-agent_23_verification-1792463735180-99",
+      "node_type": "AGENT_23_VERIFICATION",
+      "parent_hashes": [
+        "38ffd3bc1a9e1d6ae224aa3bc3ebb3daa17c8947253050d58050eab407034332",
+        "7188fae75844613b81dbabef567224cd552bb05cc1f45fe2ac067d9268ff9a74",
+        "7743b13c77a0fcf9928d540d189ae4bcc91a47d4037d792fd1c2037c5bffcced",
+        "acb2c2d2f266f1e602fc54fb9dc5324aa49423cb41ac9b2e36bfc921e9ea7b4a",
+        "ef13f1c52474bfc55dbc97fcb1ad7fc3847c241b15c5bc10e78f959407bfe0fd",
+        "fedd39d38cd27443c1f7302bf64405e750a83dcb3d3198ec84b0f3028e75dcac"
+      ],
+      "payload": {
+        "agent_id": 23,
+        "agent_code": "AGENT-23",
+        "agent_name": "Agent-23 (Giải tích: Định lý giá trị trung bình & Khảo sát hàm số)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "elapsed_ms": 24145.23
+      },
+      "timestamp": 1792463735.1804929,
+      "hash": "60fc119f1863a07bb9db721a151d15b305d5bd2767ecadf1c6860999afdce5a4"
+    },
+    {
+      "node_id": "gng5-agent_02_verification-1792463737230-100",
+      "node_type": "AGENT_02_VERIFICATION",
+      "parent_hashes": [
+        "32fdacf3f27b9c2ad69f842ca169263fdf088824f8ced5b57b8bb0fbbc3f4cfb",
+        "56d58959317b9be6298e5d71684a54e5cda5c84e571da312802ed10b16eb0b39",
+        "7dd1c3b6244fdd15d25371b6b216b53b814d2b7478bf21b1cdea722c182497fe",
+        "8175aec5d0a813502b8e87e5f0c3afd4cff0613bc73f50d96927e28ef2f80e5c",
+        "a71501005903a454bd4b11218ee327fa5f35e0e2a1c5a7cb8c4f9490f80e8637",
+        "b1bf9d5b9fe6a356722212ec286f491684449ec1e880657f864556db2193776c",
+        "f947889759b63605060deac654b6904d4e5a5f46cb52e509e18e0852bab5e255"
+      ],
+      "payload": {
+        "agent_id": 2,
+        "agent_code": "AGENT-02",
+        "agent_name": "Agent-02 (Giải tích: Đạo hàm cấp cao & Cực trị)",
+        "domain": "Giải tích",
+        "questions_processed": 7,
+        "lean4_verified": 7,
+        "python_verified": 7,
+        "elapsed_ms": 26191.91
+      },
+      "timestamp": 1792463737.2301636,
+      "hash": "b492a688607dcd1e6bc25f50579f801d75ac20271d4798775fec39a2b71df73e"
+    },
+    {
+      "node_id": "gng5-agent_03_verification-1792463738001-101",
+      "node_type": "AGENT_03_VERIFICATION",
+      "parent_hashes": [
+        "02f9028d8079411dfba3ccbec3bbcc76ca3e1f313818a4dc7a9c95f2e812fd69",
+        "19e392843b188f37e1e230cc16872000ebc3158f82bdd4f72ed84da4eaa74f55",
+        "340124bec1004b5ec6fa75fa58ac1c6dda018aeba315c3f584b82a870f30047a",
+        "40bec1e7e8380176088c70dc96c3058375d9a0ecdc177b8bed2dac3386692b95",
+        "8c10238b044074266b0235c32ad3dded72a61f1308040c4aeadaa99fce33135c",
+        "c8d236565ca7e7ea9513b192636345c710196245f6a03a6022c8b444ca3ebd90"
+      ],
+      "payload": {
+        "agent_id": 3,
+        "agent_code": "AGENT-03",
+        "agent_name": "Agent-03 (Giải tích: Tích phân xác định & Tham số)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "elapsed_ms": 26970.11
+      },
+      "timestamp": 1792463738.0017116,
+      "hash": "69a80168bb5269136cf20b30d27871af60ade636189c866e20802d6992b4e6be"
+    },
+    {
+      "node_id": "gng5-agent_25_verification-1792463738078-102",
+      "node_type": "AGENT_25_VERIFICATION",
+      "parent_hashes": [
+        "14e24299b255ad7ec7d3cba9e8f7caff9795c78704b544c7d4ff08477067594d",
+        "436f1ca699bf996e113ab9499f953d626df747be5b9be8e87b413c7683cfd5e7",
+        "75f0d48643c62b9e522b36b9793a1572c08fa550270fc9f96c03faecf93f3e60",
+        "8de6fe374089004ae9d560c0bc9b78cc4ea769024dde86048428e8e60781d192",
+        "98dd7d97bcd1a3cef226455e09dacc78810ce31ccd2d65ca92f53d3be3b1a3ef",
+        "d007b19b1e3f06acd042cdc076b47d379135ecca78d38e15b44fc57fa1137ce4"
+      ],
+      "payload": {
+        "agent_id": 25,
+        "agent_code": "AGENT-25",
+        "agent_name": "Agent-25 (Giải tích: Nguyên hàm & Tích phân cận biến thiên)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "elapsed_ms": 27031.78
+      },
+      "timestamp": 1792463738.0788856,
+      "hash": "0ab62ff0b44b6947099e6bfb94ae59032a880290c7832843e7e9a33045b85975"
+    },
+    {
+      "node_id": "gng5-agent_04_verification-1792463739023-103",
+      "node_type": "AGENT_04_VERIFICATION",
+      "parent_hashes": [
+        "2d54c385b4f9b4a95a84dea3db05e5e718b9d140f98f4a03c91cec30da66a295",
+        "3e27a0dc65d154ee1075fb9b52e6926e94f9cbfca5fd68a96138a823314bb4b4",
+        "516ca699dd3c002c628bb75a8ec90a026a7387f8b71267553bf2208f935e96bb",
+        "ad82dff46712e5eeda99ae4a7857569d8959704a2df2461fa0809e0d6a32b2b9",
+        "b7c3718c9808a8b073a705ba8d749e51a44c68a414617ebe5dfc6324609f1a24",
+        "c8c29ffa8786ab3323853e3ba316a77c469de5f88c4173f2a43d259464e9e002"
+      ],
+      "payload": {
+        "agent_id": 4,
+        "agent_code": "AGENT-04",
+        "agent_name": "Agent-04 (Giải tích: Tích phân suy rộng)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "elapsed_ms": 27980.72
+      },
+      "timestamp": 1792463739.0237942,
+      "hash": "86ec3c700ef5e63a4dc037b171fd7e29c83dbd3d33fb5d5bf497aea70a130dc3"
+    },
+    {
+      "node_id": "gng5-agent_24_verification-1792463739229-104",
+      "node_type": "AGENT_24_VERIFICATION",
+      "parent_hashes": [
+        "035e15d5bd417a29bcf93a61c80dfee4cde4b20db59790345f101ad09fd91395",
+        "51d5e0e40ddb079964c85d714ad883db03ac4be9eb32805058e4c2e294553bd3",
+        "623d68d2c0c88ebe336fe6e5fada1dfd321ad9aebfdd8ab7bb547e94c53456e5",
+        "781141ce1aca1f762f2c3df70da3db0bdf2d73f80be88587e1b75bf28af26765",
+        "bbf25560128cfc6ea0c522cfcdd1fe512e264d7a96fa141223824ffbf63f26a2",
+        "cea1f9828a35657b114cbaa4a2dfcfe13be54e6fe72882949311490aa202f35e",
+        "d733f564df14d07625b6e7ea721b2248d55f5b314dd74ff04e43f2046786cc2e"
+      ],
+      "payload": {
+        "agent_id": 24,
+        "agent_code": "AGENT-24",
+        "agent_name": "Agent-24 (Giải tích: Hàm hợp, Hàm ẩn & Đạo hàm theo hướng)",
+        "domain": "Giải tích",
+        "questions_processed": 7,
+        "lean4_verified": 7,
+        "python_verified": 7,
+        "elapsed_ms": 28192.09
+      },
+      "timestamp": 1792463739.2295933,
+      "hash": "245fc518e5486ada8cd76750da4e3679520a637b061a3a36aff0c207b2b2a1b7"
+    },
+    {
+      "node_id": "gng5-agent_07_verification-1792463740852-105",
+      "node_type": "AGENT_07_VERIFICATION",
+      "parent_hashes": [
+        "178eb3b7277d948828f900b1d8b527d4933fcff06b355141fa0b15aa921e713b",
+        "67a0ecbbc9b0b5176508c316be8f10f3c5c62a1b8f2582bd3c94b949b4886a1d",
+        "71b0d68ef46d66c69ede7cc6fb4205c3a0c274adc081035c5b5c231dd61970cc",
+        "9c3fc413849ab6a458bc6a02183a4d466c8f4c22ed691e81237a66cb1e675d80",
+        "aecfdadecdea4c7e9ac8f6448c7794ea1ee8f0bf09c3a2e26ecde047b93c6234",
+        "be3a50444399d5ce47da1aed07af65cbd51f8c81113972e7bfd3b7c765369787",
+        "eec41baf377f63085764a66886e0a92d796fb148571c1093676cf222c0e19a29"
+      ],
+      "payload": {
+        "agent_id": 7,
+        "agent_code": "AGENT-07",
+        "agent_name": "Agent-07 (Giải tích: Nhân tử Lagrange)",
+        "domain": "Giải tích",
+        "questions_processed": 7,
+        "lean4_verified": 7,
+        "python_verified": 7,
+        "elapsed_ms": 29808.77
+      },
+      "timestamp": 1792463740.8521793,
+      "hash": "75783b9afc3f14243e838f200cb980507d5f81eb0c1af4ef8e61e7b2d645aea7"
+    },
+    {
+      "node_id": "gng5-agent_09_verification-1792725413169-106",
+      "node_type": "AGENT_09_VERIFICATION",
+      "parent_hashes": [
+        "0788320f1a52ab56e8b211f319b9dcadb473e656851fa45818150c0383f58204",
+        "4f8c8a5ac538fcff27646ccea784a20698d5e2552773d4e039ebbf8f526c1654",
+        "59bbe8c3f6bf188c24565b44bfc6ad5d0869f8189ba374b7b7c43decf8e70a7c"
+      ],
+      "payload": {
+        "agent_id": 9,
+        "agent_code": "AGENT-09",
+        "agent_name": "Agent-09 (Giải tích: Giải tích Vector)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 18739.08
+      },
+      "timestamp": 1792725413.1695766,
+      "hash": "ca609b8d62e6ccaad2e1b778cb3129af26b02c4b4247b8465f9a087e29e7ba0e"
+    },
+    {
+      "node_id": "gng5-agent_11_verification-1792725413378-107",
+      "node_type": "AGENT_11_VERIFICATION",
+      "parent_hashes": [
+        "0d57a05354261105b90bb57033d3ca2a5e0608e8e3eda116e489b86b72431d18",
+        "3fc8253accfb1dd1226c8ba3046242a922a764d50be3feab13b2b168da49a3be",
+        "7cef6e22943b1de14e5d88e98865a0905a2db02eadb58013d5cf5a86447cde99"
+      ],
+      "payload": {
+        "agent_id": 11,
+        "agent_code": "AGENT-11",
+        "agent_name": "Agent-11 (Đại số: Ma trận & Định thức)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 18927.48
+      },
+      "timestamp": 1792725413.3786197,
+      "hash": "29606172dec2329a2903d942be91902beeacc3a3aa729389831da31c4e36df78"
+    },
+    {
+      "node_id": "gng5-agent_13_verification-1792725414696-108",
+      "node_type": "AGENT_13_VERIFICATION",
+      "parent_hashes": [
+        "17daa38dd1e1fe7da75a2ebcef729f8ca44615902e06a912b4692dc26bd71e06",
+        "5c866e28a7c1266b8d198566ac7fa5853f89a03962c9dc02639c59f8cc0e4e51",
+        "8aeb655fb6f88787abc7717921a73fc7fa04ba17e53654388bfd83f28e4fabfd"
+      ],
+      "payload": {
+        "agent_id": 13,
+        "agent_code": "AGENT-13",
+        "agent_name": "Agent-13 (Đại số: Hệ phương trình tuyến tính)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 20195.1
+      },
+      "timestamp": 1792725414.6965685,
+      "hash": "e4f2fa5248f68cddbd497a1acf1b2d25777696a44e24e59a13bcbfcc40872a8e"
+    },
+    {
+      "node_id": "gng5-agent_15_verification-1792725415939-109",
+      "node_type": "AGENT_15_VERIFICATION",
+      "parent_hashes": [
+        "637b679100fe4a1eb013b7a46e6108ca5a0adc96576b341c98f8c1b37b6684f3",
+        "66ef319b1e5f73e2299bbe708be736f8a61547c0c5f3c8b5623d2bb431fcdfe7",
+        "ed5a3934a894dff6093f29c9450ed722377ac81de40f5e203e531c7efb16c75c"
+      ],
+      "payload": {
+        "agent_id": 15,
+        "agent_code": "AGENT-15",
+        "agent_name": "Agent-15 (Đại số: Không gian con & Grassmann)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 21487.8
+      },
+      "timestamp": 1792725415.9396236,
+      "hash": "74db92482847abeea0106b02bdd91d1544ae6e650868c48f0e33c5fb315ce94c"
+    },
+    {
+      "node_id": "gng5-agent_18_verification-1792725416565-110",
+      "node_type": "AGENT_18_VERIFICATION",
+      "parent_hashes": [
+        "3689b66338c57c4d0882e701ccc8278913c284fa4438233c3fe32ef3e7a0434a",
+        "c57ecc00a533aedd618773f5929bd4005f0e301c28c3177cdfc1632c22f1f74e",
+        "f95117a8f847f294f19a5df5758f737d3d66645ee700f1ac17bca586dc47c14d"
+      ],
+      "payload": {
+        "agent_id": 18,
+        "agent_code": "AGENT-18",
+        "agent_name": "Agent-18 (Đại số: Chéo hóa & Cayley-Hamilton)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 22106.34
+      },
+      "timestamp": 1792725416.5659602,
+      "hash": "c22efea65d2f7dc400d57c2cf4c665e28e980adae9900114665bd5a5e2295e88"
+    },
+    {
+      "node_id": "gng5-agent_20_verification-1792725418344-111",
+      "node_type": "AGENT_20_VERIFICATION",
+      "parent_hashes": [
+        "3146fe121bbe9f9e02031109b2a3fb15950f1d7b4b6a609f195d9d01b3dec1d5",
+        "565e2d6d740b1ccec67707cc52b6013ef372958ba6f5d4a0804d4da46fdfe42d",
+        "77669e47e3a48c904ef0e54abd12c34bfd00cbaeb8a0743bb1ae583440d7a99e"
+      ],
+      "payload": {
+        "agent_id": 20,
+        "agent_code": "AGENT-20",
+        "agent_name": "Agent-20 (Đại số: Không gian Euclid & Gram-Schmidt)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 23869.0
+      },
+      "timestamp": 1792725418.3446283,
+      "hash": "ca364f9479802f48aa97d2047ef1e8aa8883711b56f38210c34dbbf5566f1a65"
+    },
+    {
+      "node_id": "gng5-agent_12_verification-1792725419652-112",
+      "node_type": "AGENT_12_VERIFICATION",
+      "parent_hashes": [
+        "14f48145f3158bf457abb4bf3915b37dc44fe01098bdd206c92b0068b18354d6",
+        "951b1129ac61c866569481204f9c5befb107fcb308d8ac9dbbfe7454f653ddac",
+        "a1f826dd4ee3f81def032c948d0bf58fed8f5a21f769c38885a4008582606f3f"
+      ],
+      "payload": {
+        "agent_id": 12,
+        "agent_code": "AGENT-12",
+        "agent_name": "Agent-12 (Đại số: Hạng của ma trận)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 25200.27
+      },
+      "timestamp": 1792725419.6523726,
+      "hash": "b705b80b5ed0a6a90312141120fd543e958d23d17fef183f922b6a49750e6c80"
+    },
+    {
+      "node_id": "gng5-agent_19_verification-1792725419718-113",
+      "node_type": "AGENT_19_VERIFICATION",
+      "parent_hashes": [
+        "1e81eb18904a80c585a3383d0f779677c65dbf1d82fe768d1b794ec1cf8cc23d",
+        "d652ccb05c1ca2f155d34ddbd44670391ae7cc76ec76268ab8a7ac64a9d34da6",
+        "e3c22f450ee6c66dd2a53f78dc63d3bc044b37d344e9afc6991d457b74e1b2b5"
+      ],
+      "payload": {
+        "agent_id": 19,
+        "agent_code": "AGENT-19",
+        "agent_name": "Agent-19 (Đại số: Dạng toàn phương & Sylvester)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 25254.1
+      },
+      "timestamp": 1792725419.7186944,
+      "hash": "df3c93130e94d824e120b1699a949d0f8da69922734dd7eb115469d535897e91"
+    },
+    {
+      "node_id": "gng5-agent_16_verification-1792725419815-114",
+      "node_type": "AGENT_16_VERIFICATION",
+      "parent_hashes": [
+        "217578b8dbee4a65fd324105f0c53f6c0df67799f21f335f69a673456573eed8",
+        "c07c98ccf2da4ccbd9feb7b62aed39b4e0f8bc95f1395dcae728bc63a0c9840d",
+        "f27052f0efea74f8237aceb3cab7645c19184ffeab0d1e6ca0749059298f9f6f"
+      ],
+      "payload": {
+        "agent_id": 16,
+        "agent_code": "AGENT-16",
+        "agent_name": "Agent-16 (Đại số: Ánh xạ tuyến tính, Ker & Im)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 2,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 25356.96
+      },
+      "timestamp": 1792725419.8157494,
+      "hash": "55227119b0a28a397a6012845153f347e4201618a51a69c8599b47234a254536"
+    },
+    {
+      "node_id": "gng5-agent_10_verification-1792725420273-115",
+      "node_type": "AGENT_10_VERIFICATION",
+      "parent_hashes": [
+        "0f0fc646ddba0d5b83bc5399f846e2cfe303d4838d9114743a33ee65568c5a7c",
+        "30297df7cf2408efdf96ec4d5238141b68957795997d5a04cfa8d3ae7337900b",
+        "889251a87ef56b99be272ef97d61469ef5f675c9e5fbeb7772d7ea9eb6b19c69"
+      ],
+      "payload": {
+        "agent_id": 10,
+        "agent_code": "AGENT-10",
+        "agent_name": "Agent-10 (Giải tích: Phương trình vi phân)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 25827.19
+      },
+      "timestamp": 1792725420.2738442,
+      "hash": "9d5936bf2056cec3e9cbd7d7fcca863e7128273f1c54f701eb789676c9cd1d34"
+    },
+    {
+      "node_id": "gng5-agent_14_verification-1792725420342-116",
+      "node_type": "AGENT_14_VERIFICATION",
+      "parent_hashes": [
+        "4318c0856c7db1f0fcb9e66e9a6f4a7602d6a07f7b86cca4be19918606976053",
+        "73fb0f23e8d4d58f9796c7fb4b8658022a88eeedacd31f425695acbbaf99319e",
+        "f8eb988f3e5ae52be1f9ebc6b8fe11052e78e79d4e363650e933c85322f10221"
+      ],
+      "payload": {
+        "agent_id": 14,
+        "agent_code": "AGENT-14",
+        "agent_name": "Agent-14 (Đại số: Không gian Vector & Cơ sở)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 25891.26
+      },
+      "timestamp": 1792725420.3424258,
+      "hash": "18363654806d62f0f6f4d1bca16d37065cf79622419a97dcbd463f494b4d19cd"
+    },
+    {
+      "node_id": "gng5-agent_08_verification-1792725420659-117",
+      "node_type": "AGENT_08_VERIFICATION",
+      "parent_hashes": [
+        "71a24d22c0724935764c03ecb2e077ab10ecf2f047c40380ec37f22b8bb308fd",
+        "d495b9c42bd2d8df2f74bafe735df55855d45d350fa76f43914838b99bbb3c76",
+        "d9230dab28ad7d4ecdb0109fb64bfaf6ed48132e8910db8f0a243aaacb96eceb"
+      ],
+      "payload": {
+        "agent_id": 8,
+        "agent_code": "AGENT-08",
+        "agent_name": "Agent-08 (Giải tích: Tích phân kép & bội ba)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 26215.06
+      },
+      "timestamp": 1792725420.6593347,
+      "hash": "6cd3ed10490c6f70a031d05deac5391aabe969abd9dfb66eeb6a0684bd1e560e"
+    },
+    {
+      "node_id": "gng5-agent_17_verification-1792725420748-118",
+      "node_type": "AGENT_17_VERIFICATION",
+      "parent_hashes": [
+        "475b51517fc544375df42286cb7d7d506b5ea84bff6c1ab46a9cf4c0329f3ce4",
+        "6389e1b76960b2595bfcb1d78c43f6615932e107ea289414d1cbe9ca2a2731d3",
+        "ace1213ffd0f1a5855bb9e21795c34a7dce3c7ede2955fdc9f4f88745d749fb6"
+      ],
+      "payload": {
+        "agent_id": 17,
+        "agent_code": "AGENT-17",
+        "agent_name": "Agent-17 (Đại số: Trị riêng & Vector riêng)",
+        "domain": "Đại số",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 26284.78
+      },
+      "timestamp": 1792725420.748238,
+      "hash": "71793456bda17f0b39e83051f8a99ba67e8fbb3eae525ad71d28795f09de3559"
+    },
+    {
+      "node_id": "gng5-agent_01_verification-1792725427082-119",
+      "node_type": "AGENT_01_VERIFICATION",
+      "parent_hashes": [
+        "5c62eee908c793b01b7c76871a63e526dc1705adb3ba61538e690b90a0e7cca0",
+        "790dd52383fd1fa3e57a315613a22ea0a7c81f33ea77c0a9e25ac4adf1a0ad00",
+        "abf740f7d00b0c04d0aed361940f355730ce5cf797df2ce3e7c87aaf2f6246c9",
+        "b9401a553a3e6444303e8fc8c7d1616561ff5302d90d080e8518f304e9627cfe",
+        "cf6b2ddb114ac55bc9754fd71a7edd8d706545c32f6a6a838c17a57b9bb3e092",
+        "ec86560b3712b129e2fa7cffb390f74a53a024489053fae2e065028d87929e77"
+      ],
+      "payload": {
+        "agent_id": 1,
+        "agent_code": "AGENT-01",
+        "agent_name": "Agent-01 (Giải tích: Giới hạn & Taylor)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 32650.21
+      },
+      "timestamp": 1792725427.0821512,
+      "hash": "93fc5b8ba3ebc342dbb962d1333fea7a3eec57bb7754a8e14cd2039b9a42ed51"
+    },
+    {
+      "node_id": "gng5-agent_22_verification-1792725427152-120",
+      "node_type": "AGENT_22_VERIFICATION",
+      "parent_hashes": [
+        "1f1b58b2cafad4bf28df9c84474e2f3d72d08ec30592dc8dc2e9d1ae0be6f98d",
+        "202c083f23bcd25f0f857dbe42ffd7e7ed75fe11d7dd776469520301befcf5b6",
+        "2dde97bcc968dcd14e7f3f8cb2b2f6458af0731837f9b5588f2170316d4be1f1",
+        "493be7a24b9eee4dac5d8335c725b66fb5747259a3b525dce2bedeb2479f259e",
+        "7d17530d352c818182d005ae87df441c62dabf45750571b62b06b48cfb011fae",
+        "8e253e66312e7dce972f4fb0c27f96a387e5db91dec13110c3dfffe15fd572ae"
+      ],
+      "payload": {
+        "agent_id": 22,
+        "agent_code": "AGENT-22",
+        "agent_name": "Agent-22 (Giải tích: Giới hạn dãy, VCB & Liên tục)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 32684.75
+      },
+      "timestamp": 1792725427.1521413,
+      "hash": "7d34621ad154f973a2578d00ad04a580eed60a0d2e3ea12055d8307fd7f2b866"
+    },
+    {
+      "node_id": "gng5-agent_21_verification-1792725427698-121",
+      "node_type": "AGENT_21_VERIFICATION",
+      "parent_hashes": [
+        "0d65c01162fbf83f08e9e0d917d0e3463f7eea73dd8d0b041a818d88756f4400",
+        "51f661cd0b35723cd8e61072aa966b1da4aad897d8a53c1dc28b330fb5602ec0",
+        "6c64cb39020265c87f3456840e1923018a30cf9810f528c46decdb6086d7d873",
+        "9c66ec7f1496a70c5bea83cd86b65baa7629191e88afa447a1fbb5e1aa1292cd",
+        "c2b62672137391447f55e6831284c73ff4d54844bb55ac076b5c26615e99dd57",
+        "d6de1c212c266c1a8164bcd2fca9022752fbbdb891692adf2a52301b80950b1d"
+      ],
+      "payload": {
+        "agent_id": 21,
+        "agent_code": "AGENT-21",
+        "agent_name": "Agent-21 (Giải tích: Ứng dụng của tích phân)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 33236.43
+      },
+      "timestamp": 1792725427.6988738,
+      "hash": "caaee8bf8daf3d21f0040efc45c6e0cbb16071d33b04a19fb49b3b1efc954eb9"
+    },
+    {
+      "node_id": "gng5-agent_23_verification-1792725429436-122",
+      "node_type": "AGENT_23_VERIFICATION",
+      "parent_hashes": [
+        "38ffd3bc1a9e1d6ae224aa3bc3ebb3daa17c8947253050d58050eab407034332",
+        "7188fae75844613b81dbabef567224cd552bb05cc1f45fe2ac067d9268ff9a74",
+        "7743b13c77a0fcf9928d540d189ae4bcc91a47d4037d792fd1c2037c5bffcced",
+        "acb2c2d2f266f1e602fc54fb9dc5324aa49423cb41ac9b2e36bfc921e9ea7b4a",
+        "ef13f1c52474bfc55dbc97fcb1ad7fc3847c241b15c5bc10e78f959407bfe0fd",
+        "fedd39d38cd27443c1f7302bf64405e750a83dcb3d3198ec84b0f3028e75dcac"
+      ],
+      "payload": {
+        "agent_id": 23,
+        "agent_code": "AGENT-23",
+        "agent_name": "Agent-23 (Giải tích: Định lý giá trị trung bình & Khảo sát hàm số)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 34961.92
+      },
+      "timestamp": 1792725429.4362893,
+      "hash": "98518d2b576a9ecaf4a90b7d49c93d3232cdf97fe9333fed01d51d8c71071134"
+    },
+    {
+      "node_id": "gng5-agent_05_verification-1792725430844-123",
+      "node_type": "AGENT_05_VERIFICATION",
+      "parent_hashes": [
+        "36def2948c68eb2040d41b7c2ad35056ee80888ca01f19d37c2590a921816e88",
+        "a74cdda7c500d88e52a27c8d2fc6a4e6aa3a170dae33747ed91bef0d914ab901",
+        "b5017bc61c61de1f8a7617f2956a7abdd5a4607eafc18cc0c01d6fc5cadbc78f"
+      ],
+      "payload": {
+        "agent_id": 5,
+        "agent_code": "AGENT-05",
+        "agent_name": "Agent-05 (Giải tích: Chuỗi số & Chuỗi lũy thừa)",
+        "domain": "Giải tích",
+        "questions_processed": 3,
+        "llm_questions": 0,
+        "lean4_applicable": 3,
+        "lean4_verified": 3,
+        "python_verified": 3,
+        "mathlib_verified": 0,
+        "elapsed_ms": 36397.89
+      },
+      "timestamp": 1792725430.8448327,
+      "hash": "35f7ac23618fe4d2589c8b2656bb4758dd2e1b8f80f13abed9589c9a3fbf0ef1"
+    },
+    {
+      "node_id": "gng5-agent_06_verification-1792725431036-124",
+      "node_type": "AGENT_06_VERIFICATION",
+      "parent_hashes": [
+        "24e47ab425768fd09f2527b3732f0d3aed4bd02dc9500c1de57f5163c9fdd031",
+        "2aeadc9ca21a316ec6a359dfe6c82cf9a9843c346b408e1708c7170359d0dab9",
+        "445ed03601579c8be0c53e8a3177a4c2d389c0674a60dda0064344a8973fbfe4",
+        "7b8062431624836561cc4eee13addde6bbf80671e1e5397e8cec8e0f40c477d1",
+        "ad38cbf10725afab4531079af7b1e7905fe2c22004016f82c7b38ffef389c0b5",
+        "ee025ee5df5f29f6deb1c82ac076a196b995901a1ede55df7240f068f5bb87b1"
+      ],
+      "payload": {
+        "agent_id": 6,
+        "agent_code": "AGENT-06",
+        "agent_name": "Agent-06 (Giải tích: Vi phân hàm nhiều biến)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 36587.41
+      },
+      "timestamp": 1792725431.0362592,
+      "hash": "8aebbcfd9495a897e38125cd3e51a25a1c19fba3d28b14f5350e7655d8c33b6a"
+    },
+    {
+      "node_id": "gng5-agent_24_verification-1792725433180-125",
+      "node_type": "AGENT_24_VERIFICATION",
+      "parent_hashes": [
+        "035e15d5bd417a29bcf93a61c80dfee4cde4b20db59790345f101ad09fd91395",
+        "51d5e0e40ddb079964c85d714ad883db03ac4be9eb32805058e4c2e294553bd3",
+        "623d68d2c0c88ebe336fe6e5fada1dfd321ad9aebfdd8ab7bb547e94c53456e5",
+        "781141ce1aca1f762f2c3df70da3db0bdf2d73f80be88587e1b75bf28af26765",
+        "bbf25560128cfc6ea0c522cfcdd1fe512e264d7a96fa141223824ffbf63f26a2",
+        "cea1f9828a35657b114cbaa4a2dfcfe13be54e6fe72882949311490aa202f35e",
+        "d733f564df14d07625b6e7ea721b2248d55f5b314dd74ff04e43f2046786cc2e"
+      ],
+      "payload": {
+        "agent_id": 24,
+        "agent_code": "AGENT-24",
+        "agent_name": "Agent-24 (Giải tích: Hàm hợp, Hàm ẩn & Đạo hàm theo hướng)",
+        "domain": "Giải tích",
+        "questions_processed": 7,
+        "llm_questions": 0,
+        "lean4_applicable": 7,
+        "lean4_verified": 7,
+        "python_verified": 7,
+        "mathlib_verified": 0,
+        "elapsed_ms": 38703.63
+      },
+      "timestamp": 1792725433.1809883,
+      "hash": "46f3102c15fdf9e1610943de23783bd56b3f7a51df3a09da964ca16011994e43"
+    },
+    {
+      "node_id": "gng5-agent_25_verification-1792725433611-126",
+      "node_type": "AGENT_25_VERIFICATION",
+      "parent_hashes": [
+        "14e24299b255ad7ec7d3cba9e8f7caff9795c78704b544c7d4ff08477067594d",
+        "436f1ca699bf996e113ab9499f953d626df747be5b9be8e87b413c7683cfd5e7",
+        "75f0d48643c62b9e522b36b9793a1572c08fa550270fc9f96c03faecf93f3e60",
+        "8de6fe374089004ae9d560c0bc9b78cc4ea769024dde86048428e8e60781d192",
+        "98dd7d97bcd1a3cef226455e09dacc78810ce31ccd2d65ca92f53d3be3b1a3ef",
+        "d007b19b1e3f06acd042cdc076b47d379135ecca78d38e15b44fc57fa1137ce4"
+      ],
+      "payload": {
+        "agent_id": 25,
+        "agent_code": "AGENT-25",
+        "agent_name": "Agent-25 (Giải tích: Nguyên hàm & Tích phân cận biến thiên)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 39127.93
+      },
+      "timestamp": 1792725433.6112273,
+      "hash": "e1338efa7884e49f02938f0c9a84ca43e77cd40cef375caf9d54b4113314c7c5"
+    },
+    {
+      "node_id": "gng5-agent_02_verification-1792725434532-127",
+      "node_type": "AGENT_02_VERIFICATION",
+      "parent_hashes": [
+        "32fdacf3f27b9c2ad69f842ca169263fdf088824f8ced5b57b8bb0fbbc3f4cfb",
+        "56d58959317b9be6298e5d71684a54e5cda5c84e571da312802ed10b16eb0b39",
+        "8175aec5d0a813502b8e87e5f0c3afd4cff0613bc73f50d96927e28ef2f80e5c",
+        "a71501005903a454bd4b11218ee327fa5f35e0e2a1c5a7cb8c4f9490f80e8637",
+        "b1bf9d5b9fe6a356722212ec286f491684449ec1e880657f864556db2193776c",
+        "de17c83e8cae53c5ba7947b48caf5b726a760c6ffcff60daac30a039729262b2",
+        "f947889759b63605060deac654b6904d4e5a5f46cb52e509e18e0852bab5e255"
+      ],
+      "payload": {
+        "agent_id": 2,
+        "agent_code": "AGENT-02",
+        "agent_name": "Agent-02 (Giải tích: Đạo hàm cấp cao & Cực trị)",
+        "domain": "Giải tích",
+        "questions_processed": 7,
+        "llm_questions": 0,
+        "lean4_applicable": 7,
+        "lean4_verified": 7,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 40086.69
+      },
+      "timestamp": 1792725434.5325208,
+      "hash": "fd645ac734f3f039454cc63098851a3d00aa4f6e6f270329e297d9b8ae16d282"
+    },
+    {
+      "node_id": "gng5-agent_03_verification-1792725439947-128",
+      "node_type": "AGENT_03_VERIFICATION",
+      "parent_hashes": [
+        "19e392843b188f37e1e230cc16872000ebc3158f82bdd4f72ed84da4eaa74f55",
+        "340124bec1004b5ec6fa75fa58ac1c6dda018aeba315c3f584b82a870f30047a",
+        "40bec1e7e8380176088c70dc96c3058375d9a0ecdc177b8bed2dac3386692b95",
+        "87f32133776c4e9472b1f2f472d84388724cc1051b4877108d40b6886b00f9bf",
+        "8c10238b044074266b0235c32ad3dded72a61f1308040c4aeadaa99fce33135c",
+        "c8d236565ca7e7ea9513b192636345c710196245f6a03a6022c8b444ca3ebd90"
+      ],
+      "payload": {
+        "agent_id": 3,
+        "agent_code": "AGENT-03",
+        "agent_name": "Agent-03 (Giải tích: Tích phân xác định & Tham số)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 5,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 45510.3
+      },
+      "timestamp": 1792725439.9479554,
+      "hash": "5b6464dfb269be9cdbe96558adf4f2c4e865df450e4d9e95d2a19ad24013f70a"
+    },
+    {
+      "node_id": "gng5-agent_07_verification-1792725440400-129",
+      "node_type": "AGENT_07_VERIFICATION",
+      "parent_hashes": [
+        "178eb3b7277d948828f900b1d8b527d4933fcff06b355141fa0b15aa921e713b",
+        "67a0ecbbc9b0b5176508c316be8f10f3c5c62a1b8f2582bd3c94b949b4886a1d",
+        "71b0d68ef46d66c69ede7cc6fb4205c3a0c274adc081035c5b5c231dd61970cc",
+        "9c3fc413849ab6a458bc6a02183a4d466c8f4c22ed691e81237a66cb1e675d80",
+        "aecfdadecdea4c7e9ac8f6448c7794ea1ee8f0bf09c3a2e26ecde047b93c6234",
+        "be3a50444399d5ce47da1aed07af65cbd51f8c81113972e7bfd3b7c765369787",
+        "eec41baf377f63085764a66886e0a92d796fb148571c1093676cf222c0e19a29"
+      ],
+      "payload": {
+        "agent_id": 7,
+        "agent_code": "AGENT-07",
+        "agent_name": "Agent-07 (Giải tích: Nhân tử Lagrange)",
+        "domain": "Giải tích",
+        "questions_processed": 7,
+        "llm_questions": 0,
+        "lean4_applicable": 7,
+        "lean4_verified": 7,
+        "python_verified": 7,
+        "mathlib_verified": 0,
+        "elapsed_ms": 45949.61
+      },
+      "timestamp": 1792725440.4009738,
+      "hash": "702d1d94bec8d22ab0c087aa66134cc4560b8a8994f970c9abfcb1c9839e39fc"
+    },
+    {
+      "node_id": "gng5-agent_04_verification-1792725440535-130",
+      "node_type": "AGENT_04_VERIFICATION",
+      "parent_hashes": [
+        "2d54c385b4f9b4a95a84dea3db05e5e718b9d140f98f4a03c91cec30da66a295",
+        "3e27a0dc65d154ee1075fb9b52e6926e94f9cbfca5fd68a96138a823314bb4b4",
+        "516ca699dd3c002c628bb75a8ec90a026a7387f8b71267553bf2208f935e96bb",
+        "ad82dff46712e5eeda99ae4a7857569d8959704a2df2461fa0809e0d6a32b2b9",
+        "b7c3718c9808a8b073a705ba8d749e51a44c68a414617ebe5dfc6324609f1a24",
+        "c8c29ffa8786ab3323853e3ba316a77c469de5f88c4173f2a43d259464e9e002"
+      ],
+      "payload": {
+        "agent_id": 4,
+        "agent_code": "AGENT-04",
+        "agent_name": "Agent-04 (Giải tích: Tích phân suy rộng)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 46083.63
+      },
+      "timestamp": 1792725440.5356176,
+      "hash": "0c2b848d94febf52919fe83c89ea9152953eb10248eb64913cffb6d0cac9dd63"
+    },
+    {
+      "node_id": "gng5-sovereign_20_agent_swarm_settlement-1792725440595-131",
+      "node_type": "SOVEREIGN_20_AGENT_SWARM_SETTLEMENT",
+      "parent_hashes": [
+        "0c2b848d94febf52919fe83c89ea9152953eb10248eb64913cffb6d0cac9dd63",
+        "18363654806d62f0f6f4d1bca16d37065cf79622419a97dcbd463f494b4d19cd",
+        "29606172dec2329a2903d942be91902beeacc3a3aa729389831da31c4e36df78",
+        "35f7ac23618fe4d2589c8b2656bb4758dd2e1b8f80f13abed9589c9a3fbf0ef1",
+        "46f3102c15fdf9e1610943de23783bd56b3f7a51df3a09da964ca16011994e43",
+        "55227119b0a28a397a6012845153f347e4201618a51a69c8599b47234a254536",
+        "5b6464dfb269be9cdbe96558adf4f2c4e865df450e4d9e95d2a19ad24013f70a",
+        "6cd3ed10490c6f70a031d05deac5391aabe969abd9dfb66eeb6a0684bd1e560e",
+        "702d1d94bec8d22ab0c087aa66134cc4560b8a8994f970c9abfcb1c9839e39fc",
+        "71793456bda17f0b39e83051f8a99ba67e8fbb3eae525ad71d28795f09de3559",
+        "74db92482847abeea0106b02bdd91d1544ae6e650868c48f0e33c5fb315ce94c",
+        "7d34621ad154f973a2578d00ad04a580eed60a0d2e3ea12055d8307fd7f2b866",
+        "8aebbcfd9495a897e38125cd3e51a25a1c19fba3d28b14f5350e7655d8c33b6a",
+        "93fc5b8ba3ebc342dbb962d1333fea7a3eec57bb7754a8e14cd2039b9a42ed51",
+        "98518d2b576a9ecaf4a90b7d49c93d3232cdf97fe9333fed01d51d8c71071134",
+        "9d5936bf2056cec3e9cbd7d7fcca863e7128273f1c54f701eb789676c9cd1d34",
+        "b705b80b5ed0a6a90312141120fd543e958d23d17fef183f922b6a49750e6c80",
+        "c22efea65d2f7dc400d57c2cf4c665e28e980adae9900114665bd5a5e2295e88",
+        "ca364f9479802f48aa97d2047ef1e8aa8883711b56f38210c34dbbf5566f1a65",
+        "ca609b8d62e6ccaad2e1b778cb3129af26b02c4b4247b8465f9a087e29e7ba0e",
+        "caaee8bf8daf3d21f0040efc45c6e0cbb16071d33b04a19fb49b3b1efc954eb9",
+        "df3c93130e94d824e120b1699a949d0f8da69922734dd7eb115469d535897e91",
+        "e1338efa7884e49f02938f0c9a84ca43e77cd40cef375caf9d54b4113314c7c5",
+        "e4f2fa5248f68cddbd497a1acf1b2d25777696a44e24e59a13bcbfcc40872a8e",
+        "fd645ac734f3f039454cc63098851a3d00aa4f6e6f270329e297d9b8ae16d282"
+      ],
+      "payload": {
+        "swarm_size": 25,
+        "total_questions": 111,
+        "llm_questions": 0,
+        "lean4_applicable": 111,
+        "lean4_verified": 106,
+        "python_verified": 110,
+        "mathlib_verified": 0,
+        "wall_clock_ms": 46163.83,
+        "verdict": "PARTIAL",
+        "signature": "Gemini-3.8-Flash-High Sovereign Epistemic Gate (@gng5 Apex Dual-Core Native Mode: @gng4 Prover + @gng3 Refuter)"
+      },
+      "timestamp": 1792725440.5953999,
+      "hash": "cef6df08b16253476a83f9d0de8bbba86354f533d285d9318409860cb619352f"
+    },
+    {
+      "node_id": "gng5-agent_22_verification-1792729319362-132",
+      "node_type": "AGENT_22_VERIFICATION",
+      "parent_hashes": [
+        "1f1b58b2cafad4bf28df9c84474e2f3d72d08ec30592dc8dc2e9d1ae0be6f98d",
+        "202c083f23bcd25f0f857dbe42ffd7e7ed75fe11d7dd776469520301befcf5b6",
+        "2dde97bcc968dcd14e7f3f8cb2b2f6458af0731837f9b5588f2170316d4be1f1",
+        "493be7a24b9eee4dac5d8335c725b66fb5747259a3b525dce2bedeb2479f259e",
+        "7d17530d352c818182d005ae87df441c62dabf45750571b62b06b48cfb011fae",
+        "8e253e66312e7dce972f4fb0c27f96a387e5db91dec13110c3dfffe15fd572ae"
+      ],
+      "payload": {
+        "agent_id": 22,
+        "agent_code": "AGENT-22",
+        "agent_name": "Agent-22 (Giải tích: Giới hạn dãy, VCB & Liên tục)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 22057.65
+      },
+      "timestamp": 1792729319.3624825,
+      "hash": "45a9fd8bd1f58231ee6d6e8d6911bbb0b3d80c60d1a60e6e3373abf7f0dce259"
+    },
+    {
+      "node_id": "gng5-agent_06_verification-1792729321116-133",
+      "node_type": "AGENT_06_VERIFICATION",
+      "parent_hashes": [
+        "24e47ab425768fd09f2527b3732f0d3aed4bd02dc9500c1de57f5163c9fdd031",
+        "2aeadc9ca21a316ec6a359dfe6c82cf9a9843c346b408e1708c7170359d0dab9",
+        "445ed03601579c8be0c53e8a3177a4c2d389c0674a60dda0064344a8973fbfe4",
+        "7b8062431624836561cc4eee13addde6bbf80671e1e5397e8cec8e0f40c477d1",
+        "ad38cbf10725afab4531079af7b1e7905fe2c22004016f82c7b38ffef389c0b5",
+        "ee025ee5df5f29f6deb1c82ac076a196b995901a1ede55df7240f068f5bb87b1"
+      ],
+      "payload": {
+        "agent_id": 6,
+        "agent_code": "AGENT-06",
+        "agent_name": "Agent-06 (Giải tích: Vi phân hàm nhiều biến)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 23799.28
+      },
+      "timestamp": 1792729321.1168401,
+      "hash": "0cfa1d9f183243ce0c5fe4cbfa7cf603c6f5ccc9c34c296f482e608d2f9d3bad"
+    },
+    {
+      "node_id": "gng5-agent_21_verification-1792729321508-134",
+      "node_type": "AGENT_21_VERIFICATION",
+      "parent_hashes": [
+        "0d65c01162fbf83f08e9e0d917d0e3463f7eea73dd8d0b041a818d88756f4400",
+        "51f661cd0b35723cd8e61072aa966b1da4aad897d8a53c1dc28b330fb5602ec0",
+        "6c64cb39020265c87f3456840e1923018a30cf9810f528c46decdb6086d7d873",
+        "9c66ec7f1496a70c5bea83cd86b65baa7629191e88afa447a1fbb5e1aa1292cd",
+        "c2b62672137391447f55e6831284c73ff4d54844bb55ac076b5c26615e99dd57",
+        "d6de1c212c266c1a8164bcd2fca9022752fbbdb891692adf2a52301b80950b1d"
+      ],
+      "payload": {
+        "agent_id": 21,
+        "agent_code": "AGENT-21",
+        "agent_name": "Agent-21 (Giải tích: Ứng dụng của tích phân)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 24185.9
+      },
+      "timestamp": 1792729321.5080447,
+      "hash": "f5c3d466373a11ee6bb4ed80dc67234d25c72ba4b6fea28df9791bbb270d92da"
+    },
+    {
+      "node_id": "gng5-agent_01_verification-1792729322093-135",
+      "node_type": "AGENT_01_VERIFICATION",
+      "parent_hashes": [
+        "5c62eee908c793b01b7c76871a63e526dc1705adb3ba61538e690b90a0e7cca0",
+        "790dd52383fd1fa3e57a315613a22ea0a7c81f33ea77c0a9e25ac4adf1a0ad00",
+        "abf740f7d00b0c04d0aed361940f355730ce5cf797df2ce3e7c87aaf2f6246c9",
+        "b9401a553a3e6444303e8fc8c7d1616561ff5302d90d080e8518f304e9627cfe",
+        "cf6b2ddb114ac55bc9754fd71a7edd8d706545c32f6a6a838c17a57b9bb3e092",
+        "ec86560b3712b129e2fa7cffb390f74a53a024489053fae2e065028d87929e77"
+      ],
+      "payload": {
+        "agent_id": 1,
+        "agent_code": "AGENT-01",
+        "agent_name": "Agent-01 (Giải tích: Giới hạn & Taylor)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 24774.67
+      },
+      "timestamp": 1792729322.0934973,
+      "hash": "35a90a5983031957aebf88b45eaf35e7c3884d43fdade01622ffd6273e3cea27"
+    },
+    {
+      "node_id": "gng5-agent_23_verification-1792729322883-136",
+      "node_type": "AGENT_23_VERIFICATION",
+      "parent_hashes": [
+        "38ffd3bc1a9e1d6ae224aa3bc3ebb3daa17c8947253050d58050eab407034332",
+        "7188fae75844613b81dbabef567224cd552bb05cc1f45fe2ac067d9268ff9a74",
+        "7743b13c77a0fcf9928d540d189ae4bcc91a47d4037d792fd1c2037c5bffcced",
+        "acb2c2d2f266f1e602fc54fb9dc5324aa49423cb41ac9b2e36bfc921e9ea7b4a",
+        "ef13f1c52474bfc55dbc97fcb1ad7fc3847c241b15c5bc10e78f959407bfe0fd",
+        "fedd39d38cd27443c1f7302bf64405e750a83dcb3d3198ec84b0f3028e75dcac"
+      ],
+      "payload": {
+        "agent_id": 23,
+        "agent_code": "AGENT-23",
+        "agent_name": "Agent-23 (Giải tích: Định lý giá trị trung bình & Khảo sát hàm số)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 25558.63
+      },
+      "timestamp": 1792729322.8834808,
+      "hash": "fd059c84207497918ca4bef3d4f1c0b38b6125e8ad376fe0d41a7b1715270319"
+    },
+    {
+      "node_id": "gng5-agent_24_verification-1792729325791-137",
+      "node_type": "AGENT_24_VERIFICATION",
+      "parent_hashes": [
+        "035e15d5bd417a29bcf93a61c80dfee4cde4b20db59790345f101ad09fd91395",
+        "51d5e0e40ddb079964c85d714ad883db03ac4be9eb32805058e4c2e294553bd3",
+        "623d68d2c0c88ebe336fe6e5fada1dfd321ad9aebfdd8ab7bb547e94c53456e5",
+        "781141ce1aca1f762f2c3df70da3db0bdf2d73f80be88587e1b75bf28af26765",
+        "bbf25560128cfc6ea0c522cfcdd1fe512e264d7a96fa141223824ffbf63f26a2",
+        "cea1f9828a35657b114cbaa4a2dfcfe13be54e6fe72882949311490aa202f35e",
+        "d733f564df14d07625b6e7ea721b2248d55f5b314dd74ff04e43f2046786cc2e"
+      ],
+      "payload": {
+        "agent_id": 24,
+        "agent_code": "AGENT-24",
+        "agent_name": "Agent-24 (Giải tích: Hàm hợp, Hàm ẩn & Đạo hàm theo hướng)",
+        "domain": "Giải tích",
+        "questions_processed": 7,
+        "llm_questions": 0,
+        "lean4_applicable": 7,
+        "lean4_verified": 7,
+        "python_verified": 7,
+        "mathlib_verified": 0,
+        "elapsed_ms": 28461.51
+      },
+      "timestamp": 1792729325.791764,
+      "hash": "cbd9b8cb169e1822b237a7118340f002f21b37a66e3fd59f81ce445c5ce81006"
+    },
+    {
+      "node_id": "gng5-agent_25_verification-1792729326059-138",
+      "node_type": "AGENT_25_VERIFICATION",
+      "parent_hashes": [
+        "14e24299b255ad7ec7d3cba9e8f7caff9795c78704b544c7d4ff08477067594d",
+        "436f1ca699bf996e113ab9499f953d626df747be5b9be8e87b413c7683cfd5e7",
+        "75f0d48643c62b9e522b36b9793a1572c08fa550270fc9f96c03faecf93f3e60",
+        "8de6fe374089004ae9d560c0bc9b78cc4ea769024dde86048428e8e60781d192",
+        "98dd7d97bcd1a3cef226455e09dacc78810ce31ccd2d65ca92f53d3be3b1a3ef",
+        "d007b19b1e3f06acd042cdc076b47d379135ecca78d38e15b44fc57fa1137ce4"
+      ],
+      "payload": {
+        "agent_id": 25,
+        "agent_code": "AGENT-25",
+        "agent_name": "Agent-25 (Giải tích: Nguyên hàm & Tích phân cận biến thiên)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 28735.77
+      },
+      "timestamp": 1792729326.0590315,
+      "hash": "867d435469b5d1b595d47dd35b20d99cdec41b23fc881c16283d73da48e49168"
+    },
+    {
+      "node_id": "gng5-agent_02_verification-1792729326098-139",
+      "node_type": "AGENT_02_VERIFICATION",
+      "parent_hashes": [
+        "32fdacf3f27b9c2ad69f842ca169263fdf088824f8ced5b57b8bb0fbbc3f4cfb",
+        "56d58959317b9be6298e5d71684a54e5cda5c84e571da312802ed10b16eb0b39",
+        "7dd1c3b6244fdd15d25371b6b216b53b814d2b7478bf21b1cdea722c182497fe",
+        "8175aec5d0a813502b8e87e5f0c3afd4cff0613bc73f50d96927e28ef2f80e5c",
+        "a71501005903a454bd4b11218ee327fa5f35e0e2a1c5a7cb8c4f9490f80e8637",
+        "b1bf9d5b9fe6a356722212ec286f491684449ec1e880657f864556db2193776c",
+        "f947889759b63605060deac654b6904d4e5a5f46cb52e509e18e0852bab5e255"
+      ],
+      "payload": {
+        "agent_id": 2,
+        "agent_code": "AGENT-02",
+        "agent_name": "Agent-02 (Giải tích: Đạo hàm cấp cao & Cực trị)",
+        "domain": "Giải tích",
+        "questions_processed": 7,
+        "llm_questions": 0,
+        "lean4_applicable": 7,
+        "lean4_verified": 7,
+        "python_verified": 7,
+        "mathlib_verified": 0,
+        "elapsed_ms": 28775.44
+      },
+      "timestamp": 1792729326.0986075,
+      "hash": "e0d115af690d032c7be1a929a0bc3b22b62766cb4dd31a09f822325d7018aab4"
+    },
+    {
+      "node_id": "gng5-agent_03_verification-1792729326684-140",
+      "node_type": "AGENT_03_VERIFICATION",
+      "parent_hashes": [
+        "02f9028d8079411dfba3ccbec3bbcc76ca3e1f313818a4dc7a9c95f2e812fd69",
+        "19e392843b188f37e1e230cc16872000ebc3158f82bdd4f72ed84da4eaa74f55",
+        "340124bec1004b5ec6fa75fa58ac1c6dda018aeba315c3f584b82a870f30047a",
+        "40bec1e7e8380176088c70dc96c3058375d9a0ecdc177b8bed2dac3386692b95",
+        "8c10238b044074266b0235c32ad3dded72a61f1308040c4aeadaa99fce33135c",
+        "c8d236565ca7e7ea9513b192636345c710196245f6a03a6022c8b444ca3ebd90"
+      ],
+      "payload": {
+        "agent_id": 3,
+        "agent_code": "AGENT-03",
+        "agent_name": "Agent-03 (Giải tích: Tích phân xác định & Tham số)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 29361.77
+      },
+      "timestamp": 1792729326.684405,
+      "hash": "afeeecdbdb6759c88b7493398b62f972f78b02dfe46b718de34d95bb30b43e83"
+    },
+    {
+      "node_id": "gng5-agent_04_verification-1792729327180-141",
+      "node_type": "AGENT_04_VERIFICATION",
+      "parent_hashes": [
+        "2d54c385b4f9b4a95a84dea3db05e5e718b9d140f98f4a03c91cec30da66a295",
+        "3e27a0dc65d154ee1075fb9b52e6926e94f9cbfca5fd68a96138a823314bb4b4",
+        "516ca699dd3c002c628bb75a8ec90a026a7387f8b71267553bf2208f935e96bb",
+        "ad82dff46712e5eeda99ae4a7857569d8959704a2df2461fa0809e0d6a32b2b9",
+        "b7c3718c9808a8b073a705ba8d749e51a44c68a414617ebe5dfc6324609f1a24",
+        "c8c29ffa8786ab3323853e3ba316a77c469de5f88c4173f2a43d259464e9e002"
+      ],
+      "payload": {
+        "agent_id": 4,
+        "agent_code": "AGENT-04",
+        "agent_name": "Agent-04 (Giải tích: Tích phân suy rộng)",
+        "domain": "Giải tích",
+        "questions_processed": 6,
+        "llm_questions": 0,
+        "lean4_applicable": 6,
+        "lean4_verified": 6,
+        "python_verified": 6,
+        "mathlib_verified": 0,
+        "elapsed_ms": 29849.42
+      },
+      "timestamp": 1792729327.1800792,
+      "hash": "209d123293c4f0f391d045b4589f7f2f46150af3448352ad874ba4e67e78c464"
+    },
+    {
+      "node_id": "gng5-agent_07_verification-1792729331160-142",
+      "node_type": "AGENT_07_VERIFICATION",
+      "parent_hashes": [
+        "178eb3b7277d948828f900b1d8b527d4933fcff06b355141fa0b15aa921e713b",
+        "67a0ecbbc9b0b5176508c316be8f10f3c5c62a1b8f2582bd3c94b949b4886a1d",
+        "71b0d68ef46d66c69ede7cc6fb4205c3a0c274adc081035c5b5c231dd61970cc",
+        "9c3fc413849ab6a458bc6a02183a4d466c8f4c22ed691e81237a66cb1e675d80",
+        "aecfdadecdea4c7e9ac8f6448c7794ea1ee8f0bf09c3a2e26ecde047b93c6234",
+        "be3a50444399d5ce47da1aed07af65cbd51f8c81113972e7bfd3b7c765369787",
+        "eec41baf377f63085764a66886e0a92d796fb148571c1093676cf222c0e19a29"
+      ],
+      "payload": {
+        "agent_id": 7,
+        "agent_code": "AGENT-07",
+        "agent_name": "Agent-07 (Giải tích: Nhân tử Lagrange)",
+        "domain": "Giải tích",
+        "questions_processed": 7,
+        "llm_questions": 0,
+        "lean4_applicable": 7,
+        "lean4_verified": 7,
+        "python_verified": 7,
+        "mathlib_verified": 0,
+        "elapsed_ms": 33829.46
+      },
+      "timestamp": 1792729331.1606061,
+      "hash": "706c573da62c636c337eb472f8fe9a443b721a371f7149803e2c68eb65655f2b"
+    },
+    {
+      "node_id": "gng5-sovereign_20_agent_swarm_settlement-1792729331205-143",
+      "node_type": "SOVEREIGN_20_AGENT_SWARM_SETTLEMENT",
+      "parent_hashes": [
+        "0cfa1d9f183243ce0c5fe4cbfa7cf603c6f5ccc9c34c296f482e608d2f9d3bad",
+        "209d123293c4f0f391d045b4589f7f2f46150af3448352ad874ba4e67e78c464",
+        "35a90a5983031957aebf88b45eaf35e7c3884d43fdade01622ffd6273e3cea27",
+        "45a9fd8bd1f58231ee6d6e8d6911bbb0b3d80c60d1a60e6e3373abf7f0dce259",
+        "706c573da62c636c337eb472f8fe9a443b721a371f7149803e2c68eb65655f2b",
+        "867d435469b5d1b595d47dd35b20d99cdec41b23fc881c16283d73da48e49168",
+        "afeeecdbdb6759c88b7493398b62f972f78b02dfe46b718de34d95bb30b43e83",
+        "cbd9b8cb169e1822b237a7118340f002f21b37a66e3fd59f81ce445c5ce81006",
+        "e0d115af690d032c7be1a929a0bc3b22b62766cb4dd31a09f822325d7018aab4",
+        "f5c3d466373a11ee6bb4ed80dc67234d25c72ba4b6fea28df9791bbb270d92da",
+        "fd059c84207497918ca4bef3d4f1c0b38b6125e8ad376fe0d41a7b1715270319"
+      ],
+      "payload": {
+        "swarm_size": 11,
+        "total_questions": 69,
+        "llm_questions": 0,
+        "lean4_applicable": 69,
+        "lean4_verified": 69,
+        "python_verified": 69,
+        "mathlib_verified": 0,
+        "wall_clock_ms": 33895.01,
+        "verdict": "SOVEREIGN_PASSED",
+        "signature": "Gemini-3.8-Flash-High Sovereign Epistemic Gate (@gng5 Apex Dual-Core Native Mode: @gng4 Prover + @gng3 Refuter)"
+      },
+      "timestamp": 1792729331.205525,
+      "hash": "6129f6cf6195cdce2610a117f5003999f56c83c84d8f9b7b971542bcb153dc70"
+    },
+    {
+      "node_id": "gng5-llm_questions_generated-1792767389195-144",
+      "node_type": "LLM_QUESTIONS_GENERATED",
+      "parent_hashes": [],
+      "payload": {
+        "model": "sonnet",
+        "requested": 11,
+        "accepted_codes": [
+          "CALC-LIM-AI-261023212534-4E52",
+          "CALC-DER-AI-261023212620-28B2",
+          "CALC-INT-AI-261023212515-5874",
+          "CALC-IMP-AI-261023212617-D55C",
+          "CALC-MUL-AI-261023212601-9F62",
+          "CALC-LAG-AI-261023212639-CF74",
+          "CALC-APP-AI-261023212752-5794",
+          "CALC-CONT-AI-261023212637-CDFB",
+          "CALC-MVT-AI-261023212509-FC24",
+          "CALC-MV2-AI-261023212551-B021",
+          "CALC-ANTI-AI-261023212658-B341"
+        ],
+        "rejected": 0
+      },
+      "timestamp": 1792767389.195531,
+      "hash": "28fb1968e7f329c11f78308a1045a3589e61246dabbce66bdfb942d72a6395b5"
+    },
+    {
+      "node_id": "gng5-llm_questions_generated-1792797226974-145",
+      "node_type": "LLM_QUESTIONS_GENERATED",
+      "parent_hashes": [],
+      "payload": {
+        "model": "haiku",
+        "requested": 1,
+        "accepted_codes": [
+          "CALC-LIM-AI-261024061059-9910"
+        ],
+        "rejected": 0
+      },
+      "timestamp": 1792797226.9749765,
+      "hash": "339579c65fb84caa83911841080d098471e2ac37aed51e4b6f64096fdfba3f4e"
+    },
+    {
+      "node_id": "gng5-exam_generated-1792797752528-146",
+      "node_type": "EXAM_GENERATED",
+      "parent_hashes": [
+        "2534febc3dab730c94327f4cd7aa0e1b7ad09e0f67d75050b2708fdb3df5e9cf",
+        "2aeadc9ca21a316ec6a359dfe6c82cf9a9843c346b408e1708c7170359d0dab9",
+        "2dde97bcc968dcd14e7f3f8cb2b2f6458af0731837f9b5588f2170316d4be1f1",
+        "51f661cd0b35723cd8e61072aa966b1da4aad897d8a53c1dc28b330fb5602ec0",
+        "56d58959317b9be6298e5d71684a54e5cda5c84e571da312802ed10b16eb0b39",
+        "71b0d68ef46d66c69ede7cc6fb4205c3a0c274adc081035c5b5c231dd61970cc",
+        "9c3fc413849ab6a458bc6a02183a4d466c8f4c22ed691e81237a66cb1e675d80",
+        "a71501005903a454bd4b11218ee327fa5f35e0e2a1c5a7cb8c4f9490f80e8637",
+        "be5c8f817d0b8191ac123e480186bf8e1ea8445d6bc29bc4bd8335dbc082a1eb",
+        "c2b62672137391447f55e6831284c73ff4d54844bb55ac076b5c26615e99dd57",
+        "d20dc5825094ea74e02d44461ed99708643b9debdd2c92fa532f85ddc4a267c6",
+        "ee025ee5df5f29f6deb1c82ac076a196b995901a1ede55df7240f068f5bb87b1",
+        "eec41baf377f63085764a66886e0a92d796fb148571c1093676cf222c0e19a29",
+        "f18c3f2ed1df0942755ea34e6901204ba0da7a95720eea8093474dddbafec11f"
+      ],
+      "payload": {
+        "exam_code": "EXAM-20261024-062232-174",
+        "title": "Đề Thi Toán Cao Cấp (Giải Tích & Đại Số) - ĐHBK",
+        "total_questions": 14,
+        "mcq_count": 10,
+        "essay_count": 4,
+        "parametric_count": 14,
+        "parameter_mode": "numeric"
+      },
+      "timestamp": 1792797752.5285392,
+      "hash": "d332eb0be7ae9d6eaa935e08ea360a925d5f84cfe59c1e14212221846eb107dd"
+    },
+    {
+      "node_id": "gng5-exam_generated-1792798247349-147",
+      "node_type": "EXAM_GENERATED",
+      "parent_hashes": [
+        "15bbaeff47f53111ca2c40bf8caf19da1438cc3d72c2ed4d30c1a17aa6aee3a7",
+        "178eb3b7277d948828f900b1d8b527d4933fcff06b355141fa0b15aa921e713b",
+        "2d54c385b4f9b4a95a84dea3db05e5e718b9d140f98f4a03c91cec30da66a295",
+        "32fdacf3f27b9c2ad69f842ca169263fdf088824f8ced5b57b8bb0fbbc3f4cfb",
+        "445ed03601579c8be0c53e8a3177a4c2d389c0674a60dda0064344a8973fbfe4",
+        "5c62eee908c793b01b7c76871a63e526dc1705adb3ba61538e690b90a0e7cca0",
+        "7188fae75844613b81dbabef567224cd552bb05cc1f45fe2ac067d9268ff9a74",
+        "7743b13c77a0fcf9928d540d189ae4bcc91a47d4037d792fd1c2037c5bffcced",
+        "7a9a6837f19823d5fcf9374db9ac16fb18bb6d14398f0b73838604545c1a7c3d",
+        "7dd1c3b6244fdd15d25371b6b216b53b814d2b7478bf21b1cdea722c182497fe",
+        "b48a71356aa15de4d71b002eaf0c8c620f7b3e4188c63856579c8ac10efe3129",
+        "c8d236565ca7e7ea9513b192636345c710196245f6a03a6022c8b444ca3ebd90",
+        "cea1f9828a35657b114cbaa4a2dfcfe13be54e6fe72882949311490aa202f35e",
+        "d6de1c212c266c1a8164bcd2fca9022752fbbdb891692adf2a52301b80950b1d"
+      ],
+      "payload": {
+        "exam_code": "EXAM-20261024-063047-862",
+        "title": "Đề Thi Toán Cao Cấp (Giải Tích & Đại Số) - ĐHBK",
+        "total_questions": 14,
+        "mcq_count": 10,
+        "essay_count": 4,
+        "parametric_count": 14,
+        "parameter_mode": "numeric"
+      },
+      "timestamp": 1792798247.349652,
+      "hash": "8a1c58ef6b13aa136be656c9efecee1e2659524b29cb659d29856f26a4328d27"
+    },
+    {
+      "node_id": "gng5-llm_questions_generated-1792801384945-148",
+      "node_type": "LLM_QUESTIONS_GENERATED",
+      "parent_hashes": [],
+      "payload": {
+        "model": "haiku",
+        "requested": 3,
+        "accepted_codes": [
+          "CALC-LIM-AI-261024070829-B694"
+        ],
+        "rejected": 2
+      },
+      "timestamp": 1792801384.9454954,
+      "hash": "70190f584394b44bd8f20195d7733f6f88aaf5748c9c297a79f91795db4050b3"
+    },
+    {
+      "node_id": "gng5-llm_questions_generated-1792802582330-149",
+      "node_type": "LLM_QUESTIONS_GENERATED",
+      "parent_hashes": [],
+      "payload": {
+        "model": "haiku",
+        "requested": 2,
+        "accepted_codes": [
+          "CALC-LIM-AI-261024072604-6DE6",
+          "CALC-LIM-AI-261024072604-D4B3"
+        ],
+        "rejected": 0
+      },
+      "timestamp": 1792802582.3303478,
+      "hash": "67d06bc33d071baa122961444eb09a8c8cd5a2c8eb7d752b810a27cd5076e47d"
+    },
+    {
+      "node_id": "gng5-llm_questions_generated-1792811390707-150",
+      "node_type": "LLM_QUESTIONS_GENERATED",
+      "parent_hashes": [],
+      "payload": {
+        "model": "haiku",
+        "requested": 1,
+        "accepted_codes": [
+          "CALC-LIM-AI-261024100153-FC12"
+        ],
+        "rejected": 0
+      },
+      "timestamp": 1792811390.7075834,
+      "hash": "365762eebae6585d2632f562bd47e565782fad2526b3ec5841ba4a6b0aa492e8"
+    },
+    {
+      "node_id": "gng5-llm_questions_generated-1792812166493-151",
+      "node_type": "LLM_QUESTIONS_GENERATED",
+      "parent_hashes": [],
+      "payload": {
+        "model": "haiku",
+        "requested": 2,
+        "accepted_codes": [
+          "CALC-LIM-AI-261024101542-A867",
+          "CALC-LIM-AI-261024101541-FC0C"
+        ],
+        "rejected": 0
+      },
+      "timestamp": 1792812166.493154,
+      "hash": "e43307d82b9dcec7d043afd7e38f8fd3069053b32d1d5e923a4c271e843743b6"
+    },
+    {
+      "node_id": "gng5-exam_generated-1792812860371-152",
+      "node_type": "EXAM_GENERATED",
+      "parent_hashes": [
+        "178eb3b7277d948828f900b1d8b527d4933fcff06b355141fa0b15aa921e713b",
+        "40bec1e7e8380176088c70dc96c3058375d9a0ecdc177b8bed2dac3386692b95",
+        "56d58959317b9be6298e5d71684a54e5cda5c84e571da312802ed10b16eb0b39",
+        "6c64cb39020265c87f3456840e1923018a30cf9810f528c46decdb6086d7d873",
+        "7a9a6837f19823d5fcf9374db9ac16fb18bb6d14398f0b73838604545c1a7c3d",
+        "7b8062431624836561cc4eee13addde6bbf80671e1e5397e8cec8e0f40c477d1",
+        "aa57752993951f10f6a08f1df9eeb08d037c8d34cd57c7c26a79a6fa65fd0bbc",
+        "ad38cbf10725afab4531079af7b1e7905fe2c22004016f82c7b38ffef389c0b5",
+        "b7c3718c9808a8b073a705ba8d749e51a44c68a414617ebe5dfc6324609f1a24",
+        "c8d236565ca7e7ea9513b192636345c710196245f6a03a6022c8b444ca3ebd90",
+        "cf6b2ddb114ac55bc9754fd71a7edd8d706545c32f6a6a838c17a57b9bb3e092",
+        "ec86560b3712b129e2fa7cffb390f74a53a024489053fae2e065028d87929e77",
+        "ef13f1c52474bfc55dbc97fcb1ad7fc3847c241b15c5bc10e78f959407bfe0fd",
+        "fd7de50a3ff84afeff43b379a49ce94735659607c17ee51ca1b46198e1997c4a"
+      ],
+      "payload": {
+        "exam_code": "EXAM-20261024-103420-970",
+        "title": "Đề Thi Toán Cao Cấp (Giải Tích & Đại Số) - ĐHBK",
+        "total_questions": 14,
+        "mcq_count": 10,
+        "essay_count": 4,
+        "parametric_count": 14,
+        "parameter_mode": "numeric"
+      },
+      "timestamp": 1792812860.3718743,
+      "hash": "43604b185c7a45398bc68f9d9bdece4080af622bca6beb2d55c3b56880fa0ccd"
+    }
+  ]
+}

@@ -1,0 +1,428 @@
+{
+ "_ghi_chu": "Nhãn do LLM opus (effort max) chấm, chỉ cho mệnh đề bộ chấm Lean chưa xác nhận tương đương; KHÔNG phải nhãn chấm tay. Tiêu chí: đúng nghĩa đề tiếng Anh.",
+ "Pugh|exercise_3_4": {
+  "top": true,
+  "top_phan_tich": "Phát biểu khẳng định dãy a_n = √(n+1) − √n (n tự nhiên, n → ∞) hội tụ về 0. Mệnh đề cần chấm: Filter.Tendsto của hàm ℕ → ℝ, n ↦ Real.sqrt (↑n + 1) − Real.sqrt ↑n, theo Filter.atTop trên ℕ, tới 𝓝 0 trong ℝ. Đây đúng là giới hạn dãy. n được ép sang ℝ trước khi cộng 1 và lấy căn, phép trừ diễn ra trong ℝ nên không có vấn đề trừ trên ℕ. Real.sqrt chỉ nhận đối số không âm nên không bị ảnh hưởng bởi giá trị quy ước. Không thêm hay bớt giả thiết, không đổi lượng từ, kết luận không mạnh hơn hay yếu hơn. So với tham chiếu: binder (n : ℕ) của tham chiếu bị biến lambda trùng tên che. Vì sqrt = Real.sqrt (open Real), biến lambda trong tham chiếu thực ra được suy kiểu ℝ, nên về hình thức tham chiếu là giới hạn theo biến thực (mạnh hơn, kéo theo bản dãy). Tuy vậy, ý định rõ ràng của tham chiếu (khai báo n : ℕ) và cách hiểu chuẩn của \"n → ∞\" đều là giới hạn dãy, nên bản cần chấm khớp hoàn toàn với phát biểu.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "Tham chiếu có binder (n : ℕ) không dùng, bị biến lambda trùng tên che. Do sqrt là Real.sqrt, biến lambda trong tham chiếu được suy kiểu ℝ, nên về hình thức tham chiếu nói về giới hạn khi biến thực → +∞. Bản cần chấm dùng n : ℕ tường minh và ép sang ℝ, tức là giới hạn dãy. Đây đúng là cách hiểu chuẩn của phát biểu và ý định của tham chiếu.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Bản cần chấm chỉ là mệnh đề (không có tên theorem, không có binder thừa) và dùng tên đầy đủ Filter.Tendsto, Filter.atTop, Real.sqrt. Đây chỉ là khác biệt về cách viết.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: đúng nghĩa",
+  "confirmed": true,
+  "confirmed_phan_tich": "Phát biểu khẳng định dãy a_n = √(n+1) − √n (n tự nhiên, n → ∞) hội tụ về 0. Mệnh đề cần chấm: Filter.Tendsto của hàm ℕ → ℝ, n ↦ Real.sqrt (↑n + 1) − Real.sqrt ↑n, theo Filter.atTop trên ℕ, tới 𝓝 0 trong ℝ. Đây đúng là giới hạn dãy. n được ép sang ℝ trước khi cộng 1 và lấy căn, phép trừ diễn ra trong ℝ nên không có vấn đề trừ trên ℕ. Real.sqrt chỉ nhận đối số không âm nên không bị ảnh hưởng bởi giá trị quy ước. Không thêm hay bớt giả thiết, không đổi lượng từ, kết luận không mạnh hơn hay yếu hơn. So với tham chiếu: binder (n : ℕ) của tham chiếu bị biến lambda trùng tên che. Vì sqrt = Real.sqrt (open Real), biến lambda trong tham chiếu thực ra được suy kiểu ℝ, nên về hình thức tham chiếu là giới hạn theo biến thực (mạnh hơn, kéo theo bản dãy). Tuy vậy, ý định rõ ràng của tham chiếu (khai báo n : ℕ) và cách hiểu chuẩn của \"n → ∞\" đều là giới hạn dãy, nên bản cần chấm khớp hoàn toàn với phát biểu.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "Tham chiếu có binder (n : ℕ) không dùng, bị biến lambda trùng tên che. Do sqrt là Real.sqrt, biến lambda trong tham chiếu được suy kiểu ℝ, nên về hình thức tham chiếu nói về giới hạn khi biến thực → +∞. Bản cần chấm dùng n : ℕ tường minh và ép sang ℝ, tức là giới hạn dãy. Đây đúng là cách hiểu chuẩn của phát biểu và ý định của tham chiếu.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Bản cần chấm chỉ là mệnh đề (không có tên theorem, không có binder thừa) và dùng tên đầy đủ Filter.Tendsto, Filter.atTop, Real.sqrt. Đây chỉ là khác biệt về cách viết.",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Rudin|exercise_3_3": {
+  "top": true,
+  "top_phan_tich": "Mệnh đề cần chấm có dạng: ∀ s : ℕ → ℝ, (s 1 = √2) → (∀ n ≥ 1, s (n+1) = √(2 + √(s n))) → [(∃ L, Tendsto s atTop (𝓝 L)) ∧ (∀ n ≥ 1, s n < 2)]. Trong Lean 4, ∧ ưu tiên cao hơn → và → kết hợp phải, nên hai giả thiết bao trọn cả hai kết luận; lượng từ ∀ s bao trùm toàn bộ mệnh đề. Hai giả thiết khớp với định nghĩa trong phát biểu (s₁ = √2, s_{n+1} = √(2+√s_n) với n = 1, 2, 3, …) và xác định duy nhất s n với mọi n ≥ 1; chỉ s 0 là tùy ý. Hội tụ là tính chất của phần đuôi nên không phụ thuộc s 0, và bất đẳng thức chỉ đòi hỏi với n ≥ 1, đúng như phát biểu. '{s_n} converges' được viết đúng bằng ∃ L : ℝ, Tendsto … (𝓝 L). √ là Real.sqrt và mọi hằng số thuộc ℝ; không có phép trừ hay chia trên ℕ. Với n ≥ 1, s n ≥ 0 nên quy ước Real.sqrt của số âm bằng 0 không ảnh hưởng. Tham chiếu dời chỉ số để f 0 = √2, còn bản cần chấm giữ chỉ số từ 1 như phát biểu gốc; hai cách tương đương. Dùng ∀ s kèm giả thiết thay cho một dãy định nghĩa sẵn cũng tương đương, vì dãy như vậy tồn tại và phần từ chỉ số 1 trở đi là duy nhất.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "Dùng lượng từ ∀ s : ℕ → ℝ kèm giả thiết về giá trị đầu và công thức truy hồi, thay vì một dãy được định nghĩa cụ thể như tham chiếu. Phần từ chỉ số 1 trở đi được xác định duy nhất và dãy như vậy tồn tại, nên nghĩa không đổi.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Giá trị s 0 không bị ràng buộc. Điều này không ảnh hưởng: tính hội tụ chỉ phụ thuộc phần đuôi, còn bất đẳng thức s n < 2 chỉ đòi hỏi với n ≥ 1.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Chỉ số bắt đầu từ 1 như phát biểu gốc, trong khi tham chiếu dời về 0 (f 0 = √2). Hai cách đánh chỉ số cho cùng nội dung.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết (fun n : ℕ => s n) thay cho s. Đây chỉ là eta-tương đương.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: đúng nghĩa",
+  "confirmed": true,
+  "confirmed_phan_tich": "Mệnh đề cần chấm có dạng: ∀ s : ℕ → ℝ, (s 1 = √2) → (∀ n ≥ 1, s (n+1) = √(2 + √(s n))) → [(∃ L, Tendsto s atTop (𝓝 L)) ∧ (∀ n ≥ 1, s n < 2)]. Trong Lean 4, ∧ ưu tiên cao hơn → và → kết hợp phải, nên hai giả thiết bao trọn cả hai kết luận; lượng từ ∀ s bao trùm toàn bộ mệnh đề. Hai giả thiết khớp với định nghĩa trong phát biểu (s₁ = √2, s_{n+1} = √(2+√s_n) với n = 1, 2, 3, …) và xác định duy nhất s n với mọi n ≥ 1; chỉ s 0 là tùy ý. Hội tụ là tính chất của phần đuôi nên không phụ thuộc s 0, và bất đẳng thức chỉ đòi hỏi với n ≥ 1, đúng như phát biểu. '{s_n} converges' được viết đúng bằng ∃ L : ℝ, Tendsto … (𝓝 L). √ là Real.sqrt và mọi hằng số thuộc ℝ; không có phép trừ hay chia trên ℕ. Với n ≥ 1, s n ≥ 0 nên quy ước Real.sqrt của số âm bằng 0 không ảnh hưởng. Tham chiếu dời chỉ số để f 0 = √2, còn bản cần chấm giữ chỉ số từ 1 như phát biểu gốc; hai cách tương đương. Dùng ∀ s kèm giả thiết thay cho một dãy định nghĩa sẵn cũng tương đương, vì dãy như vậy tồn tại và phần từ chỉ số 1 trở đi là duy nhất.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "Dùng lượng từ ∀ s : ℕ → ℝ kèm giả thiết về giá trị đầu và công thức truy hồi, thay vì một dãy được định nghĩa cụ thể như tham chiếu. Phần từ chỉ số 1 trở đi được xác định duy nhất và dãy như vậy tồn tại, nên nghĩa không đổi.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Giá trị s 0 không bị ràng buộc. Điều này không ảnh hưởng: tính hội tụ chỉ phụ thuộc phần đuôi, còn bất đẳng thức s n < 2 chỉ đòi hỏi với n ≥ 1.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Chỉ số bắt đầu từ 1 như phát biểu gốc, trong khi tham chiếu dời về 0 (f 0 = √2). Hai cách đánh chỉ số cho cùng nội dung.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết (fun n : ℕ => s n) thay cho s. Đây chỉ là eta-tương đương.",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Rudin|exercise_4_19": {
+  "top": true,
+  "top_phan_tich": "Mệnh đề cần chấm lượng từ hóa f : ℝ → ℝ, khớp với \"hàm thực có miền xác định R¹\". Giả thiết tính chất giá trị trung gian `∀ a b c, f a < c → c < f b → ∃ x ∈ Set.uIcc a b, f x = c` dịch đúng từng chữ phát biểu: a, b tùy ý, không áp thứ tự, và x nằm \"giữa a và b\" (Set.uIcc a b = [min a b, max a b]). Vì f a < c < f b nên f x = c khác f a và f b. Do đó x không thể là đầu mút (và a ≠ b), nên dùng khoảng đóng hay khoảng mở là tương đương. Giả thiết tập mức {x | f x = (r:ℝ)} đóng với mọi r : ℚ và kết luận Continuous f trùng với bản tham chiếu. Bản tham chiếu thêm điều kiện a < b, tức chỉ giả thiết tính chất giá trị trung gian khi f 'đi lên'. Đây là giả thiết YẾU hơn phát biểu, và với nó định lý sai. Phản ví dụ: f = √3 trên (-∞,0] và f = √2 trên (0,∞). Vì f không tăng nên giả thiết tham chiếu đúng hiển nhiên; tập mức tại mọi r hữu tỉ là rỗng nên đóng; nhưng f không liên tục tại 0. Gợi ý của Rudin dùng tính chất giá trị trung gian giữa x₀ và xₙ với xₙ ở cả hai phía của x₀, xác nhận cách hiểu đối xứng như mệnh đề cần chấm. Với cách hiểu này định lý đúng: lấy tₙ giữa x₀ và xₙ có f(tₙ) = r, tập mức đóng cho f(x₀) = r, mâu thuẫn. Vậy mệnh đề cần chấm khớp với phát biểu, thậm chí sát hơn bản tham chiếu.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "Không yêu cầu a < b: giả thiết áp dụng cho mọi a, b, với x ∈ Set.uIcc a b (giữa a và b theo bất kỳ thứ tự nào), trong khi tham chiếu yêu cầu a < b và a < x < b. Cách viết của mệnh đề cần chấm khớp với 'for some x between a and b' trong phát biểu (không có thứ tự). Chính tham chiếu mới làm yếu giả thiết, khiến mệnh đề tham chiếu sai (phản ví dụ hàm bậc thang giảm nhận giá trị vô tỉ √3, √2).",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Dùng khoảng đóng Set.uIcc thay cho khoảng mở. Tương đương, vì f x = c với f a < c < f b nên x ≠ a và x ≠ b.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết dạng mệnh đề đóng ∀ f, ... → ... → ... thay vì theorem có tham số và giả thiết; ép kiểu (r : ℝ) được ghi tường minh.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: đúng nghĩa",
+  "confirmed": true,
+  "confirmed_phan_tich": "Mệnh đề cần chấm lượng từ hóa f : ℝ → ℝ, khớp với \"hàm thực có miền xác định R¹\". Giả thiết tính chất giá trị trung gian `∀ a b c, f a < c → c < f b → ∃ x ∈ Set.uIcc a b, f x = c` dịch đúng từng chữ phát biểu: a, b tùy ý, không áp thứ tự, và x nằm \"giữa a và b\" (Set.uIcc a b = [min a b, max a b]). Vì f a < c < f b nên f x = c khác f a và f b. Do đó x không thể là đầu mút (và a ≠ b), nên dùng khoảng đóng hay khoảng mở là tương đương. Giả thiết tập mức {x | f x = (r:ℝ)} đóng với mọi r : ℚ và kết luận Continuous f trùng với bản tham chiếu. Bản tham chiếu thêm điều kiện a < b, tức chỉ giả thiết tính chất giá trị trung gian khi f 'đi lên'. Đây là giả thiết YẾU hơn phát biểu, và với nó định lý sai. Phản ví dụ: f = √3 trên (-∞,0] và f = √2 trên (0,∞). Vì f không tăng nên giả thiết tham chiếu đúng hiển nhiên; tập mức tại mọi r hữu tỉ là rỗng nên đóng; nhưng f không liên tục tại 0. Gợi ý của Rudin dùng tính chất giá trị trung gian giữa x₀ và xₙ với xₙ ở cả hai phía của x₀, xác nhận cách hiểu đối xứng như mệnh đề cần chấm. Với cách hiểu này định lý đúng: lấy tₙ giữa x₀ và xₙ có f(tₙ) = r, tập mức đóng cho f(x₀) = r, mâu thuẫn. Vậy mệnh đề cần chấm khớp với phát biểu, thậm chí sát hơn bản tham chiếu.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "Không yêu cầu a < b: giả thiết áp dụng cho mọi a, b, với x ∈ Set.uIcc a b (giữa a và b theo bất kỳ thứ tự nào), trong khi tham chiếu yêu cầu a < b và a < x < b. Cách viết của mệnh đề cần chấm khớp với 'for some x between a and b' trong phát biểu (không có thứ tự). Chính tham chiếu mới làm yếu giả thiết, khiến mệnh đề tham chiếu sai (phản ví dụ hàm bậc thang giảm nhận giá trị vô tỉ √3, √2).",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Dùng khoảng đóng Set.uIcc thay cho khoảng mở. Tương đương, vì f x = c với f a < c < f b nên x ≠ a và x ≠ b.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết dạng mệnh đề đóng ∀ f, ... → ... → ... thay vì theorem có tham số và giả thiết; ép kiểu (r : ℝ) được ghi tường minh.",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Rudin|exercise_4_24": {
+  "top": true,
+  "top_phan_tich": "Phát biểu: f liên tục, xác định trên (a,b), lồi trung điểm trên (a,b); kết luận f lồi (trên (a,b)). Mệnh đề cần chấm: ∀ a b, a < b → ∀ f : ℝ → ℝ, ContinuousOn f (Ioo a b) → (∀ x ∈ Ioo a b, ∀ y ∈ Ioo a b, f((x+y)/2) ≤ (f x + f y)/2) → ConvexOn ℝ (Ioo a b) f. Về cú pháp: phép chia làm trên ℝ, mũi tên kết hợp phải nên cấu trúc giả thiết → kết luận đúng, binder ∀ x ∈ S nằm trọn trong ngoặc. Giả thiết lồi trung điểm viết bằng Set.Ioo tương đương với 4 bất đẳng thức ở tham chiếu. Kết luận ConvexOn ℝ (Set.Ioo a b) f trùng với tham chiếu. Khác biệt duy nhất đáng kể là bản này dùng ContinuousOn f (Set.Ioo a b) thay cho Continuous f. Vì phát biểu nói f chỉ xác định và liên tục trên (a,b), ContinuousOn trên khoảng mở (a,b) chính là cách diễn đạt trung thành. Mô hình f : ℝ → ℝ không hạn chế gì, vì giá trị ngoài (a,b) không ảnh hưởng tới giả thiết hay kết luận. Giả thiết Continuous f của tham chiếu thực ra mạnh hơn phát biểu (ví dụ 1/(x−a) liên tục, lồi trên (a,b) nhưng không thác triển liên tục ra ℝ được), nên bản cần chấm sát phát biểu hơn và kéo theo bản tham chiếu. Định lý vẫn đúng với ContinuousOn vì chứng minh chuẩn (tỉ lệ nhị phân rồi lấy giới hạn) chỉ cần f liên tục trên đoạn [x,y] nằm trong (a,b). Giả thiết a < b giống tham chiếu và vô hại, vì nếu a ≥ b thì khoảng rỗng và kết luận đúng hiển nhiên. Kết luận: tương đương về toán học với phát biểu.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "Dùng ContinuousOn f (Set.Ioo a b) (liên tục trên (a,b)) thay cho Continuous f trên toàn ℝ như tham chiếu. Cách này đúng với phát biểu 'f liên tục, xác định trong (a,b)'. Giả thiết yếu hơn tham chiếu nhưng không yếu hơn phát biểu gốc, và định lý vẫn đúng.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Giả thiết lồi trung điểm viết bằng x ∈ Set.Ioo a b, y ∈ Set.Ioo a b thay cho 4 bất đẳng thức a < x, x < b, a < y, y < b. Hai cách tương đương định nghĩa.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết dưới dạng mệnh đề lượng từ hóa toàn thể (∀ a b, a < b → ∀ f, ...) thay vì định lý có tham số. Giả thiết a < b giống tham chiếu và vô hại (nếu a ≥ b thì khoảng rỗng, kết luận đúng hiển nhiên).",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: đúng nghĩa",
+  "confirmed": true,
+  "confirmed_phan_tich": "Phát biểu: f liên tục, xác định trên (a,b), lồi trung điểm trên (a,b); kết luận f lồi (trên (a,b)). Mệnh đề cần chấm: ∀ a b, a < b → ∀ f : ℝ → ℝ, ContinuousOn f (Ioo a b) → (∀ x ∈ Ioo a b, ∀ y ∈ Ioo a b, f((x+y)/2) ≤ (f x + f y)/2) → ConvexOn ℝ (Ioo a b) f. Về cú pháp: phép chia làm trên ℝ, mũi tên kết hợp phải nên cấu trúc giả thiết → kết luận đúng, binder ∀ x ∈ S nằm trọn trong ngoặc. Giả thiết lồi trung điểm viết bằng Set.Ioo tương đương với 4 bất đẳng thức ở tham chiếu. Kết luận ConvexOn ℝ (Set.Ioo a b) f trùng với tham chiếu. Khác biệt duy nhất đáng kể là bản này dùng ContinuousOn f (Set.Ioo a b) thay cho Continuous f. Vì phát biểu nói f chỉ xác định và liên tục trên (a,b), ContinuousOn trên khoảng mở (a,b) chính là cách diễn đạt trung thành. Mô hình f : ℝ → ℝ không hạn chế gì, vì giá trị ngoài (a,b) không ảnh hưởng tới giả thiết hay kết luận. Giả thiết Continuous f của tham chiếu thực ra mạnh hơn phát biểu (ví dụ 1/(x−a) liên tục, lồi trên (a,b) nhưng không thác triển liên tục ra ℝ được), nên bản cần chấm sát phát biểu hơn và kéo theo bản tham chiếu. Định lý vẫn đúng với ContinuousOn vì chứng minh chuẩn (tỉ lệ nhị phân rồi lấy giới hạn) chỉ cần f liên tục trên đoạn [x,y] nằm trong (a,b). Giả thiết a < b giống tham chiếu và vô hại, vì nếu a ≥ b thì khoảng rỗng và kết luận đúng hiển nhiên. Kết luận: tương đương về toán học với phát biểu.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "Dùng ContinuousOn f (Set.Ioo a b) (liên tục trên (a,b)) thay cho Continuous f trên toàn ℝ như tham chiếu. Cách này đúng với phát biểu 'f liên tục, xác định trong (a,b)'. Giả thiết yếu hơn tham chiếu nhưng không yếu hơn phát biểu gốc, và định lý vẫn đúng.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Giả thiết lồi trung điểm viết bằng x ∈ Set.Ioo a b, y ∈ Set.Ioo a b thay cho 4 bất đẳng thức a < x, x < b, a < y, y < b. Hai cách tương đương định nghĩa.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết dưới dạng mệnh đề lượng từ hóa toàn thể (∀ a b, a < b → ∀ f, ...) thay vì định lý có tham số. Giả thiết a < b giống tham chiếu và vô hại (nếu a ≥ b thì khoảng rỗng, kết luận đúng hiển nhiên).",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Rudin|exercise_5_2": {
+  "top": true,
+  "top_phan_tich": "Ứng viên: với a<b, f khả vi tại mọi x∈(a,b) và deriv f x>0, và với mọi g thỏa g(f x)=x trên (a,b), f(g y)=y trên f((a,b)), thì f tăng ngặt trên (a,b) và với mọi x∈(a,b), g khả vi tại f(x), deriv g (f x)=1/deriv f x. (1) Giả thiết về f đúng với 'f'(x)>0 trên (a,b)'. Thêm DifferentiableAt chỉ là viết ra ẩn ý; trong Lean, 0<deriv f x đã kéo theo khả vi. (2) Hai điều kiện về g mô tả đúng hàm ngược của f thu hẹp trên (a,b), xác định trên f((a,b)). Điều kiện thứ hai suy ra từ điều kiện thứ nhất. g là hàm toàn cục, giá trị ngoài f((a,b)) tùy ý, nhưng f liên tục, tăng ngặt nên f((a,b)) là khoảng mở; do đó DifferentiableAt g (f x) và deriv g (f x) chỉ phụ thuộc g trên f((a,b)). Với mọi f thỏa giả thiết luôn tồn tại g như vậy nên mệnh đề không rỗng. (3) Kết luận: StrictMonoOn khớp 'f tăng ngặt'. 'g khả vi' được hiểu đúng là khả vi trên miền xác định f((a,b)), và vì có DifferentiableAt nên deriv là đạo hàm thật; công thức g'(f(x))=1/f'(x) đúng nghĩa, không chia cho 0. (4) Tham chiếu có lỗi: f⁻¹ trong Mathlib là nghịch đảo từng điểm, và DifferentiableOn g lấy trên (a,b) là sai tập; ứng viên bám phát biểu chính xác hơn. (5) Điểm tinh tế: StrictMonoOn nằm trong phạm vi giả thiết về g, mà giả thiết này kéo theo f đơn ánh trên (a,b). Đây là cách đưa 'let g be its inverse function' thành giả thiết chung, giống tham chiếu với hg. Hàm ngược luôn tồn tại với mọi f thỏa giả thiết, và giả thiết này không tầm thường hóa phần (i): vẫn cần định lý giá trị trung bình, chẳng hạn strictMonoOn_of_deriv_pos. Vì vậy tôi coi điểm này không đổi nghĩa, dù đây là nhận định có thể tranh luận. Kết luận: ứng viên tương đương về nội dung với phát biểu.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "Thêm giả thiết a < b. Khi a ≥ b, Ioo a b rỗng nên kết luận đúng hiển nhiên; bỏ hay giữ giả thiết này không làm thay đổi nội dung.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Thêm DifferentiableAt ℝ f x cho x ∈ (a,b): phát biểu 'f'(x) > 0' đã ngầm giả định f khả vi; trong Lean, 0 < deriv f x đã kéo theo khả vi.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Hàm ngược g được mô tả bằng các điều kiện g(f x) = x trên (a,b) và f(g y) = y trên f((a,b)), với g : ℝ → ℝ có giá trị tùy ý ngoài f((a,b)); tham chiếu viết g = f⁻¹. Đây đúng là hàm ngược của f thu hẹp trên (a,b); điều kiện thứ hai thừa; vì f((a,b)) mở nên phần giá trị tùy ý không ảnh hưởng đến khả vi hay đạo hàm tại f(x).",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Kết luận khả vi của g viết là DifferentiableAt ℝ g (f x) với mọi x ∈ (a,b), tức là trên f((a,b)) = miền của g, thay vì DifferentiableOn ℝ g (Ioo a b) như tham chiếu. Cách viết của ứng viên đúng với phát biểu (tham chiếu lấy sai tập và dùng f⁻¹ là nghịch đảo từng điểm).",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Kết luận StrictMonoOn f nằm trong phạm vi ∀ g và các giả thiết về g (kéo theo f đơn ánh trên (a,b)), trong khi phát biểu đưa g vào sau khi chứng minh f tăng ngặt. Đây là cách đưa 'let g be its inverse function' thành giả thiết chung (tham chiếu cũng làm vậy); hàm ngược luôn tồn tại với mọi f thỏa giả thiết và giả thiết này không tầm thường hóa phần (i). Tôi coi là không đổi nghĩa, dù đây là nhận định có thể tranh luận.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: đúng nghĩa",
+  "confirmed": true,
+  "confirmed_phan_tich": "Ứng viên: với a<b, f khả vi tại mọi x∈(a,b) và deriv f x>0, và với mọi g thỏa g(f x)=x trên (a,b), f(g y)=y trên f((a,b)), thì f tăng ngặt trên (a,b) và với mọi x∈(a,b), g khả vi tại f(x), deriv g (f x)=1/deriv f x. (1) Giả thiết về f đúng với 'f'(x)>0 trên (a,b)'. Thêm DifferentiableAt chỉ là viết ra ẩn ý; trong Lean, 0<deriv f x đã kéo theo khả vi. (2) Hai điều kiện về g mô tả đúng hàm ngược của f thu hẹp trên (a,b), xác định trên f((a,b)). Điều kiện thứ hai suy ra từ điều kiện thứ nhất. g là hàm toàn cục, giá trị ngoài f((a,b)) tùy ý, nhưng f liên tục, tăng ngặt nên f((a,b)) là khoảng mở; do đó DifferentiableAt g (f x) và deriv g (f x) chỉ phụ thuộc g trên f((a,b)). Với mọi f thỏa giả thiết luôn tồn tại g như vậy nên mệnh đề không rỗng. (3) Kết luận: StrictMonoOn khớp 'f tăng ngặt'. 'g khả vi' được hiểu đúng là khả vi trên miền xác định f((a,b)), và vì có DifferentiableAt nên deriv là đạo hàm thật; công thức g'(f(x))=1/f'(x) đúng nghĩa, không chia cho 0. (4) Tham chiếu có lỗi: f⁻¹ trong Mathlib là nghịch đảo từng điểm, và DifferentiableOn g lấy trên (a,b) là sai tập; ứng viên bám phát biểu chính xác hơn. (5) Điểm tinh tế: StrictMonoOn nằm trong phạm vi giả thiết về g, mà giả thiết này kéo theo f đơn ánh trên (a,b). Đây là cách đưa 'let g be its inverse function' thành giả thiết chung, giống tham chiếu với hg. Hàm ngược luôn tồn tại với mọi f thỏa giả thiết, và giả thiết này không tầm thường hóa phần (i): vẫn cần định lý giá trị trung bình, chẳng hạn strictMonoOn_of_deriv_pos. Vì vậy tôi coi điểm này không đổi nghĩa, dù đây là nhận định có thể tranh luận. Kết luận: ứng viên tương đương về nội dung với phát biểu.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "Thêm giả thiết a < b. Khi a ≥ b, Ioo a b rỗng nên kết luận đúng hiển nhiên; bỏ hay giữ giả thiết này không làm thay đổi nội dung.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Thêm DifferentiableAt ℝ f x cho x ∈ (a,b): phát biểu 'f'(x) > 0' đã ngầm giả định f khả vi; trong Lean, 0 < deriv f x đã kéo theo khả vi.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Hàm ngược g được mô tả bằng các điều kiện g(f x) = x trên (a,b) và f(g y) = y trên f((a,b)), với g : ℝ → ℝ có giá trị tùy ý ngoài f((a,b)); tham chiếu viết g = f⁻¹. Đây đúng là hàm ngược của f thu hẹp trên (a,b); điều kiện thứ hai thừa; vì f((a,b)) mở nên phần giá trị tùy ý không ảnh hưởng đến khả vi hay đạo hàm tại f(x).",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Kết luận khả vi của g viết là DifferentiableAt ℝ g (f x) với mọi x ∈ (a,b), tức là trên f((a,b)) = miền của g, thay vì DifferentiableOn ℝ g (Ioo a b) như tham chiếu. Cách viết của ứng viên đúng với phát biểu (tham chiếu lấy sai tập và dùng f⁻¹ là nghịch đảo từng điểm).",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Kết luận StrictMonoOn f nằm trong phạm vi ∀ g và các giả thiết về g (kéo theo f đơn ánh trên (a,b)), trong khi phát biểu đưa g vào sau khi chứng minh f tăng ngặt. Đây là cách đưa 'let g be its inverse function' thành giả thiết chung (tham chiếu cũng làm vậy); hàm ngược luôn tồn tại với mọi f thỏa giả thiết và giả thiết này không tầm thường hóa phần (i). Tôi coi là không đổi nghĩa, dù đây là nhận định có thể tranh luận.",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Rudin|exercise_5_4": {
+  "top": false,
+  "top_phan_tich": "Giả thiết khớp với tham chiếu. Mệnh đề cần chấm lấy n : ℕ tùy ý và C : ℕ → ℝ, chỉ dùng C 0..C n. Giả thiết ∑_{k=0}^{n} C k / ((k:ℝ)+1) = 0 ép kiểu sang ℝ trước khi chia, nên không có chia nguyên trên ℕ; tham chiếu cũng hiểu là C i / (↑i + 1). Đa thức trong kết luận ∑_{k=0}^{n} C k * x^k = 0 đúng với đề. Khác biệt duy nhất về nội dung nằm ở vị trí nghiệm. Tham chiếu hiểu \"between 0 and 1\" là x ∈ Set.Icc 0 1, còn bản cần chấm đòi 0 < x ∧ x < 1, loại trừ nghiệm tại 0 và tại 1. Vì (0,1) ⊂ [0,1], kết luận này mạnh hơn: từ nó suy ra kết luận của tham chiếu, nhưng không suy ngược trực tiếp được. Ví dụ, khi C₀ = 0 thì x = 0 đủ làm chứng cho tham chiếu nhưng không đủ cho bản cần chấm. Bản khoảng mở vẫn đúng: đặt P(x) = ∑ C_k x^{k+1}/(k+1), có P(0) = P(1) = 0, theo định lý Rolle có x ∈ (0,1) với P'(x) = 0. Cách đọc \"strictly between\" cũng khá tự nhiên, nên đây là ca sát biên. Tuy vậy, theo tiêu chí chấm, miền của nghiệm phải hiểu như tham chiếu, tức [0,1]; thu hẹp miền đó, hay làm kết luận mạnh hơn, là đổi nghĩa. Các khác biệt còn lại (dạng ∀…→…, ký hiệu ∑ ∈, tên biến) chỉ là cách viết.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "Kết luận đòi nghiệm trong khoảng mở (0 < x ∧ x < 1), trong khi tham chiếu hiểu 'between 0 and 1' là đoạn đóng x ∈ Set.Icc 0 1. Kết luận mạnh hơn vì loại trừ nghiệm tại đầu mút 0 hoặc 1, và từ kết luận Icc không suy ngược trực tiếp ra kết luận Ioo. Bản khoảng mở vẫn đúng theo định lý Rolle, nhưng nó khẳng định nhiều hơn cách hiểu của tham chiếu.",
+    "lam_doi_nghia": true
+   },
+   {
+    "mo_ta": "Viết dưới dạng mệnh đề lượng từ hóa ∀ n, ∀ C, (giả thiết) → (kết luận) thay cho tham số và giả thiết của theorem.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Ép kiểu tường minh (k:ℝ)+1 ở mẫu số; tương đương với ↑i + 1 trong tham chiếu, không có phép chia trên ℕ.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Dùng ký hiệu ∑ k ∈ Finset.range (n+1) thay cho ∑ i in range (n + 1), và đổi tên biến chỉ số.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: Kết luận đòi nghiệm trong khoảng mở (0 < x ∧ x < 1), trong khi tham chiếu hiểu 'between 0 and 1' là đoạn đóng x ∈ Set.Icc 0 1. Kết luận mạnh hơn vì loại trừ nghiệm tại đầu mút 0 hoặc 1, và từ kết luận Icc không suy ngược trực tiếp ra kết luận Ioo. Bản khoảng mở vẫn đúng theo định lý Rolle, nhưng nó khẳng định nhiều hơn cách hiểu của tham chiếu.",
+  "confirmed": false,
+  "confirmed_phan_tich": "Giả thiết khớp với tham chiếu. Mệnh đề cần chấm lấy n : ℕ tùy ý và C : ℕ → ℝ, chỉ dùng C 0..C n. Giả thiết ∑_{k=0}^{n} C k / ((k:ℝ)+1) = 0 ép kiểu sang ℝ trước khi chia, nên không có chia nguyên trên ℕ; tham chiếu cũng hiểu là C i / (↑i + 1). Đa thức trong kết luận ∑_{k=0}^{n} C k * x^k = 0 đúng với đề. Khác biệt duy nhất về nội dung nằm ở vị trí nghiệm. Tham chiếu hiểu \"between 0 and 1\" là x ∈ Set.Icc 0 1, còn bản cần chấm đòi 0 < x ∧ x < 1, loại trừ nghiệm tại 0 và tại 1. Vì (0,1) ⊂ [0,1], kết luận này mạnh hơn: từ nó suy ra kết luận của tham chiếu, nhưng không suy ngược trực tiếp được. Ví dụ, khi C₀ = 0 thì x = 0 đủ làm chứng cho tham chiếu nhưng không đủ cho bản cần chấm. Bản khoảng mở vẫn đúng: đặt P(x) = ∑ C_k x^{k+1}/(k+1), có P(0) = P(1) = 0, theo định lý Rolle có x ∈ (0,1) với P'(x) = 0. Cách đọc \"strictly between\" cũng khá tự nhiên, nên đây là ca sát biên. Tuy vậy, theo tiêu chí chấm, miền của nghiệm phải hiểu như tham chiếu, tức [0,1]; thu hẹp miền đó, hay làm kết luận mạnh hơn, là đổi nghĩa. Các khác biệt còn lại (dạng ∀…→…, ký hiệu ∑ ∈, tên biến) chỉ là cách viết.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "Kết luận đòi nghiệm trong khoảng mở (0 < x ∧ x < 1), trong khi tham chiếu hiểu 'between 0 and 1' là đoạn đóng x ∈ Set.Icc 0 1. Kết luận mạnh hơn vì loại trừ nghiệm tại đầu mút 0 hoặc 1, và từ kết luận Icc không suy ngược trực tiếp ra kết luận Ioo. Bản khoảng mở vẫn đúng theo định lý Rolle, nhưng nó khẳng định nhiều hơn cách hiểu của tham chiếu.",
+    "lam_doi_nghia": true
+   },
+   {
+    "mo_ta": "Viết dưới dạng mệnh đề lượng từ hóa ∀ n, ∀ C, (giả thiết) → (kết luận) thay cho tham số và giả thiết của theorem.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Ép kiểu tường minh (k:ℝ)+1 ở mẫu số; tương đương với ↑i + 1 trong tham chiếu, không có phép chia trên ℕ.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Dùng ký hiệu ∑ k ∈ Finset.range (n+1) thay cho ∑ i in range (n + 1), và đổi tên biến chỉ số.",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Rudin|exercise_5_6": {
+  "top": true,
+  "top_phan_tich": "Đối chiếu từng phần với phát biểu và với tham chiếu: (a) f liên tục với x ≥ 0 được viết là ContinuousOn f (Set.Ici 0), giống tham chiếu; ở điểm 0 đây là liên tục phải, đúng cách hiểu chuẩn. (b) f'(x) tồn tại với x > 0 được viết là ∀ x, 0 < x → DifferentiableAt ℝ f x. Vì Set.Ioi 0 là tập mở nên điều này tương đương với DifferentiableOn ℝ f (Set.Ioi 0) của tham chiếu: chiều thuận dùng DifferentiableAt.differentiableWithinAt, chiều ngược dùng DifferentiableOn.differentiableAt cùng IsOpen.mem_nhds. Cách viết này còn sát câu chữ \"f'(x) tồn tại với x > 0\" hơn. (c) f 0 = 0, giống tham chiếu. (d) MonotoneOn (deriv f) (Set.Ioi 0): trên (0,∞) f khả vi nên deriv f đúng là f', và \"monotonically increasing\" (theo nghĩa không giảm của Rudin) khớp với MonotoneOn. Kết luận MonotoneOn (fun x => f x / x) (Set.Ioi 0) giống tham chiếu; phép chia chỉ xét với x > 0 nên quy ước x/0 = 0 không ảnh hưởng. Các số 0 đều có kiểu ℝ, không có phép toán trên ℕ. Việc lượng hóa ∀ f tường minh thay cho tham số ngầm {f} không đổi nghĩa. Vậy mệnh đề cần chấm tương đương với tham chiếu và đúng nghĩa với phát biểu.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "Giả thiết khả vi được viết là ∀ x, 0 < x → DifferentiableAt ℝ f x thay vì DifferentiableOn ℝ f (Set.Ioi 0). Vì Set.Ioi 0 là tập mở nên hai cách viết tương đương.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Hàm f được lượng hóa tường minh bằng ∀ f : ℝ → ℝ thay vì là tham số ngầm {f} như tham chiếu. Hai cách này cùng nghĩa.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: đúng nghĩa",
+  "confirmed": true,
+  "confirmed_phan_tich": "Đối chiếu từng phần với phát biểu và với tham chiếu: (a) f liên tục với x ≥ 0 được viết là ContinuousOn f (Set.Ici 0), giống tham chiếu; ở điểm 0 đây là liên tục phải, đúng cách hiểu chuẩn. (b) f'(x) tồn tại với x > 0 được viết là ∀ x, 0 < x → DifferentiableAt ℝ f x. Vì Set.Ioi 0 là tập mở nên điều này tương đương với DifferentiableOn ℝ f (Set.Ioi 0) của tham chiếu: chiều thuận dùng DifferentiableAt.differentiableWithinAt, chiều ngược dùng DifferentiableOn.differentiableAt cùng IsOpen.mem_nhds. Cách viết này còn sát câu chữ \"f'(x) tồn tại với x > 0\" hơn. (c) f 0 = 0, giống tham chiếu. (d) MonotoneOn (deriv f) (Set.Ioi 0): trên (0,∞) f khả vi nên deriv f đúng là f', và \"monotonically increasing\" (theo nghĩa không giảm của Rudin) khớp với MonotoneOn. Kết luận MonotoneOn (fun x => f x / x) (Set.Ioi 0) giống tham chiếu; phép chia chỉ xét với x > 0 nên quy ước x/0 = 0 không ảnh hưởng. Các số 0 đều có kiểu ℝ, không có phép toán trên ℕ. Việc lượng hóa ∀ f tường minh thay cho tham số ngầm {f} không đổi nghĩa. Vậy mệnh đề cần chấm tương đương với tham chiếu và đúng nghĩa với phát biểu.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "Giả thiết khả vi được viết là ∀ x, 0 < x → DifferentiableAt ℝ f x thay vì DifferentiableOn ℝ f (Set.Ioi 0). Vì Set.Ioi 0 là tập mở nên hai cách viết tương đương.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Hàm f được lượng hóa tường minh bằng ∀ f : ℝ → ℝ thay vì là tham số ngầm {f} như tham chiếu. Hai cách này cùng nghĩa.",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Rudin|exercise_5_15": {
+  "top": true,
+  "top_phan_tich": "Mệnh đề cần chấm lượng hóa ∀ a : ℝ (ứng với a ∈ R^1) và ∀ f : ℝ → ℝ. Giả thiết 'khả vi hai lần trên (a,∞)' được viết là ∀ x > a, DifferentiableAt ℝ f x ∧ DifferentiableAt ℝ (deriv f) x. Vì (a,∞) mở, f khả vi tại mọi điểm của nó nên deriv f trùng với f' trên một lân cận của mỗi x > a. Do đó deriv (deriv f) x = f''(x), và điều kiện này tương đương với hai điều kiện DifferentiableOn trong tham chiếu. Các tập {y | ∃ x, a < x ∧ y = |·|} đúng là ảnh của (a,∞) qua |f|, |f'|, |f''|; chúng khác rỗng nên IsLUB S M nghĩa là S bị chặn trên và M = sup S. Như vậy M0, M1, M2 được hiểu là các số thực hữu hạn. Đây là giả định ngầm của phát biểu (bất đẳng thức giữa các số thực; tham chiếu cũng coi M_i ∈ ℝ) và thuộc loại 'thêm sự tồn tại của đại lượng được nhắc tới' được chấp nhận. Cách dùng IsLUB còn tránh được lỗi quy ước sSup = 0 cho tập không bị chặn của tham chiếu (với f(x) = x trên (0,∞), tham chiếu dẫn tới 1 ≤ 0). Kết luận M1^2 ≤ 4*M0*M2 là phép tính trên ℝ, không có vấn đề ép kiểu. Phạm vi lượng từ và thứ tự giả thiết đều đúng. Mệnh đề đúng nghĩa.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "f được khai báo là hàm ℝ → ℝ thay vì hàm trên (a,∞). Mọi điều kiện (khả vi, deriv, deriv (deriv f) tại x > a) đều mang tính địa phương và (a,∞) mở, nên giá trị của f ngoài (a,∞) không ảnh hưởng.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "'Twice-differentiable on (a,∞)' được diễn đạt theo từng điểm bằng DifferentiableAt cho f và deriv f tại mọi x > a, thay vì DifferentiableOn như tham chiếu. Trên tập mở, hai cách này tương đương, và deriv (deriv f) x = f''(x) với x > a.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Dùng IsLUB thay cho sSup. Điều này buộc các tập bị chặn trên, tức M0, M1, M2 là số thực hữu hạn. Đây là giả định ngầm của phát biểu (sự tồn tại của các đại lượng được nhắc tới, giống tham chiếu coi M_i ∈ ℝ), đồng thời tránh được quy ước sSup = 0 cho tập không bị chặn của tham chiếu.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Các tập giá trị được viết dưới dạng {y | ∃ x, a < x ∧ y = |...|} thay cho {|f x| | x ∈ Set.Ioi a}. Hai cách viết cho cùng một tập.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Phát biểu dưới dạng một mệnh đề với các lượng từ ∀ lồng nhau thay vì theorem có tham số và giả thiết. Không làm thay đổi nội dung.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: đúng nghĩa",
+  "confirmed": true,
+  "confirmed_phan_tich": "Mệnh đề cần chấm lượng hóa ∀ a : ℝ (ứng với a ∈ R^1) và ∀ f : ℝ → ℝ. Giả thiết 'khả vi hai lần trên (a,∞)' được viết là ∀ x > a, DifferentiableAt ℝ f x ∧ DifferentiableAt ℝ (deriv f) x. Vì (a,∞) mở, f khả vi tại mọi điểm của nó nên deriv f trùng với f' trên một lân cận của mỗi x > a. Do đó deriv (deriv f) x = f''(x), và điều kiện này tương đương với hai điều kiện DifferentiableOn trong tham chiếu. Các tập {y | ∃ x, a < x ∧ y = |·|} đúng là ảnh của (a,∞) qua |f|, |f'|, |f''|; chúng khác rỗng nên IsLUB S M nghĩa là S bị chặn trên và M = sup S. Như vậy M0, M1, M2 được hiểu là các số thực hữu hạn. Đây là giả định ngầm của phát biểu (bất đẳng thức giữa các số thực; tham chiếu cũng coi M_i ∈ ℝ) và thuộc loại 'thêm sự tồn tại của đại lượng được nhắc tới' được chấp nhận. Cách dùng IsLUB còn tránh được lỗi quy ước sSup = 0 cho tập không bị chặn của tham chiếu (với f(x) = x trên (0,∞), tham chiếu dẫn tới 1 ≤ 0). Kết luận M1^2 ≤ 4*M0*M2 là phép tính trên ℝ, không có vấn đề ép kiểu. Phạm vi lượng từ và thứ tự giả thiết đều đúng. Mệnh đề đúng nghĩa.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "f được khai báo là hàm ℝ → ℝ thay vì hàm trên (a,∞). Mọi điều kiện (khả vi, deriv, deriv (deriv f) tại x > a) đều mang tính địa phương và (a,∞) mở, nên giá trị của f ngoài (a,∞) không ảnh hưởng.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "'Twice-differentiable on (a,∞)' được diễn đạt theo từng điểm bằng DifferentiableAt cho f và deriv f tại mọi x > a, thay vì DifferentiableOn như tham chiếu. Trên tập mở, hai cách này tương đương, và deriv (deriv f) x = f''(x) với x > a.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Dùng IsLUB thay cho sSup. Điều này buộc các tập bị chặn trên, tức M0, M1, M2 là số thực hữu hạn. Đây là giả định ngầm của phát biểu (sự tồn tại của các đại lượng được nhắc tới, giống tham chiếu coi M_i ∈ ℝ), đồng thời tránh được quy ước sSup = 0 cho tập không bị chặn của tham chiếu.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Các tập giá trị được viết dưới dạng {y | ∃ x, a < x ∧ y = |...|} thay cho {|f x| | x ∈ Set.Ioi a}. Hai cách viết cho cùng một tập.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Phát biểu dưới dạng một mệnh đề với các lượng từ ∀ lồng nhau thay vì theorem có tham số và giả thiết. Không làm thay đổi nội dung.",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Pugh|exercise_2_12a": {
+  "top": false,
+  "top_phan_tich": "Phát biểu (Pugh, Chương 2, bối cảnh không gian metric) nói về một dãy (p_n) tùy ý, không chỉ định không gian. Tham chiếu hiểu dãy nhận giá trị trong một không gian tô pô tùy ý α. Cấu trúc logic của mệnh đề cần chấm khớp với phát biểu: ∀ p, ∀ f, f đơn ánh, ∀ L, giả thiết p → L, kết luận p ∘ f → L. `fun n : ℕ => p n` chính là p, thứ tự lượng từ tương đương với các tham số của tham chiếu, và không có ép kiểu hay phép toán trên ℕ gây sai. Tuy nhiên mệnh đề cố định p : ℕ → ℝ, tức là thu hẹp kiểu giá trị của dãy từ không gian tô pô (hay metric) tổng quát xuống riêng ℝ. Đây là một trường hợp đặc biệt, yếu hơn hẳn kết quả tổng quát. Theo tiêu chí, thu hẹp miền/kiểu của đối tượng so với cách tham chiếu hiểu là làm đổi nghĩa, nên mệnh đề không đúng nghĩa.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "Dãy p chỉ nhận giá trị trong ℝ (p : ℕ → ℝ, L : ℝ), thay vì trong một không gian tô pô tùy ý α như tham chiếu (hay không gian metric như bối cảnh của Pugh). Đây là thu hẹp kiểu của đối tượng, chỉ phát biểu một trường hợp riêng.",
+    "lam_doi_nghia": true
+   },
+   {
+    "mo_ta": "Giả thiết hội tụ viết là Tendsto (fun n : ℕ => p n) thay vì Tendsto p. Hai cách viết bằng nhau theo định nghĩa (eta).",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết dạng mệnh đề đóng với ∀ p f, Injective f → ∀ L, ... thay vì dùng tham số và giả thiết như tham chiếu. Thứ tự lượng từ tương đương.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: Dãy p chỉ nhận giá trị trong ℝ (p : ℕ → ℝ, L : ℝ), thay vì trong một không gian tô pô tùy ý α như tham chiếu (hay không gian metric như bối cảnh của Pugh). Đây là thu hẹp kiểu của đối tượng, chỉ phát biểu một trường hợp riêng.",
+  "confirmed": false,
+  "confirmed_phan_tich": "Phát biểu (Pugh, Chương 2, bối cảnh không gian metric) nói về một dãy (p_n) tùy ý, không chỉ định không gian. Tham chiếu hiểu dãy nhận giá trị trong một không gian tô pô tùy ý α. Cấu trúc logic của mệnh đề cần chấm khớp với phát biểu: ∀ p, ∀ f, f đơn ánh, ∀ L, giả thiết p → L, kết luận p ∘ f → L. `fun n : ℕ => p n` chính là p, thứ tự lượng từ tương đương với các tham số của tham chiếu, và không có ép kiểu hay phép toán trên ℕ gây sai. Tuy nhiên mệnh đề cố định p : ℕ → ℝ, tức là thu hẹp kiểu giá trị của dãy từ không gian tô pô (hay metric) tổng quát xuống riêng ℝ. Đây là một trường hợp đặc biệt, yếu hơn hẳn kết quả tổng quát. Theo tiêu chí, thu hẹp miền/kiểu của đối tượng so với cách tham chiếu hiểu là làm đổi nghĩa, nên mệnh đề không đúng nghĩa.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "Dãy p chỉ nhận giá trị trong ℝ (p : ℕ → ℝ, L : ℝ), thay vì trong một không gian tô pô tùy ý α như tham chiếu (hay không gian metric như bối cảnh của Pugh). Đây là thu hẹp kiểu của đối tượng, chỉ phát biểu một trường hợp riêng.",
+    "lam_doi_nghia": true
+   },
+   {
+    "mo_ta": "Giả thiết hội tụ viết là Tendsto (fun n : ℕ => p n) thay vì Tendsto p. Hai cách viết bằng nhau theo định nghĩa (eta).",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết dạng mệnh đề đóng với ∀ p f, Injective f → ∀ L, ... thay vì dùng tham số và giả thiết như tham chiếu. Thứ tự lượng từ tương đương.",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Rudin|exercise_1_5": {
+  "top": true,
+  "top_phan_tich": "Mệnh đề cần chấm lượng hóa mọi A : Set ℝ khác rỗng và bị chặn dưới, khớp với giả thiết. Tập −A được viết là {y | ∃ x ∈ A, y = -x}, đúng nguyên văn \"tập các số −x với x ∈ A\". Tập này bằng tập {x | -x ∈ A} của tham chiếu vì phép đổi dấu là song ánh và tự nghịch đảo. Thay cho sInf/sSup, mệnh đề dùng IsGLB/IsLUB và khẳng định ba điều: (a) A có cận dưới đúng; (b) −A có cận trên đúng; (c) mọi cận dưới đúng i của A và mọi cận trên đúng s của −A đều thỏa i = −s. Trong ℝ cận dưới/trên đúng là duy nhất, nên (a)+(b)+(c) đúng bằng \"inf A và sup(−A) tồn tại và inf A = −sup(−A)\", tức là nội dung chuẩn của phát biểu. Phát biểu gốc đã ngầm giả định sự tồn tại của inf A và sup(−A), vì đẳng thức chỉ có nghĩa khi hai vế xác định, và điều này đúng nhờ tính đầy đủ của ℝ. Vì vậy hai vế tồn tại không làm kết luận mạnh hơn về nội dung, đồng thời tránh được vấn đề giá trị quy ước của sInf/sSup. Về cú pháp: ∧ kết hợp phải, phạm vi của ∀ i s kéo đến cuối, `∃ x ∈ A, y = -x` được hiểu đúng, và không có phép toán trên ℕ hay ép kiểu đáng ngờ.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "Dùng IsGLB/IsLUB, gồm cả khẳng định tồn tại và đẳng thức cho mọi i, s, thay cho sInf A = -sSup(-A). Do cận dưới/trên đúng là duy nhất trong ℝ và sự tồn tại cũng được khẳng định, hai cách viết cùng nghĩa.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Tập −A viết dạng ảnh {y | ∃ x ∈ A, y = -x} thay vì dạng tiền ảnh {x | -x ∈ A} như tham chiếu. Hai tập bằng nhau, và dạng ảnh còn khớp đúng lời phát biểu.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Thêm vào kết luận sự tồn tại của inf A và sup(−A). Đây là điều phát biểu ngầm giả định khi viết inf A và sup(−A), và đúng nhờ tính đầy đủ của ℝ, nên không làm đổi nghĩa.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết thành một mệnh đề ∀ đóng, không đặt tên giả thiết và không dùng biến phụ minus_A cùng giả thiết định nghĩa nó. Đây chỉ là khác biệt về cách trình bày.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: đúng nghĩa",
+  "confirmed": true,
+  "confirmed_phan_tich": "Mệnh đề cần chấm lượng hóa mọi A : Set ℝ khác rỗng và bị chặn dưới, khớp với giả thiết. Tập −A được viết là {y | ∃ x ∈ A, y = -x}, đúng nguyên văn \"tập các số −x với x ∈ A\". Tập này bằng tập {x | -x ∈ A} của tham chiếu vì phép đổi dấu là song ánh và tự nghịch đảo. Thay cho sInf/sSup, mệnh đề dùng IsGLB/IsLUB và khẳng định ba điều: (a) A có cận dưới đúng; (b) −A có cận trên đúng; (c) mọi cận dưới đúng i của A và mọi cận trên đúng s của −A đều thỏa i = −s. Trong ℝ cận dưới/trên đúng là duy nhất, nên (a)+(b)+(c) đúng bằng \"inf A và sup(−A) tồn tại và inf A = −sup(−A)\", tức là nội dung chuẩn của phát biểu. Phát biểu gốc đã ngầm giả định sự tồn tại của inf A và sup(−A), vì đẳng thức chỉ có nghĩa khi hai vế xác định, và điều này đúng nhờ tính đầy đủ của ℝ. Vì vậy hai vế tồn tại không làm kết luận mạnh hơn về nội dung, đồng thời tránh được vấn đề giá trị quy ước của sInf/sSup. Về cú pháp: ∧ kết hợp phải, phạm vi của ∀ i s kéo đến cuối, `∃ x ∈ A, y = -x` được hiểu đúng, và không có phép toán trên ℕ hay ép kiểu đáng ngờ.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "Dùng IsGLB/IsLUB, gồm cả khẳng định tồn tại và đẳng thức cho mọi i, s, thay cho sInf A = -sSup(-A). Do cận dưới/trên đúng là duy nhất trong ℝ và sự tồn tại cũng được khẳng định, hai cách viết cùng nghĩa.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Tập −A viết dạng ảnh {y | ∃ x ∈ A, y = -x} thay vì dạng tiền ảnh {x | -x ∈ A} như tham chiếu. Hai tập bằng nhau, và dạng ảnh còn khớp đúng lời phát biểu.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Thêm vào kết luận sự tồn tại của inf A và sup(−A). Đây là điều phát biểu ngầm giả định khi viết inf A và sup(−A), và đúng nhờ tính đầy đủ của ℝ, nên không làm đổi nghĩa.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "Viết thành một mệnh đề ∀ đóng, không đặt tên giả thiết và không dùng biến phụ minus_A cùng giả thiết định nghĩa nó. Đây chỉ là khác biệt về cách trình bày.",
+    "lam_doi_nghia": false
+   }
+  ]
+ },
+ "Rudin|exercise_4_8b": {
+  "top": true,
+  "top_phan_tich": "Phát biểu (theo cách ghi của ProofNet và cách tham chiếu hiểu): với mọi tập bị chặn E ⊆ ℝ, tồn tại hàm thực f liên tục đều trên E nhưng không bị chặn trên E. Tham chiếu: (E : Set ℝ) (h : IsBounded E) ⊢ ∃ f : ℝ → ℝ, UniformContinuousOn f E ∧ ¬ IsBounded (f '' E). Mệnh đề cần chấm: ∀ E : Set ℝ, IsBounded E → ∃ f : ℝ → ℝ, UniformContinuousOn f E ∧ ¬ ∃ M, ∀ x ∈ E, |f x| ≤ M. Giả thiết (Bornology.IsBounded E), lượng từ (∀ E, ∃ f), kiểu của f (ℝ → ℝ) và tính liên tục đều (UniformContinuousOn f E) giống hệt tham chiếu. Khác biệt duy nhất là cách viết 'không bị chặn trên E'. Trên ℝ, bornology mặc định đến từ metric và isBounded_iff_forall_norm_le cho IsBounded S ↔ ∃ C, ∀ y ∈ S, ‖y‖ ≤ C, với ‖y‖ = |y|. Thay S = f '' E thì được đúng ∃ C, ∀ x ∈ E, |f x| ≤ C, nên hai kết luận tương đương; đây cũng là định nghĩa chuẩn của 'f bị chặn trên E'. Cú pháp: ¬ phủ định toàn bộ ∃ M, ...; ∧ nối đúng hai vế; ∃ f nằm trong kết luận của phép kéo theo. Lưu ý: phát biểu như được ghi là sai về mặt toán học (hàm liên tục đều trên tập bị chặn luôn bị chặn; với E = ∅ không có f nào không bị chặn trên E), có lẽ do chép nhầm Rudin 4.8 (bản gốc nói về E không bị chặn). Tuy vậy, tham chiếu hình thức hóa đúng câu đề như được ghi, và mệnh đề cần chấm trung thành với cùng câu đó, nên đây không phải là khác biệt. Kết luận: đúng nghĩa.",
+  "top_khac_biet": [
+   {
+    "mo_ta": "'Không bị chặn trên E' được viết là ¬ ∃ M : ℝ, ∀ x ∈ E, |f x| ≤ M thay vì ¬ Bornology.IsBounded (f '' E). Hai cách tương đương trên ℝ theo isBounded_iff_forall_norm_le và Real.norm_eq_abs; đây cũng là định nghĩa chuẩn của hàm bị chặn trên E.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "E được lượng từ hóa ∀ trong thân mệnh đề, kèm phép kéo theo IsBounded E → ..., thay vì là tham số định lý với giả thiết h. Hai cách viết như nhau.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "'Hàm thực' được biểu diễn là f : ℝ → ℝ kèm UniformContinuousOn f E, giống tham chiếu, thay cho hàm chỉ xác định trên E. Mọi hàm trên E mở rộng được ra ℝ, và cả hai tính chất chỉ phụ thuộc giá trị của f trên E, nên không đổi nghĩa.",
+    "lam_doi_nghia": false
+   }
+  ],
+  "ly_do": "opus: đúng nghĩa",
+  "confirmed": true,
+  "confirmed_phan_tich": "Phát biểu (theo cách ghi của ProofNet và cách tham chiếu hiểu): với mọi tập bị chặn E ⊆ ℝ, tồn tại hàm thực f liên tục đều trên E nhưng không bị chặn trên E. Tham chiếu: (E : Set ℝ) (h : IsBounded E) ⊢ ∃ f : ℝ → ℝ, UniformContinuousOn f E ∧ ¬ IsBounded (f '' E). Mệnh đề cần chấm: ∀ E : Set ℝ, IsBounded E → ∃ f : ℝ → ℝ, UniformContinuousOn f E ∧ ¬ ∃ M, ∀ x ∈ E, |f x| ≤ M. Giả thiết (Bornology.IsBounded E), lượng từ (∀ E, ∃ f), kiểu của f (ℝ → ℝ) và tính liên tục đều (UniformContinuousOn f E) giống hệt tham chiếu. Khác biệt duy nhất là cách viết 'không bị chặn trên E'. Trên ℝ, bornology mặc định đến từ metric và isBounded_iff_forall_norm_le cho IsBounded S ↔ ∃ C, ∀ y ∈ S, ‖y‖ ≤ C, với ‖y‖ = |y|. Thay S = f '' E thì được đúng ∃ C, ∀ x ∈ E, |f x| ≤ C, nên hai kết luận tương đương; đây cũng là định nghĩa chuẩn của 'f bị chặn trên E'. Cú pháp: ¬ phủ định toàn bộ ∃ M, ...; ∧ nối đúng hai vế; ∃ f nằm trong kết luận của phép kéo theo. Lưu ý: phát biểu như được ghi là sai về mặt toán học (hàm liên tục đều trên tập bị chặn luôn bị chặn; với E = ∅ không có f nào không bị chặn trên E), có lẽ do chép nhầm Rudin 4.8 (bản gốc nói về E không bị chặn). Tuy vậy, tham chiếu hình thức hóa đúng câu đề như được ghi, và mệnh đề cần chấm trung thành với cùng câu đó, nên đây không phải là khác biệt. Kết luận: đúng nghĩa.",
+  "confirmed_khac_biet": [
+   {
+    "mo_ta": "'Không bị chặn trên E' được viết là ¬ ∃ M : ℝ, ∀ x ∈ E, |f x| ≤ M thay vì ¬ Bornology.IsBounded (f '' E). Hai cách tương đương trên ℝ theo isBounded_iff_forall_norm_le và Real.norm_eq_abs; đây cũng là định nghĩa chuẩn của hàm bị chặn trên E.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "E được lượng từ hóa ∀ trong thân mệnh đề, kèm phép kéo theo IsBounded E → ..., thay vì là tham số định lý với giả thiết h. Hai cách viết như nhau.",
+    "lam_doi_nghia": false
+   },
+   {
+    "mo_ta": "'Hàm thực' được biểu diễn là f : ℝ → ℝ kèm UniformContinuousOn f E, giống tham chiếu, thay cho hàm chỉ xác định trên E. Mọi hàm trên E mở rộng được ra ℝ, và cả hai tính chất chỉ phụ thuộc giá trị của f trên E, nên không đổi nghĩa.",
+    "lam_doi_nghia": false
+   }
+  ]
+ }
+}

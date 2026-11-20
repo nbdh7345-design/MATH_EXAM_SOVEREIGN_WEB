@@ -1,0 +1,164 @@
+{
+ "Pugh|exercise_3_4": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Putnam|exercise_1998_a3": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_3_1a": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_3_3": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_4_19": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_4_24": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_5_2": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_5_4": {
+  "ok": true,
+  "migrated": true,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_5_6": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_5_15": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Pugh|exercise_3_1": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Putnam|exercise_1999_b4": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Putnam|exercise_2018_a5": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_3_2a": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_4_1a": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_5_1": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_5_3": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_5_5": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_5_7": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_5_17": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Pugh|exercise_2_12a": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_1_5": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_3_6a": {
+  "ok": true,
+  "migrated": true,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_4_8b": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Pugh|exercise_4_15a": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_3_5": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ },
+ "Rudin|exercise_4_8a": {
+  "ok": true,
+  "migrated": false,
+  "errors": "",
+  "checked_at": "2026-10-31T00:28:58"
+ }
+}

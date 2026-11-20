@@ -1,0 +1,113 @@
+{
+ "luot_chay": "valid_v3",
+ "chua_cham": [],
+ "tu_dong_BEq": {
+  "so_bai": 14,
+  "loi": 0,
+  "ti_le_bien_dich_duoc_%": 100.0,
+  "do_chinh_xac_menh_de_chon_%": 21.4,
+  "ti_le_da_xac_nhan_%": 85.7,
+  "do_chinh_xac_cua_da_xac_nhan_%": 25.0,
+  "do_phu_xac_nhan_dung_%": 21.4,
+  "luot_LLM_trung_binh": {
+   "sonnet": 3.71,
+   "haiku": 3.36
+  },
+  "thoi_gian_trung_binh_s": 105.7
+ },
+ "sau_cham_tay": {
+  "so_bai": 14,
+  "loi": 0,
+  "ti_le_bien_dich_duoc_%": 100.0,
+  "do_chinh_xac_menh_de_chon_%": 85.7,
+  "ti_le_da_xac_nhan_%": 85.7,
+  "do_chinh_xac_cua_da_xac_nhan_%": 91.7,
+  "do_phu_xac_nhan_dung_%": 78.6,
+  "luot_LLM_trung_binh": {
+   "sonnet": 3.71,
+   "haiku": 3.36
+  },
+  "thoi_gian_trung_binh_s": 105.7
+ },
+ "theo_split": {
+  "valid": {
+   "so_bai": 14,
+   "loi": 0,
+   "ti_le_bien_dich_duoc_%": 100.0,
+   "do_chinh_xac_menh_de_chon_%": 85.7,
+   "ti_le_da_xac_nhan_%": 85.7,
+   "do_chinh_xac_cua_da_xac_nhan_%": 91.7,
+   "do_phu_xac_nhan_dung_%": 78.6,
+   "luot_LLM_trung_binh": {
+    "sonnet": 3.71,
+    "haiku": 3.36
+   },
+   "thoi_gian_trung_binh_s": 105.7
+  }
+ },
+ "theo_nhom": {
+  "chinh": {
+   "so_bai": 10,
+   "loi": 0,
+   "ti_le_bien_dich_duoc_%": 100.0,
+   "do_chinh_xac_menh_de_chon_%": 20.0,
+   "ti_le_da_xac_nhan_%": 90.0,
+   "do_chinh_xac_cua_da_xac_nhan_%": 22.2,
+   "do_phu_xac_nhan_dung_%": 20.0,
+   "luot_LLM_trung_binh": {
+    "sonnet": 3.8,
+    "haiku": 3.1
+   },
+   "thoi_gian_trung_binh_s": 96.1
+  },
+  "bien": {
+   "so_bai": 4,
+   "loi": 0,
+   "ti_le_bien_dich_duoc_%": 100.0,
+   "do_chinh_xac_menh_de_chon_%": 25.0,
+   "ti_le_da_xac_nhan_%": 75.0,
+   "do_chinh_xac_cua_da_xac_nhan_%": 33.3,
+   "do_phu_xac_nhan_dung_%": 25.0,
+   "luot_LLM_trung_binh": {
+    "sonnet": 3.5,
+    "haiku": 4.0
+   },
+   "thoi_gian_trung_binh_s": 129.5
+  }
+ },
+ "theo_nhom_cham_tay": {
+  "chinh": {
+   "so_bai": 10,
+   "loi": 0,
+   "ti_le_bien_dich_duoc_%": 100.0,
+   "do_chinh_xac_menh_de_chon_%": 100.0,
+   "ti_le_da_xac_nhan_%": 90.0,
+   "do_chinh_xac_cua_da_xac_nhan_%": 100.0,
+   "do_phu_xac_nhan_dung_%": 90.0,
+   "luot_LLM_trung_binh": {
+    "sonnet": 3.8,
+    "haiku": 3.1
+   },
+   "thoi_gian_trung_binh_s": 96.1
+  },
+  "bien": {
+   "so_bai": 4,
+   "loi": 0,
+   "ti_le_bien_dich_duoc_%": 100.0,
+   "do_chinh_xac_menh_de_chon_%": 50.0,
+   "ti_le_da_xac_nhan_%": 75.0,
+   "do_chinh_xac_cua_da_xac_nhan_%": 66.7,
+   "do_phu_xac_nhan_dung_%": 50.0,
+   "luot_LLM_trung_binh": {
+    "sonnet": 3.5,
+    "haiku": 4.0
+   },
+   "thoi_gian_trung_binh_s": 129.5
+  }
+ },
+ "doi_chieu_bai_bao_%": {
+  "GPT-4o (greedy, test, chấm tay)": 31.0,
+  "GPT-4o (lọc kiểm kiểu + tự nhất quán, test, chấm tay)": 45.1
+ },
+ "luu_y": "Không so trực tiếp được: bài báo chấm tay trên toàn bộ 186 bài test, Lean v4.7-v4.16; ở đây là tập con Giải tích 1, Lean của máy, chấm tự động kiểu BEq rút gọn (có thể báo sai âm) và chấm tay nếu có."
+}

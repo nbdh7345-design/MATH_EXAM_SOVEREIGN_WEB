@@ -1,0 +1,35 @@
+{
+  "mo_ta": "Các bài ProofNet# thuộc phạm vi Giải tích 1 (Bảng 1.2 của đặc tả). Phân loại thủ công theo đề tiếng Anh và mệnh đề Lean tham chiếu. 'chinh': nằm rõ trong phạm vi; 'bien': gần phạm vi nhưng dùng khái niệm giáo trình Giải tích 1 không có (không gian tô pô tổng quát, sup/inf, limsup, liên tục đều, tổng riêng của chuỗi). Các bài còn lại (đại số, tô pô, không gian mêtric, số phức, số học, chuỗi) nằm ngoài phạm vi.",
+  "nguon": "PAug/ProofNetSharp (Hugging Face), tải ngày 2026-10-30; Poiroux và cộng sự, arXiv 2406.07222",
+  "chinh": [
+    {"id": "Pugh|exercise_3_4", "split": "valid", "chu_de": "Giới hạn dãy số"},
+    {"id": "Putnam|exercise_1998_a3", "split": "valid", "chu_de": "Đạo hàm cấp cao"},
+    {"id": "Rudin|exercise_3_1a", "split": "valid", "chu_de": "Giới hạn dãy số"},
+    {"id": "Rudin|exercise_3_3", "split": "valid", "chu_de": "Giới hạn dãy số (dãy truy hồi)"},
+    {"id": "Rudin|exercise_4_19", "split": "valid", "chu_de": "Liên tục"},
+    {"id": "Rudin|exercise_4_24", "split": "valid", "chu_de": "Lồi lõm"},
+    {"id": "Rudin|exercise_5_2", "split": "valid", "chu_de": "Đạo hàm, hàm ngược"},
+    {"id": "Rudin|exercise_5_4", "split": "valid", "chu_de": "Định lý giá trị trung bình (Rolle)"},
+    {"id": "Rudin|exercise_5_6", "split": "valid", "chu_de": "Đạo hàm và tính đơn điệu"},
+    {"id": "Rudin|exercise_5_15", "split": "valid", "chu_de": "Khai triển Taylor, bất đẳng thức đạo hàm"},
+    {"id": "Pugh|exercise_3_1", "split": "test", "chu_de": "Đạo hàm (hàm hằng)"},
+    {"id": "Putnam|exercise_1999_b4", "split": "test", "chu_de": "Đạo hàm cấp cao"},
+    {"id": "Putnam|exercise_2018_a5", "split": "test", "chu_de": "Đạo hàm cấp cao"},
+    {"id": "Rudin|exercise_3_2a", "split": "test", "chu_de": "Giới hạn"},
+    {"id": "Rudin|exercise_4_1a", "split": "test", "chu_de": "Giới hạn, liên tục"},
+    {"id": "Rudin|exercise_5_1", "split": "test", "chu_de": "Đạo hàm (hàm hằng)"},
+    {"id": "Rudin|exercise_5_3", "split": "test", "chu_de": "Định lý giá trị trung bình"},
+    {"id": "Rudin|exercise_5_5", "split": "test", "chu_de": "Định lý giá trị trung bình, giới hạn"},
+    {"id": "Rudin|exercise_5_7", "split": "test", "chu_de": "Quy tắc L'Hospital"},
+    {"id": "Rudin|exercise_5_17", "split": "test", "chu_de": "Khai triển Taylor"}
+  ],
+  "bien": [
+    {"id": "Pugh|exercise_2_12a", "split": "valid", "chu_de": "Giới hạn dãy", "ly_do": "dãy trong không gian tô pô tổng quát"},
+    {"id": "Rudin|exercise_1_5", "split": "valid", "chu_de": "Cận trên, cận dưới", "ly_do": "sup/inf của tập số thực"},
+    {"id": "Rudin|exercise_3_6a", "split": "valid", "chu_de": "Giới hạn dãy tổng riêng", "ly_do": "gần chuỗi số (ngoài phạm vi)"},
+    {"id": "Rudin|exercise_4_8b", "split": "valid", "chu_de": "Liên tục đều", "ly_do": "liên tục đều, tập bị chặn (Bornology)"},
+    {"id": "Pugh|exercise_4_15a", "split": "test", "chu_de": "Liên tục đều", "ly_do": "module liên tục"},
+    {"id": "Rudin|exercise_3_5", "split": "test", "chu_de": "Giới hạn trên", "ly_do": "limsup trên EReal"},
+    {"id": "Rudin|exercise_4_8a", "split": "test", "chu_de": "Liên tục đều", "ly_do": "liên tục đều, tập bị chặn (Bornology)"}
+  ]
+}

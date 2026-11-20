@@ -1,0 +1,80 @@
+{
+ "luot_chay": "pb_valid_v1",
+ "toan_bo": {
+  "so_bai": 34,
+  "chung_minh_duoc": 18,
+  "ti_le_%": 52.9,
+  "loi": 0,
+  "cach_tim": {
+   "llm": 12,
+   "auto": 6
+  },
+  "ly_do_dung": {
+   "het_so_lan_thu": 16
+  },
+  "luot_LLM_trung_binh": {
+   "haiku": 0.82,
+   "sonnet": 2.21
+  },
+  "thoi_gian_trung_binh_s": 87.9
+ },
+ "theo_linh_vuc": {
+  "calculus": {
+   "so_bai": 27,
+   "chung_minh_duoc": 14,
+   "ti_le_%": 51.9,
+   "loi": 0,
+   "cach_tim": {
+    "llm": 11,
+    "auto": 3
+   },
+   "ly_do_dung": {
+    "het_so_lan_thu": 13
+   },
+   "luot_LLM_trung_binh": {
+    "haiku": 0.89,
+    "sonnet": 2.3
+   },
+   "thoi_gian_trung_binh_s": 94.9
+  },
+  "real_analysis": {
+   "so_bai": 7,
+   "chung_minh_duoc": 4,
+   "ti_le_%": 57.1,
+   "loi": 0,
+   "cach_tim": {
+    "auto": 3,
+    "llm": 1
+   },
+   "ly_do_dung": {
+    "het_so_lan_thu": 3
+   },
+   "luot_LLM_trung_binh": {
+    "haiku": 0.57,
+    "sonnet": 1.86
+   },
+   "thoi_gian_trung_binh_s": 61.0
+  }
+ },
+ "theo_tap": {
+  "valid": {
+   "so_bai": 34,
+   "chung_minh_duoc": 18,
+   "ti_le_%": 52.9,
+   "loi": 0,
+   "cach_tim": {
+    "llm": 12,
+    "auto": 6
+   },
+   "ly_do_dung": {
+    "het_so_lan_thu": 16
+   },
+   "luot_LLM_trung_binh": {
+    "haiku": 0.82,
+    "sonnet": 2.21
+   },
+   "thoi_gian_trung_binh_s": 87.9
+  }
+ },
+ "luu_y": "Mọi bài 'chứng minh được' đã được Lean kiểm (QT18), nên không có chứng minh sai; chỉ số là tỉ lệ chứng minh được trong giới hạn lượt LLM và heartbeat. Chỉ đo chế độ tìm chứng minh của FR09."
+}

@@ -1,0 +1,59 @@
+{
+ "luot_chay": "pb_valid_20fix",
+ "toan_bo": {
+  "so_bai": 10,
+  "chung_minh_duoc": 1,
+  "ti_le_%": 10.0,
+  "loi": 7,
+  "cach_tim": {
+   "llm": 1
+  },
+  "ly_do_dung": {
+   "het_so_lan_thu": 2
+  },
+  "luot_LLM_trung_binh": {
+   "haiku": 1.0,
+   "sonnet": 5.6
+  },
+  "thoi_gian_trung_binh_s": 190.3
+ },
+ "theo_linh_vuc": {
+  "calculus": {
+   "so_bai": 10,
+   "chung_minh_duoc": 1,
+   "ti_le_%": 10.0,
+   "loi": 7,
+   "cach_tim": {
+    "llm": 1
+   },
+   "ly_do_dung": {
+    "het_so_lan_thu": 2
+   },
+   "luot_LLM_trung_binh": {
+    "haiku": 1.0,
+    "sonnet": 5.6
+   },
+   "thoi_gian_trung_binh_s": 190.3
+  }
+ },
+ "theo_tap": {
+  "valid": {
+   "so_bai": 10,
+   "chung_minh_duoc": 1,
+   "ti_le_%": 10.0,
+   "loi": 7,
+   "cach_tim": {
+    "llm": 1
+   },
+   "ly_do_dung": {
+    "het_so_lan_thu": 2
+   },
+   "luot_LLM_trung_binh": {
+    "haiku": 1.0,
+    "sonnet": 5.6
+   },
+   "thoi_gian_trung_binh_s": 190.3
+  }
+ },
+ "luu_y": "Mọi bài 'chứng minh được' đã được Lean kiểm (QT18), nên không có chứng minh sai; chỉ số là tỉ lệ chứng minh được trong giới hạn lượt LLM và heartbeat. Chỉ đo chế độ tìm chứng minh của FR09."
+}

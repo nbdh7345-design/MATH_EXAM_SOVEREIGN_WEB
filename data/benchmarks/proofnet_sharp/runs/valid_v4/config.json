@@ -1,0 +1,111 @@
+{
+ "split": "valid",
+ "include_borderline": true,
+ "env_overrides": {},
+ "llm": {
+  "provider": "claude-cli",
+  "model": "haiku",
+  "proof_escalate_model": "sonnet",
+  "judge_model": "sonnet",
+  "judge_effort": "high",
+  "normalize_model": "sonnet",
+  "backtranslate_model": "sonnet",
+  "effort": "low"
+ },
+ "fr08": {
+  "max_llm_calls": 16,
+  "candidates": 3,
+  "extra": 2,
+  "equiv_llm_pairs": 1,
+  "equiv_llm_fixes": 1,
+  "judge_groups": 2,
+  "semantic_rank": false,
+  "deep_vacuity": true,
+  "vacuity_model": "sonnet"
+ },
+ "core": {
+  "mathlib_ready": true,
+  "model": "haiku",
+  "proof_escalate_model": "sonnet",
+  "max_attempts": 3,
+  "statement_fixes": 2,
+  "proof_fixes": 2,
+  "statement_fallbacks": 1,
+  "statement_rewrites": 1,
+  "mathexam_ready": true,
+  "formalize_steps": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "formalize_candidates": 3,
+  "formalize_equivalence_check": true,
+  "formalize_vacuity_check": true,
+  "judge_model": "sonnet",
+  "require_equivalence": true,
+  "form_check": true,
+  "extra_candidates": 2,
+  "auto_prove": true,
+  "decompose": true,
+  "disprove_fixes": 1,
+  "score": {
+   "combine": "log",
+   "alpha": 0.5,
+   "embed_model": "sentence-transformers/LaBSE"
+  }
+ },
+ "lean_imports": [
+  "Mathlib.Tactic",
+  "Mathlib.Analysis.SpecialFunctions.Integrals.Basic",
+  "Mathlib.Analysis.SpecialFunctions.Pow.Deriv",
+  "Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv",
+  "Mathlib.Analysis.SpecialFunctions.Log.Deriv",
+  "Mathlib.Analysis.SpecificLimits.Basic",
+  "Mathlib.Analysis.Calculus.Taylor",
+  "Mathlib.Analysis.Calculus.LHopital",
+  "Mathlib.Analysis.Calculus.Deriv.Pow",
+  "Mathlib.MeasureTheory.Integral.IntegralEqImproper",
+  "Mathlib.Topology.Algebra.InfiniteSum.Real",
+  "Mathlib.LinearAlgebra.Matrix.Determinant.Basic",
+  "Mathlib.LinearAlgebra.Matrix.Rank",
+  "Mathlib.LinearAlgebra.Matrix.Charpoly.Basic",
+  "Mathlib.LinearAlgebra.Matrix.PosDef",
+  "Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho",
+  "Mathlib.Analysis.Convex.Function",
+  "Mathlib.Analysis.Convex.Deriv",
+  "Mathlib.Topology.Bornology.Basic",
+  "Mathlib.Topology.UniformSpace.UniformConvergence",
+  "Mathlib.Order.LiminfLimsup",
+  "Mathlib.Data.EReal.Basic",
+  "Mathlib.Data.PNat.Basic",
+  "Mathlib.Analysis.Calculus.Deriv.Inverse",
+  "Mathlib.Topology.Order.IntermediateValue",
+  "MathExam"
+ ],
+ "versions": {
+  "lean": "leanprover/lean4:v4.35.0",
+  "mathlib": "56a005855ea17e0b0958f73ec801ae140b0a1679"
+ },
+ "data_sha256": {
+  "valid": "7511d28c3b7b8b6c6af1c5d66da67a4f6e0cd4ff41823a9723b522422bd856dd",
+  "test": "6b1d66a2a2be86fa3432762761503782585d15f26ebd54b3a94a54387e6c7ca5"
+ },
+ "subset_sha256": "e47f0d748aff6bea14c76dd878835556df04a903329e190381f58484e85f33e4",
+ "items": [
+  "Pugh|exercise_3_4",
+  "Putnam|exercise_1998_a3",
+  "Rudin|exercise_3_1a",
+  "Rudin|exercise_3_3",
+  "Rudin|exercise_4_19",
+  "Rudin|exercise_4_24",
+  "Rudin|exercise_5_2",
+  "Rudin|exercise_5_4",
+  "Rudin|exercise_5_6",
+  "Rudin|exercise_5_15",
+  "Pugh|exercise_2_12a",
+  "Rudin|exercise_1_5",
+  "Rudin|exercise_3_6a",
+  "Rudin|exercise_4_8b"
+ ]
+}

@@ -1,0 +1,6 @@
+{
+ "Rudin|exercise_4_19": "đề tham chiếu sai: giả thiết giá trị trung gian chỉ viết cho f a < c < f b với a < b; hàm giảm ngặt có bước nhảy (x<0: -x, x≥0: -x-1) thỏa mọi giả thiết nhưng không liên tục [Lean chứng minh phủ định: de_tham_chieu_sai.lean]",
+ "Rudin|exercise_5_2": "đề tham chiếu sai: f⁻¹ trong Mathlib là 1/f (nghịch đảo từng điểm), không phải hàm ngược; f = id trên (-1, 1) thì 1/x không khả vi tại 0 [Lean chứng minh phủ định: de_tham_chieu_sai.lean]",
+ "Rudin|exercise_5_15": "đề tham chiếu sai: sSup của tập không bị chặn trong ℝ bằng 0 (quy ước Mathlib, Rudin cho phép +∞); f = id trên (0, ∞) cho M0 = 0, M1 = 1, M2 = 0 nên 1 ≤ 0 [Lean chứng minh phủ định: de_tham_chieu_sai.lean]",
+ "Rudin|exercise_4_8b": "đề tham chiếu sai (cả đề bằng lời): hàm liên tục đều trên tập BỊ CHẶN của ℝ luôn bị chặn; đề gốc của Rudin là E KHÔNG bị chặn [Lean chứng minh phủ định: de_tham_chieu_sai.lean]"
+}

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@gng5 Hệ Thống Sinh Đề Toán Cao Cấp (Giải Tích & Đại Số) - Kiểm Chứng LEAN 4 & Python</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/static/styles.css" />
+  <!-- KaTeX for Mathematical Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <!-- Top Sovereign Header -->
+  <header class="top-header">
+    <div class="header-inner">
+      <div class="brand-title">
+        <div class="brand-badge">@gng5 SOVEREIGN</div>
+        <div class="brand-text">
+          <h1>HỆ THỐNG SINH ĐỀ TOÁN CAO CẤP (GIẢI TÍCH & ĐẠI SỐ)</h1>
+          <p>Tự luận & Trắc nghiệm Tham số • Kiểm chứng Kép LEAN 4.35.0 + Python SymPy/NumPy • Điều phối các Agent Giải tích 1 Song Song</p>
+        </div>
+      </div>
+      <div class="merkle-banner" id="merkleBanner">
+        Merkle Root: <span id="headerMerkleRoot">Đang tải...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <button class="nav-tab active" onclick="switchTab('dashboard')" id="tabBtn-dashboard">
+        ⚡ Trung Tâm Agent Giải tích 1
+      </button>
+      <button class="nav-tab" onclick="switchTab('questions')" id="tabBtn-questions">
+        📐 Ngân Hàng Câu Hỏi & Biến Thiên Tham Số
+      </button>
+      <button class="nav-tab" onclick="switchTab('exam-builder')" id="tabBtn-exam-builder">
+        📝 Sinh Đề Thi & Thi Trực Tuyến
+      </button>
+      <button class="nav-tab" onclick="switchTab('sandbox')" id="tabBtn-sandbox">
+        🔬 Phòng Thí Nghiệm Kiểm Chứng LEAN 4 + Python
+      </button>
+      <button class="nav-tab" onclick="switchTab('ledger')" id="tabBtn-ledger">
+        🛡️ Sổ Cái Bất Biến Merkle DAG (@gng5)
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-container">
+    <!-- TAB 1: DASHBOARD & AGENT SWARM -->
+    <section id="panel-dashboard" class="tab-panel active">
+      <div class="stats-grid" id="dashboardStatsGrid">
+        <div class="stat-card">
+          <span class="stat-label">Tổng Số Câu Hỏi</span>
+          <span class="stat-value" id="statTotalQ">0</span>
+          <span class="stat-sub" id="statSubjBreakdown">Giải tích: 0 | Đại số: 0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Trắc Nghiệm / Tự Luận</span>
+          <span class="stat-value" id="statTypeBreakdown">0 / 0</span>
+          <span class="stat-sub" id="statParamCount">100% Có tham số hóa (m, a, b)</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Kiểm Chứng Hình Thức LEAN 4</span>
+          <span class="stat-value" id="statLeanPass">0</span>
+          <span class="stat-sub">LEAN v4.35.0 (Zero sorry)</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Kiểm Chứng Số Python</span>
+          <span class="stat-value" id="statPyPass">0</span>
+          <span class="stat-sub">SymPy + NumPy/SciPy Grid Sweep</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Đề Thi Đã Lưu CSDL</span>
+          <span class="stat-value" id="statExamsCount">0</span>
+          <span class="stat-sub">SQLite WAL Persistent DB</span>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>🚀 Ma Trận Agent Giải tích 1 Chạy Song Song</h2>
+            <p style="font-size: 0.84rem; color: var(--text-muted);">
+              Bấm vào một Agent bất kỳ để lọc câu hỏi của Agent đó, hoặc kích hoạt đồng thời tất cả Agent kiểm chứng song song.
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.6rem;">
+            <button class="btn btn-accent" onclick="trigger20AgentSwarm()" id="btnRunSwarm">
+              ⚡ Kích Hoạt Các Agent Kiểm Chứng Song Song
+            </button>
+            <button class="btn btn-outline" onclick="loadDashboard()">
+              🔄 Làm mới trạng thái
+            </button>
+          </div>
+        </div>
+        <div id="swarmStatusBanner" style="display:none; margin-bottom: 1rem; padding: 0.8rem 1rem; border-radius: 8px; background: #eff6ff; border: 1px solid #bfdbfe; font-weight: 600; color: #1e40af;"></div>
+        <div class="swarm-grid" id="swarmGridContainer"></div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>🤖 Sinh Câu Hỏi Mới Bằng LLM Theo Chủ Đề Agent</h2>
+            <p style="font-size: 0.84rem; color: var(--text-muted);">
+              Mỗi agent gọi LLM (Qwen hoặc Claude) sinh câu hỏi theo chủ đề của mình. Một lượt gọi độc lập chỉ xem đề bài và viết bộ giải SymPy;
+              câu hỏi chỉ được lưu khi đáp án khớp bộ giải trên mọi giá trị tham số và 4 phương án đôi một phân biệt.
+            </p>
+            <p style="font-size: 0.8rem;" id="llmStatusLine">Đang kiểm tra cấu hình LLM...</p>
+            <p style="font-size: 0.8rem;" id="leanStatusLine"></p>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap: wrap; gap: 0.8rem; align-items: flex-end; margin-bottom: 0.8rem;">
+          <div>
+            <label style="font-size: 0.8rem; display:block;">Agent</label>
+            <select id="llmAgentSelect" class="form-control">
+              <option value="">Tất cả agent</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; display:block;">Số câu / agent</label>
+            <input type="number" id="llmCount" class="form-control" style="width: 75px;" value="1" min="1" max="5" />
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; display:block;">Loại câu</label>
+            <select id="llmType" class="form-control">
+              <option value="mixed">Trộn (TN + TL)</option>
+              <option value="mcq">Trắc nghiệm</option>
+              <option value="essay">Tự luận</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; display:block;">Mức độ</label>
+            <select id="llmDifficulty" class="form-control">
+              <option>Nhận biết</option>
+              <option>Thông hiểu</option>
+              <option selected>Vận dụng</option>
+              <option>Vận dụng cao</option>
+            </select>
+          </div>
+          <label style="font-size: 0.82rem; display:flex; align-items:center; gap:0.35rem;">
+            <input type="checkbox" id="llmFormalize" checked /> Formalize đề bằng Lean + Mathlib (kiểm tra trong lượt sinh)
+          </label>
+          <button class="btn btn-accent" onclick="triggerLLMGenerate()" id="btnLLMGenerate">
+            ✨ Sinh Câu Hỏi Bằng LLM
+          </button>
+        </div>
+        <div id="llmResultBox"></div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <h2>📜 Nhật Ký Kiểm Chứng Thực Tế Gần Nhất (LEAN 4.35.0 & Python Subprocess)</h2>
+        </div>
+        <div id="recentLogsContainer" style="max-height: 360px; overflow-y: auto;"></div>
+      </div>
+    </section>
+
+    <!-- TAB 2: QUESTION BANK & LIVE PARAMETER CALCULATOR -->
+    <section id="panel-questions" class="tab-panel">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>📐 Ngân Hàng Câu Hỏi Toán Cao Cấp & Bộ Tính Toán Tham Số Động</h2>
+            <p style="font-size: 0.84rem; color: var(--text-muted);">
+              Mỗi câu hỏi hỗ trợ biến thiên tham số $m, a, b$: Thay đổi giá trị tham số hoặc bấm "🎲 Ngẫu nhiên tham số" để tính lại đáp án A, B, C, D tức thì!
+            </p>
+          </div>
+          <span class="badge badge-blue" id="questionCountBadge">0 câu hỏi</span>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label>Học phần:</label>
+            <select id="filterSubject" class="form-control" onchange="loadQuestions()">
+              <option value="ALL">Tất cả (Giải tích + Đại số)</option>
+              <option value="Giải tích">Giải tích (Calculus I, II, III, PTVP)</option>
+              <option value="Đại số">Đại số (Đại số tuyến tính & Dạng toàn phương)</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Loại câu hỏi:</label>
+            <select id="filterType" class="form-control" onchange="loadQuestions()">
+              <option value="ALL">Tất cả (Trắc nghiệm + Tự luận)</option>
+              <option value="mcq">Trắc nghiệm có tham số (4 phương án A, B, C, D)</option>
+              <option value="essay">Tự luận & Chứng minh (Rubric chi tiết)</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Agent:</label>
+            <select id="filterAgent" class="form-control" onchange="loadQuestions()">
+              <option value="">Tất cả Agent</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Chế độ hiển thị tham số:</label>
+            <select id="filterParamMode" class="form-control" onchange="loadQuestions()">
+              <option value="dual">Song song (Công thức tham số m + Giá trị tính theo m)</option>
+              <option value="symbolic">Thuần ký hiệu tham số (Biểu thức theo m)</option>
+              <option value="numeric">Thay số trực tiếp theo giá trị tham số m</option>
+            </select>
+          </div>
+          <div class="filter-group" style="flex:1; min-width: 200px;">
+            <input type="text" id="filterSearch" class="form-control" style="width:100%;" placeholder="Tìm theo mã câu, định thức, Taylor, tích phân, Sylvester..." oninput="debounceLoadQuestions()" />
+          </div>
+        </div>
+
+        <div id="questionsListContainer"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: EXAM BUILDER & ONLINE TEST -->
+    <section id="panel-exam-builder" class="tab-panel">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>📝 Trình Sinh Đề Thi Toán Cao Cấp (Giải tích 1)</h2>
+            <p style="font-size: 0.84rem; color: var(--text-muted);">
+              Tự động rút trích, gán giá trị tham số ngẫu nhiên đảm bảo 4 phương án phân biệt, kiểm chứng LEAN 4 & Python và lưu trữ vào SQLite DB.
+            </p>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label>Tiêu đề đề thi:</label>
+            <input type="text" id="examTitleInput" class="form-control" style="width: 320px;" value="Đề Thi Toán Cao Cấp (Giải Tích & Đại Số) - ĐHBK" />
+          </div>
+          <div class="filter-group">
+            <label>Phân môn:</label>
+            <select id="examSubjectInput" class="form-control">
+              <option value="ALL">Tổng hợp (Giải tích + Đại số)</option>
+              <option value="Giải tích">Chuyên đề Giải tích</option>
+              <option value="Đại số">Chuyên đề Đại số</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Số câu Trắc nghiệm:</label>
+            <input type="number" id="examMcqCount" class="form-control" style="width: 75px;" value="10" min="1" max="40" />
+          </div>
+          <div class="filter-group">
+            <label>Số câu Tự luận:</label>
+            <input type="number" id="examEssayCount" class="form-control" style="width: 75px;" value="4" min="0" max="20" />
+          </div>
+          <div class="filter-group">
+            <label>Chế độ Tham số:</label>
+            <select id="examParamMode" class="form-control">
+              <option value="numeric" selected>Thay số cụ thể từ tham số m (đáp án là số)</option>
+              <option value="symbolic">Giữ nguyên tham số ký hiệu m</option>
+              <option value="dual">Song song công thức m + giá trị (chỉ để đối chiếu, lộ đáp án)</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Mức tin cậy câu hỏi:</label>
+            <select id="examTrustLevel" class="form-control">
+              <option value="all">Tất cả câu trong ngân hàng</option>
+              <option value="exclude_failed">Bỏ câu formalize thất bại</option>
+              <option value="formal_only">Chỉ câu đã formalize Lean + Mathlib</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Thời gian (phút):</label>
+            <input type="number" id="examDuration" class="form-control" style="width: 80px;" value="90" min="15" max="180" />
+          </div>
+          <button class="btn btn-accent" onclick="generateNewExam()">
+            ⚡ Sinh Đề Thi Mới & Lưu CSDL
+          </button>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <h3 style="font-size: 0.95rem; margin-bottom: 0.5rem;">📚 Danh Sách Đề Thi Đã Lưu Trong Cơ Sở Dữ Liệu:</h3>
+          <div id="savedExamsList" style="display: flex; flex-wrap: wrap; gap: 0.6rem;"></div>
+        </div>
+      </div>
+
+      <div id="activeExamContainer"></div>
+    </section>
+
+    <!-- TAB 4: DUAL VERIFICATION SANDBOX (LEAN 4 + PYTHON) -->
+    <section id="panel-sandbox" class="tab-panel">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>🔬 Phòng Thí Nghiệm Kiểm Chứng Kép Trực Tiếp (LEAN 4.35.0 Compiler + Python SymPy/NumPy)</h2>
+            <p style="font-size: 0.84rem; color: var(--text-muted);">
+              Viết hoặc nạp mã kiểm chứng từ bất kỳ câu hỏi nào để biên dịch thực tế bằng <code>lean.exe</code> và chạy số bằng <code>python.exe</code>.
+            </p>
+          </div>
+          <button class="btn btn-success" onclick="runSandboxVerification()" id="btnRunSandbox">
+            ▶️ Chạy Kiểm Chứng Kép (LEAN 4 + Python)
+          </button>
+        </div>
+
+        <div class="code-dual-grid">
+          <div>
+            <label style="font-weight: 700; font-size: 0.88rem; display:block; margin-bottom: 0.4rem;">
+              🏛️ Mã Nguồn Kiểm Chứng Hình Thức LEAN 4 (<code>.lean</code> - Cấm <code>sorry</code>):
+            </label>
+            <textarea id="sandboxLeanCode" class="code-editor">-- Kiểm chứng hình thức định thức ma trận tham số m trong Lean 4.35.0
+def det3x3_sym (m : Int) : Int :=
+  m * (m * m - 1) - 1 * (m - 1) + 1 * (1 - m)
+
+def det3x3_factored (m : Int) : Int :=
+  (m - 1) * (m - 1) * (m + 2)
+
+theorem det_parametric_verified :
+  (List.map (fun m => det3x3_sym m == det3x3_factored m) [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).all (· == true) = true := by
+  decide
+
+#eval det3x3_factored 3
+</textarea>
+          </div>
+          <div>
+            <label style="font-weight: 700; font-size: 0.88rem; display:block; margin-bottom: 0.4rem;">
+              🐍 Script Python Chạy Số & Ký Hiệu (<code>SymPy + NumPy</code>):
+            </label>
+            <textarea id="sandboxPythonCode" class="code-editor">import sympy as sp
+import numpy as np
+
+m = sp.Symbol('m')
+A = sp.Matrix([[m, 1, 1], [1, m, 1], [1, 1, m]])
+det_sym = sp.factor(A.det())
+expected = (m - 1)**2 * (m + 2)
+assert sp.simplify(det_sym - expected) == 0, f"Mismatch: {det_sym}"
+
+# Quét lưới tham số số học bằng NumPy
+for m_val in range(2, 10):
+    mat_num = np.array([[m_val, 1, 1], [1, m_val, 1], [1, 1, m_val]], dtype=float)
+    det_num = np.linalg.det(mat_num)
+    det_formula = (m_val - 1)**2 * (m_val + 2)
+    assert abs(det_num - det_formula) < 1e-7
+
+print(f"VERIFIED_OK: det(A(m)) = {det_sym}, m=3 -> {(3-1)**2*(3+2)}")
+</textarea>
+          </div>
+        </div>
+
+        <div id="sandboxResultBox" style="margin-top: 1.2rem;"></div>
+      </div>
+    </section>
+
+    <!-- TAB 5: MERKLE DAG LEDGER -->
+    <section id="panel-ledger" class="tab-panel">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>🛡️ Sổ Cái Bất Biến Merkle DAG (@gng5 Sovereign Epistemic Gate)</h2>
+            <p style="font-size: 0.84rem; color: var(--text-muted);">
+              Mọi câu hỏi, kết quả biên dịch LEAN 4, kết quả chạy số Python và đề thi đều được niêm phong SHA-256 trong <code>gng5_merkle_ledger.json</code>.
+            </p>
+          </div>
+          <button class="btn btn-outline" onclick="loadMerkleLedger()">🔄 Tải lại Sổ cái</button>
+        </div>
+        <div id="merkleLedgerContainer"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
