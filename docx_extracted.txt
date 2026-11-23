@@ -1,0 +1,2969 @@
+1. Mục tiêu và phạm vi
+1.1 Mục tiêu tổng quát
+Đồ án xây dựng một hệ thống tự động kiểm tra suy luận toán học trong học phần Giải tích 1, dùng trợ lý chứng minh Lean 4 và thư viện Mathlib, áp dụng cho ngân hàng câu hỏi. Hệ thống gồm hai phần:
+Sinh câu hỏi có tham số: dùng mô hình ngôn ngữ lớn (LLM) sinh câu hỏi trắc nghiệm và tự luận có tham số, mỗi câu kèm đáp án và lời giải từng bước. Câu trắc nghiệm không có lời giải nào đạt kiểm vẫn được dùng, nhưng không kèm lời giải; câu tự luận phải có lời giải đã được chứng minh (QT07).
+Kiểm tra đáp án và lời giải: đáp án được kiểm cho mọi giá trị tham số hợp lệ và được chứng minh bằng Lean khi tìm được chứng minh; mỗi bước của lời giải được Lean kiểm như kiểm một bài chứng minh. Mỗi câu vào ngân hàng kèm nhãn đúng với mức đã kiểm.
+Lõi của hệ thống là chuyển đề bài và lời giải thành mệnh đề Lean đúng nghĩa, rồi để Lean kiểm tra. Hệ thống tuân theo bốn nguyên tắc:
+Lean là giám khảo cuối cùng. LLM chỉ đề xuất nội dung; mọi kết luận “đúng” phải được Lean xác nhận. CAS và tính số chỉ dùng để tìm sai và để có thêm bằng chứng khi các nguồn kiểm mâu thuẫn.
+Đáp án và miền tham số do hệ thống điền vào mệnh đề. Với câu theo khuôn, hệ thống sinh cả câu chữ lẫn mệnh đề Lean từ cùng một bản ghi có cấu trúc, nên LLM không viết mệnh đề. Với câu tự do, LLM viết mệnh đề có chỗ trống, còn đáp án và miền tham số do hệ thống điền vào; cách này hạn chế, nhưng không loại trừ hẳn, việc LLM biến câu hỏi thành một câu dễ chứng minh hơn (mục 1.4, FR07).
+Có mâu thuẫn hoặc chưa chắc thì không giữ. Khi các nguồn kiểm không khớp nhau, máy tự phân xử theo đa số; không đủ căn cứ thì câu bị loại (QT25).
+Không trình bày kết quả quá mức đã kiểm. Kết quả chưa được Lean xác nhận vẫn có thể được giữ, nhưng gắn nhãn đúng mức (mục 1.7).
+1.2 Mục tiêu cụ thể
+Mã
+Mục tiêu
+Khoảng trống
+Kết quả cần đạt
+MT1
+Sinh câu hỏi có tham số bằng LLM cho các chuyên đề Giải tích 1
+K4
+Mỗi chuyên đề có câu hỏi trong ngân hàng; báo cáo theo chuyên đề, dạng bài và khuôn (câu tự do tính riêng), tách theo phiên bản quy trình: tỉ lệ câu qua các lớp kiểm, tỉ lệ câu có đáp án được Lean chứng minh, tỉ lệ câu sai qua kiểm mẫu kèm cận trên 95%
+MT2
+Kiểm đáp án và phương án nhiễu cho mọi giá trị tham số
+K4
+Đáp án được kiểm bằng CAS và tính số trên số thực, trên toàn miền tham số, theo kiểu đáp án (Bảng 3.15), và được chứng minh bằng Lean khi tìm được chứng minh, với tỉ lệ báo cáo như ở MT1; phương án nhiễu khác đáp án ở mọi giá trị được dùng
+MT3
+Hình thức hóa đúng nghĩa đề bài
+K2, K7
+Trên bộ đề có mệnh đề chuẩn do người viết, ≥ 90% mệnh đề được chọn tương đương mệnh đề chuẩn; báo cáo kèm tỉ lệ đề được xác nhận; đối chiếu thêm với kết quả công bố trên ProofNet#
+MT4
+Kiểm lời giải đi kèm câu hỏi
+K4
+Lời giải là một chuỗi lập luận liền mạch từ đại lượng cần tính đến đáp án; mọi nghĩa vụ chứng minh của từng bước được Lean chứng minh bằng bộ chiến thuật cố định, không dùng LLM (QT04); lời giải được giữ đều “Đã chứng minh”; báo cáo tỉ lệ câu có lời giải đạt và tỉ lệ câu bị loại vì lời giải, theo chuyên đề, dạng bài và khuôn
+MT5
+Bổ sung khái niệm Giải tích 1 mà Mathlib chưa có
+K3
+Mỗi định nghĩa bổ sung có định lý tương đương với giáo trình, có ví dụ đúng và sai, không còn chứng minh bỏ trống
+MT6
+Kết quả bằng tiếng Việt
+K7
+Câu hỏi, lời giải và báo cáo bằng tiếng Việt, kèm nhãn mức bảo đảm
+MT7
+Dữ liệu đánh giá Giải tích 1 tiếng Việt có nhãn
+K1, K7
+Bộ đề có mệnh đề chuẩn, do hai người gán nhãn độc lập; báo cáo độ đồng thuận
+Bảng 1.1. Mục tiêu cụ thể của hệ thống
+1.3 Phạm vi kiến thức
+Phần
+Nội dung
+Hàm một biến
+Giới hạn hàm số và dãy số; vô cùng bé tương đương; liên tục, điểm gián đoạn; đạo hàm, đạo hàm cấp cao, tiếp tuyến; quy tắc L’Hospital; khai triển Taylor–Maclaurin; định lý giá trị trung bình; cực trị; tiệm cận; lồi lõm, điểm uốn
+Tích phân một biến
+Nguyên hàm; tích phân xác định, đổi biến, từng phần; tích phân phụ thuộc tham số, tích phân cận biến thiên; tích phân suy rộng và biện luận hội tụ; ứng dụng: diện tích, thể tích tròn xoay, độ dài cung, tọa độ cực
+Hàm nhiều biến
+Giới hạn hàm hai biến; đạo hàm riêng, đạo hàm theo hướng; hàm hợp, hàm ẩn; ma trận Hessian và cực trị tự do; cực trị có điều kiện (nhân tử Lagrange)
+Bảng 1.2. Phạm vi kiến thức
+1.4 Phạm vi dạng bài
+Hình thức: trắc nghiệm, gồm đáp án và ba phương án nhiễu là biểu thức theo tham số, lời giải kèm theo khi đạt kiểm lời giải; hoặc tự luận, gồm đáp số và lời giải từng bước đã được chứng minh (QT07).
+Dạng bài: mỗi chuyên đề gồm một danh mục dạng bài, ví dụ “giới hạn dạng 0/0”, “tích phân từng phần”. Mỗi dạng bài có kiểu đáp án, các hình thức cho phép, mô tả dùng làm hướng dẫn cho LLM, và có thể có một hoặc nhiều khuôn. Mỗi câu thuộc đúng một dạng bài (QT24).
+Loại câu: câu theo khuôn, sinh từ một phiên bản khuôn đã kiểm chứng (FR03, FR07); hoặc câu tự do (Nên có), dành cho dạng bài chưa có khuôn và được phép sinh tự do, có mệnh đề do FR05 dịch và được bảo đảm bằng QT15 và kiểm mẫu.
+Tham số: ít tham số, miền hữu hạn; sau khi bỏ các giá trị không dùng được (QT01, QT03, QT04), miền vẫn còn ít nhất một số giá trị tối thiểu, cấu hình được.
+Biểu thức và lời giải: mọi biểu thức và mệnh đề của câu (đại lượng cần tính, đáp án, phương án, các bước của lời giải) viết theo một văn phạm cố định (mục 5.9); đáp án thuộc một kiểu ở Bảng 3.15; lời giải là lời giải có cấu trúc: một cây khối gồm các bước thuộc các loại ở Bảng 3.12, đi từ đích gốc đến bước kết luận khớp đích đó; ngữ cảnh của mỗi bước do hệ thống tính từ cây, không do LLM khai (QT04, FR07).
+Để mệnh đề Lean đúng nghĩa với đề, mỗi khuôn và mỗi câu tự do phải đáp ứng ba yêu cầu (QT16):
+Điều kiện tồn tại của đại lượng cần tính (giới hạn tồn tại, hàm khả vi, hàm khả tích) luôn nằm trong kết luận của mệnh đề, theo dạng ở Bảng 3.13, không bao giờ là giả thiết; cấm các cách viết có giá trị quy ước của Mathlib (deriv, limUnder, tích phân không kèm khả tích). Mathlib gán giá trị quy ước, thường là 0, khi đại lượng không tồn tại, nên mệnh đề thiếu điều kiện, hoặc đặt điều kiện làm giả thiết, có thể “chứng minh được” mà vô nghĩa. Mã của hệ thống kiểm yêu cầu này.
+Câu “tìm tham số” và câu “biện luận” có dạng “với mọi tham số: tính chất ⇔ tham số thuộc tập S”, không được chỉ một chiều.
+Khái niệm dùng theo định nghĩa của giáo trình, ví dụ giới hạn lấy trên lân cận bỏ điểm, tích phân suy rộng là giới hạn của tích phân xác định.
+1.5 Phạm vi chức năng
+Trong phạm vi
+Lập kế hoạch đợt sinh theo danh mục dạng bài; sinh câu hỏi có tham số bằng LLM theo khuôn đã kiểm chứng, và câu tự do (Nên có); câu bị loại được ghi lý do và được thử lại trong giới hạn lượt của từng câu được yêu cầu.
+Kiểm đáp án bằng CAS và tính số trên số thực, trên toàn miền tham số, theo kiểu đáp án; kiểm phương án nhiễu luôn khác đáp án; máy tự phân xử khi các nguồn kiểm mâu thuẫn.
+Văn phạm biểu thức, khuôn câu hỏi, và bộ chuyển sang mệnh đề Lean, biểu thức CAS và công thức hiển thị.
+Hình thức hóa đề bài của câu tự do sang Lean và tự kiểm đúng nghĩa.
+Kiểm từng bước của lời giải bằng Lean với bộ chiến thuật cố định; chứng minh đáp án bằng Lean, dùng chính lời giải đã chứng minh khi có; chỉ chấp nhận chứng minh đúng mệnh đề đã cố định và không dựa vào tiên đề lạ.
+Đưa câu vào ngân hàng theo mức bảo đảm; kiểm mẫu theo phiên bản quy trình, để đo chất lượng mà không chặn câu; duyệt câu; gỡ hoặc sửa câu lỗi.
+Quản lý thư viện định nghĩa bổ sung, từ điển thuật ngữ Việt–Lean, từ điển định lý giáo trình, danh mục dạng bài và khuôn câu hỏi.
+Ghi nhật ký, báo cáo đợt sinh, thống kê ngân hàng và đánh giá hệ thống.
+Ngoài phạm vi
+Nội dung
+Lý do
+Đại số tuyến tính, chuỗi, tích phân bội, phương trình vi phân
+Không thuộc học phần Giải tích 1
+Tạo đề thi, trộn đề, làm bài và chấm bài; hướng dẫn chấm
+Theo phạm vi đồ án, kết quả là ngân hàng câu hỏi; ra đề và chấm bài từ ngân hàng thuộc hướng phát triển
+Kiểm tra bài chứng minh do sinh viên viết
+Đồ án chỉ kiểm câu hỏi và lời giải do hệ thống sinh; cách kiểm lời giải (QT04) và chức năng chứng minh tự động (FR06) có thể dùng lại cho hướng phát triển này
+Kiểm câu trùng; kiểm phương án nhiễu “thật sự sai”
+Chưa làm trong đồ án; để dành cho bước phát triển sau. QT03 chỉ bảo đảm phương án nhiễu khác đáp án
+Xuất ngân hàng câu hỏi ra tệp, hoặc đưa sang hệ thống khác
+Đồ án chỉ lưu ngân hàng câu hỏi trong hệ thống
+Triển khai qua mạng cho nhiều người dùng
+Hệ thống chạy trên máy cá nhân, phục vụ thử nghiệm
+Huấn luyện hoặc tinh chỉnh mô hình
+Không có GPU
+Đóng góp vào Mathlib chính thức; vẽ đồ thị
+Định nghĩa bổ sung nằm trong thư viện riêng; Lean không kiểm được hình vẽ
+Bảng 1.3. Nội dung ngoài phạm vi
+1.6 Ràng buộc và giả định
+Ràng buộc
+Mã
+Ràng buộc
+Lý do
+Ảnh hưởng
+RB1
+Phiên bản Lean và Mathlib cố định trong suốt đồ án
+Tái lập kết quả; Mathlib đổi tên định lý giữa các phiên bản
+Mọi kết quả ghi kèm phiên bản; đổi phiên bản thì kiểm lại toàn bộ
+RB2
+Chạy trên máy cá nhân, bộ nhớ hạn chế
+Tài nguyên sẵn có
+Ít tiến trình Lean chạy cùng lúc; thời gian kiểm là nút thắt chính
+RB3
+LLM là dịch vụ thương mại có hạn mức và chi phí theo lượt dùng
+Không tự huấn luyện mô hình
+Giới hạn số lượt gọi cho mỗi câu; ghi chi phí thật; chạy theo đợt
+RB4
+Nội dung do LLM sinh là không đáng tin
+LLM có thể sai hoặc sinh mã nguy hiểm
+Mọi nội dung phải qua kiểm chứng; mã do LLM sinh được chạy cách ly; biểu thức do LLM sinh chỉ được phân tích theo văn phạm, không được thực thi; không dùng LLM để quyết định kết luận
+RB5
+Không sửa Mathlib
+Giữ độ tin cậy của Mathlib
+Khái niệm bổ sung nằm trong thư viện riêng và phải được kiểm chứng
+RB6
+Số liệu báo cáo được tính từ nhật ký
+Báo cáo phản ánh đúng hệ thống
+Không có chỉ số gán tay; không lưu sẵn số liệu thống kê
+Bảng 1.4. Ràng buộc của hệ thống
+Giả định
+Câu hỏi, lời giải và giao diện bằng tiếng Việt.
+Người kiểm hiểu Giải tích 1 và đọc được Lean để kiểm mẫu.
+Có ít nhất hai người hiểu cả giải tích và Lean để gán nhãn dữ liệu đánh giá.
+Lean và Mathlib được coi là đáng tin cậy; hệ thống không kiểm lại chúng.
+1.7 Mức bảo đảm của kết quả
+Khía cạnh
+Mức
+Ý nghĩa
+Đáp án
+Đã chứng minh
+Lean chứng minh đáp án đúng với mọi giá trị tham số trong miền, trên mệnh đề đã được xác nhận đúng nghĩa. Chứng minh có thể do Lean tìm (1.7), hoặc ráp từ chứng minh các bước của lời giải đã chứng minh (1.6)
+Chỉ kiểm số
+Đáp án đã qua kiểm đáp án (CAS và tính số do mã của hệ thống thực hiện) trên toàn miền tham số, nhưng chưa có chứng minh Lean; câu ghi kèm lý do và cách kiểm đáp án đã qua (QT06)
+Chưa kiểm
+Chưa qua kiểm đáp án (câu đang kiểm hoặc vừa sửa)
+Lời giải
+Đã chứng minh
+Lời giải là cây khối hợp lệ, đi từ đích gốc đến bước kết luận; mọi nghĩa vụ chứng minh của mọi bước được Lean chứng minh bằng bộ chiến thuật cố định, không dùng LLM, với mọi giá trị tham số còn trong miền, và CAS không tìm thấy phản ví dụ (QT04, QT07). Vì bộ chiến thuật chỉ đóng được bước nhỏ, mức này còn cho biết lời giải không bỏ qua bước
+Chưa kiểm
+Lời giải đang được kiểm hoặc đang được sinh lại
+Không có
+Không lời giải nào đạt sau số lần sinh lại cho phép. Lời giải không đạt không được lưu kèm câu; chỉ câu trắc nghiệm được ở mức này (QT07)
+Duyệt
+Người đã duyệt
+Người kiểm đã đọc câu và xác nhận câu đúng, khi kiểm mẫu hoặc khi duyệt câu (QT09). Đây là một cờ, không đổi nhãn; câu có đáp án “Chỉ kiểm số” mang cờ được hiển thị là “Chỉ kiểm số, đã duyệt”
+Bảng 1.5. Mức bảo đảm của một câu hỏi
+Câu ở mức cao nhất là câu có đáp án và lời giải đều “Đã chứng minh”. Câu vào ngân hàng ở cả hai mức của đáp án, kèm nhãn của từng khía cạnh và cờ “Người đã duyệt”, nếu có; riêng câu tự luận phải có lời giải “Đã chứng minh”, vì câu tự luận không có phương án để đối chiếu, nên lời giải đã kiểm là phần chính của câu. Câu theo khuôn và câu tự do có mệnh đề đã xác nhận vào ngân hàng ngay khi qua các lớp kiểm; chất lượng của quy trình sinh câu được đo bằng kiểm mẫu theo từng phiên bản quy trình, không chặn câu (QT08, QT12, QT27). Báo cáo đếm số câu theo từng tổ hợp nhãn (QT09).
+2. Phân tích chức năng
+2.1 Tác nhân
+Tác nhân là người hoặc hệ thống bên ngoài, đưa dữ liệu vào hoặc nhận kết quả từ hệ thống. CAS và tính số là thành phần bên trong, do mã của hệ thống thực hiện (QT02), nên không là tác nhân.
+Tác nhân
+Loại
+Vai trò
+Giảng viên
+Người dùng
+Yêu cầu đợt sinh câu hỏi; xem kế hoạch và báo cáo đợt sinh; gỡ hoặc sửa câu lỗi, nhận kết quả kiểm lại; xem thống kê ngân hàng
+Người kiểm
+Người dùng
+Kiểm chứng khuôn câu hỏi; kiểm mẫu các câu do máy đưa vào ngân hàng; duyệt câu “Chờ duyệt”, câu “Chỉ kiểm số” và câu “Tạm khóa”; gỡ hoặc sửa câu lỗi; gán nhãn dữ liệu đánh giá và chấm tay. Cần hiểu cả giải tích và Lean
+Quản trị viên
+Người dùng
+Quản lý thư viện định nghĩa bổ sung, từ điển thuật ngữ, từ điển định lý giáo trình, danh mục dạng bài và khuôn câu hỏi; xử lý khuôn hoặc chuyên đề bị tạm dừng; nhập mục đánh giá và chạy đánh giá; xem thống kê; yêu cầu thay đổi hệ thống: nâng phiên bản Lean, Mathlib, sửa lớp kiểm, thay mô hình hoặc prompt
+Dịch vụ LLM
+Hệ thống ngoài
+Điền bản ghi câu hỏi theo khuôn, gồm lời giải có cấu trúc; sinh câu tự do theo mô tả dạng bài; viết lại đoạn hỏng của lời giải; viết lời giải độc lập cho câu tự do; đề xuất mệnh đề Lean cho câu tự do; đề xuất chứng minh cho đáp án và các bản dịch; viết bản diễn đạt lại mệnh đề bằng tiếng Việt. LLM không quyết định kết luận nào (RB4)
+Lean 4 + Mathlib
+Hệ thống ngoài
+Biên dịch mệnh đề và kiểm tra chứng minh; là giám khảo cuối cùng
+Bảng 2.1. Các tác nhân
+2.2 Danh sách yêu cầu chức năng
+Bảng 2.2 giữ các yêu cầu chức năng của bản trước; cột “Chức năng” cho biết yêu cầu được thực hiện ở chức năng lá nào của biểu đồ phân rã (mục 2.3).
+Mã
+Yêu cầu
+Mô tả
+Chức năng
+Mục tiêu
+Ưu tiên
+FR01
+Sinh và kiểm câu hỏi
+Lập kế hoạch đợt sinh theo dạng bài; sinh câu hỏi có tham số bằng LLM, theo khuôn hoặc tự do; kiểm đáp án, phương án nhiễu và từng bước của lời giải; xếp mức bảo đảm; chứng minh lại khi hệ thống rảnh
+1.1–1.9; 5.1
+MT1, MT2, MT4
+Bắt buộc
+FR02
+Kiểm mẫu, gỡ và sửa câu
+Kiểm mẫu theo phiên bản quy trình cho câu tự do của mỗi chuyên đề và câu của mỗi khuôn; duyệt câu; gỡ hoặc sửa câu lỗi; đặt lại phần bị ảnh hưởng khi hệ thống thay đổi
+2.1–2.4; 5.2, 5.3
+MT1
+Bắt buộc
+FR03
+Quản lý thư viện, dạng bài và khuôn
+Thêm, sửa định nghĩa bổ sung kèm bằng chứng kiểm chứng; cập nhật từ điển thuật ngữ và từ điển định lý giáo trình; quản lý danh mục dạng bài; thêm, sửa và kiểm chứng khuôn câu hỏi
+3.1–3.4
+MT5
+Bắt buộc
+FR04
+Đánh giá và báo cáo
+Gán nhãn dữ liệu đánh giá, chạy đánh giá, thống kê từ nhật ký
+4.1–4.3; 1.9
+MT1, MT2, MT3, MT7
+Bắt buộc
+FR05
+Hình thức hóa
+Chuyển đề bài tiếng Việt thành mệnh đề Lean và tự kiểm đúng nghĩa
+1.5; dùng lại ở 4.2
+MT3
+Bắt buộc
+FR06
+Chứng minh tự động
+Chứng minh mệnh đề Lean (đáp án, các bản dịch) theo chiều đúng, sai hoặc mâu thuẫn; kiểm nghĩa vụ của bước lời giải ở chế độ kiểm bước, chỉ bằng bộ chiến thuật cố định; chỉ chấp nhận chứng minh hợp lệ
+1.7; dùng lại ở 1.5, 1.6, 4.2, 5.1, 5.2
+MT2, MT4
+Bắt buộc
+FR07
+Khuôn câu hỏi và văn phạm biểu thức
+Văn phạm biểu thức và mệnh đề, bộ phân tích, bộ chuyển sang mệnh đề Lean, biểu thức CAS và công thức hiển thị; sinh câu chữ và mệnh đề Lean từ khuôn; dựng cây lời giải và sinh nghĩa vụ chứng minh cho từng bước
+1.3, 1.6, 3.3, 3.4
+MT1, MT2, MT4
+Bắt buộc
+Bảng 2.2. Danh sách yêu cầu chức năng
+FR05, FR06 và FR07 là các chức năng lõi dùng chung. Trong biểu đồ phân rã, chúng không tạo thành nhánh riêng mà được đặc tả một lần tại chức năng lá dùng chúng chính: văn phạm và bộ chuyển ở 1.3, cây lời giải và nghĩa vụ ở 1.6, hình thức hóa ở 1.5, chứng minh tự động ở 1.7. Các chức năng lá khác dùng lại chỉ dẫn chiếu.
+2.3 Biểu đồ phân rã chức năng
+Hình 2.1 phân rã chức năng tổng quát của hệ thống thành năm chức năng gộp, ứng với năm nhóm nghiệp vụ, và 23 chức năng lá. Chức năng gộp 1 là luồng sinh câu hỏi chính, các chức năng lá 1.1 đến 1.9 được đánh số theo thứ tự chạy; chức năng 2 theo dõi chất lượng ngân hàng bằng con người; chức năng 3 quản lý tri thức nền (định nghĩa, thuật ngữ, định lý, dạng bài, khuôn); chức năng 4 đo hệ thống; chức năng 5 giữ ngân hàng đúng khi hệ thống thay đổi.
+Hình 2.1. Biểu đồ phân rã chức năng
+2.4 Mô tả chức năng lá
+Bảng 2.3 mô tả ngắn từng chức năng lá. Đầu vào, kết quả và cách xử lý chi tiết của mỗi chức năng được đặc tả ở mục 2.5; dữ liệu mà mỗi chức năng tạo, đọc và cập nhật được tổng hợp ở ma trận chức năng – bảng (mục 5.8).
+Mã
+Chức năng lá
+Mô tả
+Tác nhân
+1. Sinh và kiểm câu hỏi
+1.1
+Tiếp nhận yêu cầu và lập kế hoạch đợt sinh
+Nhận yêu cầu của giảng viên (chuyên đề, số câu trắc nghiệm, số câu tự luận); xác định dạng bài sinh được; chia số câu thành các chỗ theo dạng bài và khuôn (QT24); báo kế hoạch cho giảng viên
+Giảng viên
+1.2
+Sinh bản ghi câu hỏi
+Gọi LLM điền bản ghi theo khuôn, hoặc viết câu tự do theo mô tả dạng bài; kiểm trạng thái khuôn và chuyên đề trước mỗi lần sinh; sinh lần thử mới cho chỗ có câu bị loại (QT05)
+Dịch vụ LLM
+1.3
+Kiểm cấu trúc và sinh mệnh đề
+Kiểm bản ghi đủ thành phần, đúng văn phạm, miền tham số hợp lệ (QT01); với câu theo khuôn, sinh câu chữ, mệnh đề Lean và biểu thức CAS từ bản ghi, biên dịch mệnh đề; ghi lỗi khuôn
+Lean
+1.4
+Kiểm đáp án và phương án nhiễu
+Kiểm điều kiện xác định ở từng giá trị tham số; kiểm đáp án bằng CAS và tính số trên số thực, thêm lời giải độc lập với câu tự do (QT02); kiểm phương án nhiễu (QT03)
+Dịch vụ LLM
+1.5
+Hình thức hóa đề
+Với câu tự do: dịch đề sang mệnh đề Lean có chỗ trống, điền đáp án và miền tham số, kiểm năm điều kiện xác nhận (QT15). Câu theo khuôn đi qua
+Dịch vụ LLM, Lean
+1.6
+Kiểm lời giải
+Dựng cây khối của lời giải, sinh nghĩa vụ của từng bước; Lean kiểm từng nghĩa vụ bằng bộ chiến thuật cố định, CAS tìm phản ví dụ; sinh lại đoạn hỏng; lời giải đạt thì ráp thành chứng minh đáp án (QT04)
+Dịch vụ LLM, Lean
+1.7
+Chứng minh đáp án
+Tìm chứng minh Lean cho đáp án khi cần: câu cần phân xử, câu trắc nghiệm có lời giải không đạt, hoặc khi ráp chứng minh không được (QT06, QT18, QT25)
+Dịch vụ LLM, Lean
+1.8
+Xếp mức và xử lý câu
+Gắn nhãn đáp án và nhãn lời giải (QT06, QT07); đưa câu vào ngân hàng, chờ duyệt hoặc loại (QT08); áp dụng quy tắc kiểm lại (QT20) và quy tắc tạm dừng theo ngưỡng (QT26)
+—
+1.9
+Lập báo cáo đợt sinh
+Đối chiếu kế hoạch với kết quả theo từng chỗ; báo nhãn, sự kiện và chi phí của đợt, tính từ nhật ký
+Giảng viên
+2. Kiểm soát chất lượng ngân hàng
+2.1
+Kiểm mẫu theo chuyên đề
+Với câu tự do: người kiểm xem 10 câu đầu của mỗi phiên bản quy trình và khoảng 1 trên 20 câu mới; kiểm riêng lô câu tạm khóa của phiên bản cũ khi được chọn (QT11–QT14, QT27)
+Người kiểm
+2.2
+Kiểm mẫu theo khuôn
+Như 2.1, với câu theo khuôn, theo từng phiên bản quy trình của phiên bản khuôn; lỗi khuôn đưa phiên bản khuôn về “Chưa kiểm chứng”
+Người kiểm
+2.3
+Duyệt câu
+Người kiểm đọc câu “Chờ duyệt”, câu có đáp án “Chỉ kiểm số” chưa duyệt và câu “Tạm khóa”, xác nhận đúng hay sai (QT09, QT15)
+Người kiểm
+2.4
+Gỡ và sửa câu
+Gỡ câu khỏi ngân hàng kèm lý do, hoặc sửa câu để kiểm lại, kể cả câu đã bị gỡ; báo kết quả kiểm lại cho người sửa (QT14, QT20)
+Giảng viên, Người kiểm
+3. Quản lý thư viện, dạng bài và khuôn
+3.1
+Quản lý định nghĩa bổ sung
+Thêm, sửa định nghĩa bổ sung kèm bằng chứng; Lean kiểm chứng; khi sửa, đặt lại mệnh đề, câu và khuôn dùng định nghĩa (QT21)
+Quản trị viên, Lean
+3.2
+Quản lý từ điển thuật ngữ và định lý
+Gắn thuật ngữ và định lý giáo trình với khái niệm, định lý Lean tương ứng, kèm ví dụ kiểm chứng
+Quản trị viên, Lean
+3.3
+Quản lý dạng bài và khuôn câu hỏi
+Thêm, sửa dạng bài; thêm, sửa khuôn theo phiên bản: trường và ràng buộc, mẫu câu chữ, mẫu mệnh đề Lean, kịch bản chứng minh, bộ ví dụ kiểm thử; mở lại khuôn tạm dừng
+Quản trị viên
+3.4
+Kiểm chứng khuôn
+Kiểm chứng phiên bản khuôn theo ba bước; đạt thì “Đã kiểm chứng”, dùng ngay và bắt đầu một phiên bản quy trình mới; sinh lại câu tạm khóa của phiên bản lỗi
+Người kiểm, Lean, Quản trị viên
+4. Đánh giá và báo cáo
+4.1
+Gán nhãn dữ liệu đánh giá
+Hai người kiểm gán nhãn độc lập cho mỗi mục đề, thống nhất nhãn; tính độ đồng thuận (MT7)
+Quản trị viên, Người kiểm
+4.2
+Chạy đánh giá
+Chạy hình thức hóa hoặc chứng minh tự động trên bộ dữ liệu; chấm bằng BEq+ hoặc theo QT18, chấm tay một mẫu; tính chỉ số
+Quản trị viên, Người kiểm, Dịch vụ LLM, Lean
+4.3
+Thống kê ngân hàng
+Tính từ nhật ký phần ngân hàng hiện có và phần chất lượng sinh và kiểm, theo chuyên đề, dạng bài, khuôn và phiên bản (QT23)
+Giảng viên, Quản trị viên
+5. Bảo trì hệ thống
+5.1
+Chứng minh lại
+Khi hệ thống rảnh, hoặc sau khi nâng phiên bản, thử chứng minh lại đáp án “Chỉ kiểm số” có mệnh đề đã xác nhận, với giới hạn lớn hơn
+Dịch vụ LLM, Lean
+5.2
+Nâng phiên bản Lean, Mathlib
+Kiểm toàn bộ chứng minh, thư viện và khuôn trên phiên bản mới trước khi chuyển; sau khi chuyển, đặt lại phần không còn hợp lệ (QT22)
+Quản trị viên, Lean
+5.3
+Cập nhật lớp kiểm, mô hình và prompt
+Áp dụng thay đổi; bắt đầu phiên bản quy trình mới cho chuyên đề và khuôn bị ảnh hưởng; kiểm lại câu đã qua lớp được sửa; xử lý lô câu tạm khóa của phiên bản cũ (QT12, QT27)
+Quản trị viên
+Bảng 2.3. Mô tả các chức năng lá
+2.5 Đặc tả chức năng lá
+Mỗi chức năng lá được đặc tả bằng tác nhân, đầu vào, kết quả, các yêu cầu và quy tắc áp dụng, rồi cách xử lý. Xử lý nhiều nhánh được viết thành bảng quyết định ở mục 3.8; sự thay đổi trạng thái của câu hỏi, chuyên đề, khuôn và đợt sinh được gom ở mục 3.9. Trong các đặc tả, “câu không đạt” nghĩa là: câu mới bị loại và chỗ của câu dùng lần thử tiếp nếu còn lượt (QT05); câu đang được kiểm lại được xử lý theo QT20.
+1.1 Tiếp nhận yêu cầu và lập kế hoạch đợt sinh
+Tác nhân
+Giảng viên
+Đầu vào
+Yêu cầu đợt sinh: với mỗi chuyên đề, số câu trắc nghiệm và số câu tự luận
+Kết quả
+Đợt sinh mới và các chỗ của nó; kế hoạch đợt sinh gửi giảng viên
+Yêu cầu, quy tắc
+FR01; QT24; RD03, RD14, RD16
+Kiểm yêu cầu. Mỗi chuyên đề được yêu cầu phải có trong danh mục và thuộc phạm vi kiến thức (Bảng 1.2).
+Xác định dạng bài sinh được. Với mỗi chuyên đề, hình thức và dạng bài của chuyên đề: có khuôn có phiên bản “Đã kiểm chứng” hỗ trợ hình thức đó thì sinh theo khuôn; nếu không, dạng bài cho phép sinh tự do và chuyên đề “Đang sinh” thì sinh tự do; còn lại thì không sinh được, kèm lý do (QT24).
+Chia số câu. Số câu yêu cầu được chia đều cho các dạng bài sinh được, phần dư dành cho dạng bài đang có ít câu trong ngân hàng nhất; trong một dạng bài có nhiều khuôn, số câu được chia giữa các khuôn theo cùng cách (QT24). Ví dụ: 10 câu trắc nghiệm của chuyên đề “Giới hạn”, ba dạng bài sinh được, dạng “giới hạn dạng 0/0” ít câu nhất: chia thành 4, 3 và 3 câu.
+Tạo đợt sinh và các chỗ. Đợt sinh mới ở trạng thái “Đang chạy”, ghi giảng viên yêu cầu và, với mỗi chuyên đề và hình thức, số câu yêu cầu, số câu bị từ chối và lý do. Mỗi câu được chia là một chỗ: thứ tự chỗ, dạng bài, hình thức, khuôn hoặc sinh tự do; chỗ bắt đầu ở “Đang sinh”, chưa dùng lần thử nào. Đợt sinh không có chỗ nào (mọi phần bị từ chối) chuyển ngay sang “Hoàn thành”.
+Báo kế hoạch. Kế hoạch đợt sinh được gửi cho giảng viên ngay: số câu theo dạng bài và nguồn sinh (khuôn hoặc tự do), phần bị từ chối và lý do, ví dụ “Tích phân suy rộng, tự luận: 4 câu bị từ chối, không có dạng bài sinh được”. Kế hoạch được lưu cùng đợt sinh, và là cơ sở để báo cáo đợt sinh đối chiếu kế hoạch với kết quả (1.9).
+1.2 Sinh bản ghi câu hỏi
+Tác nhân
+Dịch vụ LLM
+Đầu vào
+Chỗ “Đang sinh” của đợt sinh; phiên bản khuôn (các trường và ràng buộc) hoặc mô tả của dạng bài
+Kết quả
+Câu hỏi mới ở “Đang kiểm”, gắn chỗ, lần thử và phiên bản quy trình, kèm bản ghi có cấu trúc
+Yêu cầu, quy tắc
+FR01, FR07; QT05, QT17, QT27; RB3, RB4; NFR04
+Kiểm nguồn sinh trước mỗi lần sinh. Phiên bản khuôn dùng cho chỗ phải còn “Đã kiểm chứng” và là phiên bản mới nhất đã kiểm chứng của khuôn (RD09); với câu tự do, chuyên đề phải “Đang sinh” (QT10). Nếu không, chỗ được chuyển sang nguồn sinh khác theo QT05, và lần chuyển này không tính lượt.
+Sinh theo khuôn. LLM điền bản ghi có cấu trúc theo khuôn: giá trị các trường, miền tham số, đáp án, ba phương án nhiễu (câu trắc nghiệm) và lời giải có cấu trúc. Câu chữ và mệnh đề Lean không do LLM viết mà do hệ thống sinh từ bản ghi ở 1.3 (FR07).
+Sinh tự do. Với chỗ sinh tự do (Nên có), LLM viết đề bài theo mô tả của dạng bài, và bản ghi ghi đại lượng cần tính bằng văn phạm, cùng miền tham số, đáp án, phương án và lời giải. Bản ghi vẫn theo văn phạm để kiểm đáp án (QT02); mệnh đề Lean do FR05 dịch ở 1.5.
+Lần thử mới. Khi câu của một chỗ không đạt và chỗ còn lượt, một câu mới được sinh cho cùng chỗ, dùng tiếp lượt của chỗ (QT05). Câu kiểm lại và câu bị loại hoặc bị gỡ sau khi đợt sinh đã xong không được sinh câu thay.
+Phiên bản quy trình. Câu mới ghi phiên bản quy trình đang dùng của nguồn sinh: chuyên đề với câu tự do, phiên bản khuôn với câu theo khuôn (QT27).
+Giới hạn và nội dung không tin cậy. Mỗi lần thử có giới hạn số lượt gọi LLM và lượng token (NFR04). Nội dung LLM trả về chỉ được dùng sau khi qua các lớp kiểm (RB4).
+1.3 Kiểm cấu trúc và sinh mệnh đề
+Tác nhân
+Lean
+Đầu vào
+Bản ghi của câu mới (1.2), hoặc của câu cần kiểm lại có bước bắt đầu là 1.3; phiên bản khuôn của câu
+Kết quả
+Câu đạt kiểm cấu trúc, kèm câu chữ, biểu thức CAS và, với câu theo khuôn, mệnh đề Lean đã biên dịch; hoặc câu không đạt kèm lý do; lỗi khuôn ghi vào phiên bản khuôn
+Yêu cầu, quy tắc
+FR01, FR07; QT01, QT16, QT17, QT20; RD09, RD10
+Kiểm cấu trúc. Bản ghi đủ thành phần; mọi biểu thức đúng văn phạm; miền tham số hữu hạn và hợp lệ (QT01); với câu theo khuôn, bản ghi thỏa các ràng buộc của khuôn.
+Văn phạm biểu thức. Mọi biểu thức trong bản ghi viết theo một văn phạm cố định (mục 5.9): số, tham số và biến; bốn phép tính và lũy thừa; các hàm sơ cấp của giáo trình (lượng giác và lượng giác ngược, mũ, logarit, căn bậc hai, căn bậc ba là một hàm riêng, giá trị tuyệt đối); hàm cho theo từng khúc; ±∞; và các phép toán dùng để ghi đại lượng cần tính (giới hạn kèm hướng, đạo hàm, tích phân xác định và suy rộng). Phép nhân phải viết tường minh; cách viết có thể hiểu theo hai nghĩa bị cấm, ví dụ sin x² phải viết sin(x²) hoặc (sin x)²; lũy thừa có số mũ không nguyên chỉ dùng cho cơ số dương; giới hạn phải ghi rõ hướng.
+Bộ phân tích. Mã tất định do đồ án tự viết, đọc biểu thức thành cây biểu thức. Biểu thức không bao giờ được thực thi như mã, vì nội dung do LLM sinh là không tin cậy (RB4, NFR02). Biểu thức sai văn phạm bị từ chối, kèm vị trí lỗi.
+Bộ chuyển. Từ cây biểu thức, hệ thống sinh ba dạng: biểu thức Lean, biểu thức CAS và công thức hiển thị. Phép chuyển không chỉ là đổi tên hàm, vì quy ước của Mathlib khác giáo trình: phép chia cho 0, logarit của số không dương và căn bậc hai của số âm vẫn có một giá trị quy ước; trong Mathlib (−8)^(1/3) bằng 1 chứ không bằng −2. Vì vậy căn bậc ba được chuyển sang một định nghĩa trong thư viện bổ sung (FR03), và điều kiện xác định, điều kiện tồn tại chỉ được lấy theo Bảng 3.13, không do CAS tính, vì CAS có thể tính trên số phức. Bộ ví dụ kiểm thử của bộ chuyển gồm các trường hợp này (NFR08).
+Sinh câu theo khuôn. Hệ thống sinh câu chữ và mệnh đề Lean từ cùng bản ghi; mệnh đề phải biên dịch được, và mã kiểm rằng mệnh đề chỉ dùng các dạng cho phép ở Bảng 3.13 (QT16). Khuôn và bộ chuyển đúng thì câu chữ và mệnh đề cùng nghĩa với mọi bản ghi hợp lệ; điều này được kiểm bằng bộ ví dụ kiểm thử (NFR08) và theo dõi bằng kiểm mẫu theo khuôn (2.2). Khuôn bảo đảm nghĩa của mệnh đề, không bảo đảm Lean chứng minh được đáp án.
+Lỗi khuôn. Bản ghi hợp lệ mà mệnh đề sinh từ khuôn không biên dịch được là lỗi chắc chắn của khuôn hoặc bộ chuyển: phiên bản khuôn về “Chưa kiểm chứng” ngay, kèm lý do; câu bị loại, không tính lượt, và chỗ được chuyển theo QT05 (Bảng 3.21). Nếu sau đó xác định lỗi ở bộ chuyển thì bộ chuyển được sửa như một lớp kiểm (5.3).
+Không đạt. Bản ghi không đạt kiểm cấu trúc thì câu không đạt, kèm lý do. Lời giải thiếu hoặc sai văn phạm không làm câu không đạt ở bước này mà được sinh lại ở 1.6 (QT01).
+Câu cần kiểm lại. Câu kiểm lại đi vào chuỗi kiểm từ bước bắt đầu ghi kèm câu (Bảng 3.10); câu theo khuôn có câu chữ và mệnh đề sinh lại bằng phiên bản khuôn mới phải có bản ghi thỏa các trường và ràng buộc của phiên bản đó, nếu không thì bị gỡ (QT20).
+Phạm vi. Văn phạm, bộ chuyển và khuôn cho hàm một biến và tích phân một biến là Bắt buộc; cho hàm nhiều biến là Nên có.
+1.4 Kiểm đáp án và phương án nhiễu
+Tác nhân
+Dịch vụ LLM (lời giải độc lập cho câu tự do)
+Đầu vào
+Câu đã kiểm cấu trúc
+Kết quả
+Miền đã kiểm và cách kiểm đáp án đã qua; hoặc câu cần phân xử; hoặc câu không đạt
+Yêu cầu, quy tắc
+FR01; QT01, QT02, QT03, QT25; RD10, RD11
+Kiểm điều kiện xác định. Mã duyệt cây biểu thức của đại lượng cần tính, đáp án và các phương án; với mỗi phép toán bộ phận, sinh điều kiện theo Bảng 3.13 và kiểm ở từng giá trị tham số. Giá trị vi phạm bị bỏ khỏi miền; miền còn ít giá trị hơn số tối thiểu thì câu không đạt (QT01). Ví dụ: giới hạn của ln(x − a)/(x − 2) khi x → 1, với a ∈ {−1, 0, 1, 2}: ln(x − a) không xác định trên cả lân cận bỏ điểm của 1 khi a = 1 hoặc a = 2, nên bỏ a = 1, 2 và giữ a = −1, 0.
+Kiểm đáp án. Hệ thống tính đáp án từ bản ghi bằng CAS và bằng tính số độc lập, trên toàn miền tham số, theo kiểu đáp án (Bảng 3.15), rồi so với đáp án do LLM sinh; hai phép tính này do mã của hệ thống thực hiện, không qua LLM (QT02). Biến và tham số được khai báo là số thực; phép tính sinh ra số phức thì cách tính đó coi như không cho kết quả dùng được, ví dụ CAS tính tích phân của 2/x trên [−2, −1] thành 2ln(−1) − 2ln(−2). Đạo hàm tại một điểm được tính số bằng sai phân từng phía rồi so hai phía, không dùng sai phân trung tâm: với |x| tại 0, bên phải cho 1, bên trái cho −1, nên đạo hàm không tồn tại.
+Lời giải độc lập. Với câu tự do, một lời giải độc lập do mô hình hoặc prompt khác viết, chỉ được xem đề, tính lại đáp án, để phát hiện đề bài không khớp với bản ghi. Câu theo khuôn không dùng bước này, vì câu chữ được sinh từ bản ghi.
+CAS và tính số lệch nhau. Tính số được chạy lại với độ chính xác cao hơn và cách tính khác. Khớp CAS thì đáp án được xét lại như bình thường, và lần lệch được ghi là sai số làm tròn. Vẫn lệch thì câu cần phân xử: câu được hình thức hóa (1.5) rồi chứng minh đáp án (1.7) trước khi kiểm lời giải, và được xử lý theo QT25 (Bảng 3.17).
+Kiểm phương án nhiễu. Bốn phương án khác nhau từng đôi một và không phương án nhiễu nào bằng đáp án, ở mọi giá trị tham số được dùng, so bằng CAS; giá trị làm hai phương án trùng nhau bị bỏ khỏi miền (QT03).
+Quyết định. Kết quả được xử lý theo Bảng 3.16. Miền đã kiểm và cách kiểm đáp án đã qua được ghi vào câu (RD11).
+1.5 Hình thức hóa đề
+Tác nhân
+Dịch vụ LLM, Lean
+Đầu vào
+Câu tự do đã kiểm đáp án; từ điển thuật ngữ, định nghĩa bổ sung
+Kết quả
+Mệnh đề đã xác nhận được chọn cho đề; hoặc kết luận “không được xác nhận”, xử lý theo QT15
+Yêu cầu, quy tắc
+FR05, FR06; QT15, QT16, QT17; RD01
+Câu theo khuôn. Đi qua mà không hình thức hóa: mệnh đề đã được sinh ở 1.3 và được coi là đã xác nhận khi biên dịch được và qua phép kiểm của QT16 (QT15).
+Điều kiện xác nhận. Mệnh đề chỉ được coi là “đã xác nhận” khi đạt đủ năm điều kiện: (1) biên dịch được trong Lean; (2) các giả thiết không mâu thuẫn với nhau; (3) đúng dạng theo dạng bài (QT16), do mã của hệ thống kiểm: điều kiện tồn tại ở kết luận, không dùng cách viết có giá trị quy ước, câu tìm tham số và câu biện luận ở dạng “với mọi tham số: tính chất ⇔ tham số thuộc tập S”; (4) các bản dịch độc lập của cùng một phát biểu được Lean chứng minh là tương đương; (5) bản diễn đạt lại bằng tiếng Việt khớp với phát biểu gốc. Các phép chứng minh ở điều kiện (2) (chiều mâu thuẫn) và (4) dùng FR06, nên FR06 nhận cả mệnh đề chưa được xác nhận.
+Đáp án và miền tham số do hệ thống điền. Mệnh đề có chỗ trống cho đáp án và miền tham số; hệ thống điền chúng vào và kiểm rằng mọi chỗ trống đều có mặt và được dùng; LLM không được chọn hay sửa đáp án và miền (QT17). Phép kiểm này chỉ là kiểm cú pháp; nghĩa của mệnh đề vẫn phải qua năm điều kiện.
+Khái niệm được dùng. Chỉ dùng khái niệm của Mathlib và định nghĩa bổ sung đã kiểm chứng (FR03).
+Không được xác nhận. Chỗ còn lần thử thì câu không đạt. Lần thử cuối của chỗ, hoặc câu đang được kiểm lại: nếu đáp án đã qua kiểm đáp án và câu không cần phân xử, câu đi tiếp đến 1.6 với đáp án “Chỉ kiểm số”, lý do (c), rồi chuyển sang “Chờ duyệt”; nếu không, câu không đạt, vì không còn kết quả kiểm nào để người duyệt đối chiếu (QT15). Quyết định chỉ phụ thuộc lần thử của chính câu, nên không đổi theo thứ tự xử lý các câu.
+Dùng lại. Chức năng 4.2 dùng lại xử lý này trên các đề của bộ dữ liệu đánh giá (FR04).
+1.6 Kiểm lời giải
+Tác nhân
+Dịch vụ LLM, Lean
+Đầu vào
+Câu có mệnh đề (đích gốc); lời giải có cấu trúc trong bản ghi; từ điển định lý giáo trình
+Kết quả
+Nhãn lời giải; các bước và nghĩa vụ kèm kết luận; chứng minh đáp án ráp từ lời giải; hoặc câu cần chứng minh đáp án (1.7); hoặc câu không đạt
+Yêu cầu, quy tắc
+FR01, FR06, FR07; QT04, QT07, QT18; RD01, RD12, RD13
+Lời giải được kiểm như kiểm một bài chứng minh: chỉ Lean quyết định một bước đúng hay sai; CAS chỉ giúp tìm phản ví dụ và phát hiện mâu thuẫn; có mâu thuẫn hoặc chưa chắc thì không nhận. Quy trình gồm tám bước:
+Dựng cây và đích gốc. Lời giải có cấu trúc ghi loại bước và bước mở khối chứa của từng bước (Bảng 3.12). Hệ thống dựng cây khối từ đó và tính ngữ cảnh của từng bước theo P1–P5 (mục 3.7); LLM không khai ngữ cảnh. Đích gốc là mệnh đề đáp án đã xác nhận của câu (sinh từ khuôn, hoặc bản dịch đã xác nhận), nên đáp án và lời giải được kiểm trên cùng một mệnh đề; với câu tự do có mệnh đề không được xác nhận, đích gốc được sinh từ đại lượng cần tính theo Bảng 3.13.
+Kiểm cấu trúc. Mã tất định kiểm: mọi biểu thức và mệnh đề đúng văn phạm; mọi khối mở đều được đóng; bước mở khối khớp hình dạng của đích (P5); tên mới không trùng tên đang có hiệu lực và biểu thức chỉ dùng biến đã có hiệu lực (P3, P4); khối gốc kết thúc bằng bước kết luận khớp đích gốc. Hệ thống dựng khung Lean của cây, mỗi nghĩa vụ để trống, rồi biên dịch; lỗi do cấu trúc được gắn cho bước gây ra nó, với kết luận “Sai cấu trúc”.
+Sinh nghĩa vụ. Bộ chuyển, không phải LLM, sinh nghĩa vụ của mỗi bước: theo loại bước (Bảng 3.12), điều kiện xác định của các phép toán trong bước (Bảng 3.13), và điều kiện của định lý được dùng, tra qua từ điển định lý giáo trình. Mắt xích của chuỗi biến đổi nằm dưới giới hạn, tích phân hay đạo hàm chỉ cần đúng trên miền mà phép toán đó dùng: ví dụ (x² − 1)/(x − 1) = x + 1 chỉ cần đúng khi x ≠ 1, vì mắt xích nằm trong giới hạn khi x → 1.
+CAS tìm phản ví dụ. Ở từng giá trị tham số còn trong miền, CAS thử từng nghĩa vụ trong ngữ cảnh của nó. Kết quả chỉ là “thấy” hoặc “không thấy” phản ví dụ; không thấy không có nghĩa là đúng.
+Lean kiểm từng nghĩa vụ. Lean kiểm mỗi nghĩa vụ với mọi giá trị tham số trong miền, giả định các nghĩa vụ khác đúng, ở chế độ kiểm bước của FR06 (1.7): chỉ bộ chiến thuật tự động cố định kèm định lý mà bước ghi, không dùng LLM, có giới hạn riêng cho mỗi bước. CAS thấy phản ví dụ thì Lean thử chiều sai với phản ví dụ đó. Lean kiểm cả việc ngữ cảnh của bước có mâu thuẫn hay không.
+Kết luận. Kết luận của nghĩa vụ theo Bảng 3.14; kết luận của bước là kết luận kém nhất trong các nghĩa vụ của bước; nhãn lời giải theo Bảng 3.19. Bước chỉ sai ở một vài giá trị tham số thì các giá trị đó được bỏ khỏi miền nếu miền còn đủ (QT03), rồi kiểm lại.
+Sinh lại đoạn hỏng. Lời giải chưa đạt được sinh lại từ bước hỏng đầu tiên: các bước trước được giữ, LLM viết lại từ bước đó, kèm phản hồi cụ thể như phản hồi cho một bài chứng minh: “bước 3 sai, phản ví dụ x = 1,5”; “bước 3 nhảy quá xa, cần thêm bước trung gian”; “bước 3 có thể dùng định lý … trong từ điển”. Tối đa M lần cho mỗi câu (QT04).
+Ráp chứng minh đáp án. Lời giải “Đã chứng minh” và câu có mệnh đề đáp án đã xác nhận thì chứng minh của các nghĩa vụ được ráp vào khung Lean của lời giải; Lean biên dịch cả khung và kiểm theo QT18. Đạt thì đáp án “Đã chứng minh”, cách tìm “ráp từ lời giải”, và câu không qua 1.7 (QT05). Ráp mà không biên dịch được thì câu được chứng minh đáp án ở 1.7.
+Hết lượt sinh lại. Không lời giải nào đạt sau M lần thì nhãn lời giải là “Không có”, lời giải không được lưu kèm câu và chỉ được ghi vào nhật ký (QT07): câu trắc nghiệm đi tiếp đến 1.7, hiển thị không kèm lời giải; câu tự luận không đạt, không qua 1.7, nên không tốn công chứng minh đáp án.
+Hiển thị. Lời giải hiển thị do hệ thống sinh từ cây đã kiểm: biểu thức và mệnh đề qua công thức hiển thị, tên định lý theo từ điển, kèm lời dẫn của LLM. Lời dẫn không được kiểm, nên chỉ được nối các bước, không được thêm nội dung toán; người kiểm đánh giá điều này theo mục “Lời giải” của Bảng 3.6.
+Ghi nhận. Mỗi lần Lean và CAS mâu thuẫn ở một nghĩa vụ được tính vào thống kê lỗi lớp kiểm (4.3); số câu không đạt vì lời giải được thống kê theo dạng bài và khuôn, để quản trị viên thêm định lý vào từ điển hoặc sửa khuôn.
+1.7 Chứng minh đáp án
+Tác nhân
+Dịch vụ LLM, Lean
+Đầu vào
+Câu cần chứng minh đáp án: câu cần phân xử (từ 1.4), câu trắc nghiệm có lời giải “Không có”, câu có chứng minh ráp không biên dịch được; mệnh đề đã xác nhận; kịch bản chứng minh của khuôn
+Kết quả
+Chứng minh đáp án, hoặc kết quả “không chứng minh được” kèm lý do dừng, hoặc phản ví dụ; nhãn đáp án
+Yêu cầu, quy tắc
+FR01, FR06; QT06, QT18, QT19, QT25, QT26; RD02; NFR03, NFR05
+Khi nào chạy. Chỉ cho ba loại câu ở đầu vào. Câu cần phân xử chạy bước này trước 1.6, để đáp án còn nghi ngờ chưa tốn công sinh lời giải; câu được giữ mới sang 1.6 (QT05). Câu tự do có mệnh đề không được xác nhận không đến bước này, vì không có mệnh đề để chứng minh.
+Cách tìm chứng minh. Dùng cho chứng minh đáp án và cho FR05 (chứng minh các bản dịch tương đương, kiểm giả thiết không mâu thuẫn). Thử từ cách rẻ đến cách tốn kém: kịch bản chứng minh của khuôn (câu theo khuôn); chiến thuật tự động của Lean; LLM viết chứng minh và sửa theo thông báo lỗi; chia thành các bước trung gian và chứng minh từng bước. Ở chiều sai, LLM được đề xuất phản ví dụ, nhưng Lean phải xác nhận.
+Chế độ kiểm bước. Với nghĩa vụ của bước lời giải (1.6), FR06 chỉ chạy một bộ chiến thuật tự động cố định, chọn theo loại bước và loại nghĩa vụ, kèm định lý mà bước ghi; không dùng LLM viết chứng minh hay chia bước, và mỗi bước có giới hạn riêng. Bước mà bộ chiến thuật không đóng được là bước quá lớn so với một lời giải từng bước. Ở chiều sai, CAS đề xuất phản ví dụ và Lean phải xác nhận.
+Ba chiều chứng minh. Đúng: chứng minh đối tượng. Sai: chỉ ra phản ví dụ, tức một trường hợp cụ thể thỏa mọi giả thiết mà đối tượng không đúng; khi ngữ cảnh mâu thuẫn thì không có phản ví dụ nào. Mâu thuẫn: suy ra điều vô lý từ ngữ cảnh; chiều này dùng cho điều kiện (2) của FR05 và cho việc kiểm ngữ cảnh của bước lời giải.
+Không quyết định kết luận nghiệp vụ. FR06 chỉ trả về kết quả chứng minh. Việc yêu cầu chiều nào, và kết quả được hiểu thành nhãn gì, do bên gọi quyết định: QT06 và QT25 cho đáp án, QT04 cho lời giải, QT15 cho FR05.
+Điều kiện chấp nhận. Chứng minh chỉ được chấp nhận khi không còn chỗ bỏ trống, chỉ dựa vào các tiên đề chuẩn, chứng minh đúng mệnh đề đã cố định (không bị sửa), và không dùng lệnh có thể làm sai lệch kết quả kiểm (QT18).
+Giới hạn. Mỗi yêu cầu có giới hạn tài nguyên và số lần thử, do bên gọi đặt; giới hạn chính đo bằng heartbeat của Lean, không phụ thuộc tốc độ hay tải của máy, kèm một giới hạn thời gian thực để phòng treo, và giới hạn lượt gọi LLM, số token (NFR04). Hết giới hạn thì trả về “không chứng minh được” kèm lý do dừng; kết quả này không có nghĩa là đáp án sai (QT19).
+Tái lập và bộ nhớ đệm. Mọi chứng minh tìm được đều được lưu để kiểm lại bằng Lean mà không cần gọi lại LLM (NFR05). Kết quả được lưu theo mệnh đề đã chuẩn hóa, chiều, các định lý gợi ý và phiên bản hệ thống; yêu cầu trùng thì trả lại kết quả đã lưu; bộ nhớ đệm bị xóa khi đổi phiên bản (QT22).
+Ưu tiên. Yêu cầu từ đợt sinh được xử lý trước yêu cầu từ đánh giá (4.2); chứng minh lại (5.1) chỉ chạy khi không còn yêu cầu khác; số tiến trình Lean chạy cùng lúc theo RB2.
+Quyết định. Kết quả được hiểu thành nhãn đáp án theo Bảng 3.18; với câu cần phân xử, theo Bảng 3.17. Lean bác bỏ đáp án mà CAS và tính số cùng xác nhận thì câu không đạt, và lý do này dùng ngưỡng riêng của QT26.
+1.8 Xếp mức và xử lý câu
+Tác nhân
+—
+Đầu vào
+Kết quả các bước kiểm của câu; trạng thái của phiên bản khuôn và của chuyên đề; chỗ của câu
+Kết quả
+Nhãn và trạng thái của câu; kết quả của chỗ, hoặc lần thử mới cho chỗ; phiên bản khuôn hoặc chuyên đề tạm dừng theo ngưỡng
+Yêu cầu, quy tắc
+FR01; QT05–QT09, QT15, QT20, QT26; RD02, RD04, RD11–RD16
+Xếp mức và xử lý. Câu được xếp mức theo Bảng 1.5 (đáp án theo QT06, lời giải theo QT07) và xử lý theo Bảng 3.20. Câu theo khuôn và câu tự do có mệnh đề đã xác nhận vào ngân hàng ngay khi qua các lớp kiểm; chất lượng của quy trình sinh được đo bằng kiểm mẫu (2.1, 2.2), không chặn câu (QT08). Câu tự do có mệnh đề không được xác nhận theo QT15. Câu kiểm lại theo QT20 (Bảng 3.11).
+Nguồn sinh mất hiệu lực trong khi kiểm. Phiên bản khuôn của câu mất kiểm chứng hoặc bị tạm dừng, hoặc chuyên đề của câu tự do bị tạm dừng, trong khi câu mới đang kiểm: câu bị loại, lý do “nguồn sinh mất hiệu lực trong khi kiểm”, không tính lượt, và chỗ được chuyển theo QT05.
+Phân loại lỗi. Máy xác định nguyên nhân của câu không đạt theo Bảng 3.21: lỗi lẻ của LLM thì chỉ dùng lần thử tiếp; lỗi chắc chắn của khuôn thì đặt lại phiên bản khuôn; lỗi lặp lại thì tạm dừng theo ngưỡng; mâu thuẫn giữa các nguồn kiểm thì phân xử.
+Tạm dừng theo ngưỡng. Sau mỗi câu không đạt, hệ thống đếm theo từng lý do trên các câu gần nhất của nguồn sinh (QT26). Vượt ngưỡng thì phiên bản khuôn hoặc chuyên đề sang “Tạm dừng”, phần kế hoạch còn lại chuyển theo QT05, và quản trị viên được báo kèm các câu bị loại.
+Cập nhật chỗ. Câu vào ngân hàng: chỗ “Có câu”. Câu chờ duyệt: chỗ “Đang chờ người”, không sinh câu thay. Câu không đạt: chỗ dùng lần thử tiếp nếu còn lượt, hết lượt thì “Thiếu” kèm lý do của lần thử cuối (QT05).
+1.9 Lập báo cáo đợt sinh
+Tác nhân
+Giảng viên
+Đầu vào
+Đợt sinh, kế hoạch, các chỗ và câu của đợt; nhật ký
+Kết quả
+Báo cáo đợt sinh; trạng thái của đợt sinh
+Yêu cầu, quy tắc
+FR01, FR04; QT23; RB6; NFR03, NFR06
+Kế hoạch đối chiếu kết quả. Mọi số liệu tính từ dữ liệu của đợt và nhật ký (RB6). Mỗi dòng của kế hoạch đợt sinh có thêm kết quả theo chỗ:
+Chuyên đề, dạng bài, hình thức
+Yêu cầu
+Có câu
+Chờ duyệt
+Thiếu (lý do)
+Giới hạn dạng 0/0, trắc nghiệm
+8
+7
+0
+1 (đáp án không đạt)
+Tích phân từng phần, tự luận
+6
+3
+1
+2 (không có lời giải đạt)
+Đạo hàm cấp cao, tự luận
+6
+6
+0
+0
+Bảng 2.4. Ví dụ phần kế hoạch đối chiếu kết quả của báo cáo đợt sinh
+Nhãn, sự kiện và chi phí. Cuối báo cáo: nhãn của các câu có được (đáp án “Đã chứng minh” hoặc “Chỉ kiểm số”; lời giải “Đã chứng minh” hoặc “Không có”), ghi rõ số câu trắc nghiệm không kèm lời giải; các sự kiện trong đợt: phiên bản khuôn hoặc chuyên đề bị tạm dừng hoặc mất kiểm chứng và phần kế hoạch đã chuyển sang đâu, đợt bị dừng và chạy tiếp; chi phí của đợt và chi phí trung bình cho một câu có được, tính cả các lần thử bị loại (NFR04). Ví dụ: “20 câu yêu cầu: 16 có câu, 1 chờ duyệt, 3 thiếu. 3 câu trắc nghiệm không kèm lời giải. Khuôn TP-02 bị tạm dừng sau câu thứ 3, phần còn lại chuyển sang sinh tự do.”
+Trạng thái đợt sinh. Đợt sinh chuyển sang “Hoàn thành” khi mọi chỗ đã có kết quả: “Có câu”, “Đang chờ người” hoặc “Thiếu”; báo cáo ghi riêng số chỗ đang chờ người. Đợt bị dừng giữa chừng ở trạng thái “Bị dừng” và được chạy tiếp mà không sinh lại các chỗ đã xong (NFR06); tiến độ được hiển thị cho giảng viên (NFR03).
+2.1 Kiểm mẫu theo chuyên đề
+Tác nhân
+Người kiểm
+Đầu vào
+Câu tự do thuộc phiên bản quy trình hiện hành của chuyên đề; đánh giá của người kiểm; lô câu tạm khóa của phiên bản cũ, khi được chọn kiểm riêng
+Kết quả
+Lần kiểm mẫu và kết luận từng câu; cờ “Người đã duyệt”; câu sai xử lý theo QT14
+Yêu cầu, quy tắc
+FR02; QT10–QT14, QT27; RD05, RD06
+Mục đích. Kiểm mẫu đo chất lượng của quy trình sinh câu tự do (mô hình, prompt, các lớp kiểm), không đứng trên đường đi của câu: câu tự do qua các lớp kiểm đã vào ngân hàng ngay (QT08). Cách làm này giống việc kiểm tay một mẫu ngẫu nhiên để đo chất lượng của các bộ dữ liệu được sinh tự động.
+10 câu đầu. Mỗi phiên bản quy trình mới của chuyên đề có một lần kiểm mẫu loại “10 câu đầu”: 10 câu tự do đầu tiên của phiên bản đều được kiểm, kể cả câu cũ vừa kiểm lại chuyển sang phiên bản; có nhiều hơn 10 câu cùng lúc thì chọn ngẫu nhiên (QT12).
+Kiểm mẫu định kỳ. Sau đó, mỗi đợt sinh có câu tự do mới của chuyên đề, hệ thống chọn ngẫu nhiên khoảng 1 trên 20 câu mới, ít nhất 1 câu (QT13).
+Chọn mẫu. Chỉ chọn câu thuộc phiên bản quy trình hiện hành, đang “Trong ngân hàng” hoặc “Tạm khóa”, không đang chờ kiểm lại, chưa từng vào mẫu (RD05). Câu chuyển sang được kiểm lại khi đang nằm trong mẫu chưa chấm thì được rút khỏi mẫu và chọn câu khác bù (QT11).
+Đánh giá. Người kiểm xem đề, đáp án, phương án, lời giải, mệnh đề Lean gốc và bản diễn đạt lại bằng tiếng Việt (chỉ để tham khảo, vì bản này do LLM viết), rồi đánh dấu từng câu đúng hay sai theo Bảng 3.6, kèm mục sai và loại lỗi.
+Kết quả. Câu đúng mang cờ “Người đã duyệt” và không bị tạm khóa vì lỗi chung của nguồn sinh. Câu sai xử lý theo QT14: câu bị gỡ; câu cùng phiên bản chưa có cờ bị tạm khóa; chuyên đề tạm dừng nếu câu sai thuộc phiên bản hiện hành. Hệ thống tính tỉ lệ sai và cận trên 95% theo phiên bản (QT12): không thấy câu sai trong 10 câu chỉ cho cận trên khoảng 30%, trong 60 câu khoảng 5%.
+Lô phiên bản cũ. Khi quản trị viên đổi prompt hoặc mô hình và chọn kiểm riêng lô câu tạm khóa của phiên bản cũ (5.3), hệ thống tạo một lần kiểm mẫu loại “Lô phiên bản cũ”: 30 câu chọn ngẫu nhiên, ít hơn thì kiểm hết. Không có câu sai thì cả lô về “Trong ngân hàng”; có câu sai thì cả lô bị gỡ (Bảng 3.7).
+2.2 Kiểm mẫu theo khuôn
+Tác nhân
+Người kiểm
+Đầu vào
+Câu theo khuôn thuộc phiên bản quy trình hiện hành của phiên bản khuôn; đánh giá của người kiểm
+Kết quả
+Lần kiểm mẫu và kết luận từng câu; cờ “Người đã duyệt”; câu sai xử lý theo QT14; ghi chú sửa khuôn
+Yêu cầu, quy tắc
+FR02; QT11–QT14, QT27; RD05, RD06
+Như 2.1, theo phiên bản khuôn. Mỗi phiên bản khuôn mới được kiểm chứng bắt đầu một phiên bản quy trình; đổi mô hình, prompt hay lớp kiểm mà khuôn dùng cũng bắt đầu phiên bản quy trình mới (QT27). 10 câu đầu của mỗi phiên bản quy trình được kiểm hết, kể cả khi thuộc nhiều đợt sinh; sau đó khoảng 1 trên 20 câu mới mỗi đợt, ít nhất 1 câu.
+Lỗi ngoài tiêu chí. Lỗi không thuộc Bảng 3.6 (câu quá dễ, phương án nhiễu dễ loại, lời văn gượng) được ghi lại để sửa khuôn, không làm câu thành câu sai và không đổi trạng thái khuôn.
+Câu sai. Mục “Khuôn và bộ chuyển” (câu chữ và mệnh đề Lean không cùng nghĩa) đưa phiên bản khuôn về “Chưa kiểm chứng”; mục khác đưa phiên bản khuôn sang “Tạm dừng” nếu câu thuộc phiên bản quy trình hiện hành; trong cả hai trường hợp, câu khác chưa có cờ bị tạm khóa theo QT14.
+2.3 Duyệt câu
+Tác nhân
+Người kiểm
+Đầu vào
+Danh sách câu cần duyệt; kết quả duyệt của người kiểm
+Kết quả
+Cờ “Người đã duyệt”, trạng thái câu; lần duyệt; câu sai xử lý theo QT14
+Yêu cầu, quy tắc
+FR02; QT09, QT14, QT15, QT20
+Duyệt câu là việc người kiểm đọc một câu cụ thể và xác nhận câu đúng hay sai; việc này không đổi nhãn của câu (QT09).
+Hệ thống lập danh sách câu cần duyệt theo thứ tự: câu “Chờ duyệt” (câu tự do có mệnh đề không được xác nhận, QT15); câu “Tạm khóa” mà người dùng chọn duyệt riêng; câu có đáp án “Chỉ kiểm số” chưa duyệt trong ngân hàng. Trong mỗi nhóm, ưu tiên chuyên đề còn ít câu ở mức cao nhất. Câu đang chờ kiểm lại không vào danh sách.
+Người duyệt xem đề, đáp án, phương án và lời giải, nếu có; lý do câu ở mức “Chỉ kiểm số” và cách kiểm đáp án đã qua (QT06); kết quả của CAS và tính số ở từng giá trị tham số, trong đó các giá trị cần chú ý (gần biên của miền, hoặc chỉ một cách tính được) được tô sáng.
+Người duyệt đánh giá câu theo Bảng 3.6: với câu “Tạm khóa”, theo đủ mọi mục, kể cả mệnh đề Lean và khuôn; với câu khác, trừ hai mục này, nên người duyệt không phải đọc mệnh đề Lean.
+Câu đúng: câu mang cờ “Người đã duyệt”; câu “Chờ duyệt” và câu “Tạm khóa” về “Trong ngân hàng”; câu “Chỉ kiểm số” được hiển thị là “Chỉ kiểm số, đã duyệt”. Câu sai: xử lý theo QT14; câu “Chờ duyệt” bị loại và chỗ của câu ghi “Thiếu”, không sinh câu bù; câu đã từng ở ngân hàng bị gỡ.
+Kết quả chỉ được nhận khi câu còn ở trạng thái lúc vào danh sách, và không đang chờ kiểm lại (QT20). Mỗi lần duyệt được ghi lại; câu đã duyệt mà về sau được xác định là sai, ví dụ khi Lean bác bỏ đáp án ở 5.1, thì lần duyệt được tính là duyệt sai (QT09).
+Không tính vào kiểm mẫu. Câu được duyệt không được cộng vào số câu đã kiểm mẫu của phiên bản, vì không được chọn ngẫu nhiên; câu sai phát hiện khi duyệt được đếm riêng (QT14).
+2.4 Gỡ và sửa câu
+Tác nhân
+Giảng viên, Người kiểm
+Đầu vào
+Yêu cầu gỡ câu kèm lý do: lỗi theo Bảng 3.6 (mục sai và loại lỗi) hoặc lý do khác; hoặc yêu cầu sửa câu kèm nội dung sửa
+Kết quả
+Câu bị gỡ; câu cần kiểm lại; kết quả sửa câu gửi người sửa
+Yêu cầu, quy tắc
+FR02; QT14, QT20
+Gỡ câu. Người gỡ bắt buộc chọn lý do. Lỗi theo Bảng 3.6 là câu sai và kéo theo quy tắc chung QT14, như khi phát hiện qua kiểm mẫu; lý do khác (không muốn dùng, trùng, lỗi trình bày nhỏ) chỉ gỡ câu, không tính là câu sai. Câu bị gỡ không còn được dùng nhưng vẫn được lưu đủ nội dung kèm lý do (RD08).
+Sửa câu. Câu bị sửa thì mọi nhãn về “Chưa kiểm”, cờ “Người đã duyệt” bị bỏ, và câu được kiểm lại từ 1.3 (QT20); trong lúc kiểm lại, câu đang trong ngân hàng ở “Tạm khóa”. Câu theo khuôn chỉ được sửa qua bản ghi, vì câu chữ và mệnh đề phải sinh từ bản ghi (RD09). Câu “Bị gỡ” cũng được sửa: câu về “Đang kiểm” và được kiểm lại như trên, nên người sửa không phải tạo câu mới và không mất bản ghi, lời giải đã có. Câu “Bị loại” là trạng thái cuối.
+Kết quả sửa câu. Khi câu kiểm lại có kết quả, người sửa nhận thông báo: mã câu; đạt, kèm trạng thái và nhãn mới; hoặc không đạt, kèm bước và lý do; hoặc “Chờ duyệt”. Ví dụ: “Câu 57 không đạt ở bước kiểm đáp án: đáp án 2 lệch kết quả của CAS và tính số (bằng 3) tại a = 1.” Câu kiểm lại không đạt bị gỡ, không sinh câu thay (Bảng 3.11).
+Không tính sai hai lần. Câu bị gỡ vì không đạt kiểm lại không được tính thêm vào tỉ lệ câu sai; lỗi do bản sửa của người không thuộc quy trình sinh câu (QT14).
+3.1 Quản lý định nghĩa bổ sung
+Tác nhân
+Quản trị viên, Lean
+Đầu vào
+Định nghĩa bổ sung kèm định lý tương đương, ví dụ đúng và ví dụ sai
+Kết quả
+Định nghĩa đã kiểm chứng; kết quả kiểm chứng gửi quản trị viên; mệnh đề, câu và phiên bản khuôn bị đặt lại khi sửa định nghĩa
+Yêu cầu, quy tắc
+FR03; QT17, QT20, QT21; RB5
+Định nghĩa bổ sung. Dành cho khái niệm Giải tích 1 mà Mathlib chưa có. Mỗi định nghĩa kèm định lý tương đương với định nghĩa trong giáo trình, ví dụ đúng và ví dụ sai.
+Kiểm chứng. Lean kiểm tra định nghĩa và các bằng chứng kèm theo; không còn chứng minh bỏ trống. Chỉ định nghĩa “Đã kiểm chứng” mới được dùng khi hình thức hóa và trong khuôn.
+Khi sửa định nghĩa. Mệnh đề dùng định nghĩa về “Chưa xác nhận”; câu dùng định nghĩa mất cờ “Người đã duyệt”, câu đang trong ngân hàng sang “Tạm khóa”, và được kiểm lại từ 1.5; phiên bản khuôn dùng định nghĩa về “Chưa kiểm chứng”, và câu của nó chỉ được kiểm lại sau khi khuôn được kiểm chứng lại (QT21, QT20).
+3.2 Quản lý từ điển thuật ngữ và định lý
+Tác nhân
+Quản trị viên, Lean
+Đầu vào
+Thuật ngữ và khái niệm Lean tương ứng; định lý giáo trình và định lý Lean tương ứng, kèm ví dụ kiểm chứng
+Kết quả
+Từ điển thuật ngữ và từ điển định lý đã kiểm chứng; kết quả kiểm chứng gửi quản trị viên
+Yêu cầu, quy tắc
+FR03
+Từ điển thuật ngữ. Mỗi thuật ngữ trong giáo trình được gắn với khái niệm tương ứng trong Lean, ví dụ “vô cùng bé tương đương” với khái niệm tương đương tiệm cận của Mathlib. Từ điển được dùng khi hình thức hóa và khi diễn đạt lại bằng tiếng Việt.
+Từ điển định lý giáo trình. Mỗi định lý của giáo trình (Rolle, Lagrange, Cauchy, L’Hospital, Taylor, giá trị trung gian, Weierstrass, …) được gắn với định lý tương ứng trong Mathlib hoặc thư viện bổ sung, kèm ví dụ kiểm chứng. Khi một bước của lời giải ghi định lý được dùng, bộ chuyển tra từ điển để sinh nghĩa vụ điều kiện của định lý, và bộ chiến thuật cố định dùng định lý đó khi kiểm bước (QT04).
+3.3 Quản lý dạng bài và khuôn câu hỏi
+Tác nhân
+Quản trị viên
+Đầu vào
+Dạng bài; khuôn câu hỏi và phiên bản mới của khuôn; yêu cầu mở lại phiên bản khuôn tạm dừng
+Kết quả
+Danh mục dạng bài; phiên bản khuôn ở “Chưa kiểm chứng”; phiên bản khuôn được mở lại
+Yêu cầu, quy tắc
+FR03, FR07; QT16, QT24, QT26; RD09, RD14
+Dạng bài. Mỗi dạng bài thuộc một chuyên đề, gồm: tên; mô tả, dùng làm hướng dẫn cho LLM khi sinh tự do; kiểu đáp án (Bảng 3.15); hình thức cho phép; cờ “cho phép sinh tự do”. Dạng bài có kiểu đáp án chưa có trong Bảng 3.15 thì không sinh được, kể cả sinh tự do (QT24).
+Khuôn câu hỏi. Mỗi khuôn thuộc một dạng bài và hỗ trợ một hoặc cả hai hình thức của dạng bài. Mỗi phiên bản khuôn gồm: các trường của bản ghi và ràng buộc của chúng; mẫu câu chữ tiếng Việt; mẫu mệnh đề Lean; kịch bản chứng minh, tức các chiến thuật được thử trước khi FR06 tìm chứng minh đầy đủ; và bộ ví dụ kiểm thử, mỗi ví dụ kèm kết quả mong đợi gồm đáp án, có bản ghi ở biên và bản ghi cố ý sai mà khuôn phải từ chối.
+Phiên bản. Sửa khuôn tạo phiên bản mới ở “Chưa kiểm chứng”. Sửa vì lỗi thì phiên bản cũ cũng về “Chưa kiểm chứng”; sửa để cải tiến thì phiên bản cũ được dùng tiếp đến khi phiên bản mới được kiểm chứng. Chỉ phiên bản mới nhất đã kiểm chứng của một khuôn được dùng để sinh câu; câu đã sinh giữ phiên bản khuôn của mình (RD09).
+Mở lại phiên bản khuôn tạm dừng. Quản trị viên chạy lại bộ ví dụ kiểm thử: ví dụ do người viết cũng không đạt thì chắc chắn là lỗi khuôn, khuôn được sửa thành phiên bản mới và kiểm chứng lại (3.4); thấy khuôn không sai (dạng bài khó với LLM) thì mở lại phiên bản về “Đã kiểm chứng”, có thể chỉnh prompt, khi đó phiên bản quy trình mới bắt đầu (QT26, QT27).
+3.4 Kiểm chứng khuôn
+Tác nhân
+Người kiểm, Lean, Quản trị viên
+Đầu vào
+Phiên bản khuôn “Chưa kiểm chứng”; kết quả đối chiếu và xác nhận của người kiểm
+Kết quả
+Phiên bản khuôn “Đã kiểm chứng” hoặc giữ “Chưa kiểm chứng” kèm lý do; kết quả kiểm chứng gửi quản trị viên; câu tạm khóa của phiên bản lỗi được đưa đi kiểm lại
+Yêu cầu, quy tắc
+FR03, FR07; QT16, QT20, QT27; RD09; NFR08
+Đối chiếu nghĩa (người kiểm). Người kiểm đối chiếu mẫu mệnh đề Lean với mẫu câu chữ, xác nhận hai mẫu cùng nghĩa và dùng định nghĩa của giáo trình, ví dụ giới hạn lấy trên lân cận bỏ điểm, tích phân suy rộng hội tụ theo định nghĩa trong thư viện bổ sung chứ không theo tính khả tích Lebesgue của Mathlib.
+Điều kiện tồn tại và xác định (người kiểm, có mã hỗ trợ). Mã kiểm mẫu mệnh đề chỉ dùng các dạng cho phép ở Bảng 3.13 và đặt điều kiện tồn tại ở kết luận (QT16); người kiểm xác nhận mẫu đủ điều kiện tồn tại và xác định.
+Bộ ví dụ kiểm thử (máy). Hệ thống sinh câu chữ, mệnh đề Lean và biểu thức CAS từ từng bản ghi của bộ ví dụ, biên dịch mệnh đề, và so với kết quả mong đợi, gồm đáp án; bản ghi ở biên phải đạt, bản ghi cố ý sai phải bị từ chối.
+Kết quả. Đạt cả ba bước thì phiên bản khuôn sang “Đã kiểm chứng”, được dùng ngay, và một phiên bản quy trình mới bắt đầu: 10 câu đầu của nó được kiểm ở 2.2 (QT27). Kết quả được báo cho quản trị viên. Không có bước sinh câu mẫu: câu đầu tiên của khuôn là câu thật, được kiểm hết bằng quy tắc 10 câu đầu.
+Câu của phiên bản lỗi. Khi phiên bản mới được kiểm chứng sau một lỗi khuôn, câu tạm khóa của phiên bản lỗi được sinh lại câu chữ và mệnh đề bằng phiên bản mới, từ bản ghi của câu, rồi kiểm lại từ 1.3 và ghi phiên bản mới; bản ghi không khớp trường và ràng buộc của phiên bản mới thì câu bị gỡ (QT20).
+Đo độ chính xác của kiểm chứng. Thống kê ngân hàng (4.3) báo tỉ lệ câu sai qua kiểm mẫu theo khuôn, và tỉ lệ khuôn đã qua ba bước mà về sau bị quay về “Chưa kiểm chứng” vì lỗi khuôn.
+4.1 Gán nhãn dữ liệu đánh giá
+Tác nhân
+Quản trị viên, Người kiểm
+Đầu vào
+Mục đánh giá do quản trị viên nhập; nhãn của từng người kiểm
+Kết quả
+Mục đánh giá có nhãn thống nhất, xếp vào bộ điều chỉnh hoặc bộ kiểm tra; độ đồng thuận
+Yêu cầu, quy tắc
+FR04; RD07; MT7
+Gán nhãn. Mỗi mục đánh giá loại đề do hai người kiểm gán nhãn độc lập; hai nhãn khác nhau thì bàn lại để thống nhất. Chỉ mục đã thống nhất được dùng khi chạy đánh giá; mục mệnh đề Lean lấy từ ProverBench không cần gán nhãn, vì Lean tự chấm chứng minh. Hệ thống báo cáo độ đồng thuận (MT7).
+Chia tập. Mục đã thống nhất được xếp vào bộ điều chỉnh hoặc bộ kiểm tra để dùng ở 4.2.
+4.2 Chạy đánh giá
+Tác nhân
+Quản trị viên, Người kiểm, Dịch vụ LLM, Lean
+Đầu vào
+Yêu cầu đánh giá (bộ dữ liệu, bộ điều chỉnh hoặc bộ kiểm tra, cấu hình); mục đã thống nhất; kết quả chấm tay
+Kết quả
+Lần chạy đánh giá và kết quả trên từng mục; chỉ số gửi quản trị viên
+Yêu cầu, quy tắc
+FR04, FR05, FR06; QT18; MT2, MT3, MT7
+Chia bộ dữ liệu. Prompt và tham số chỉ được chỉnh trên bộ điều chỉnh. Bộ kiểm tra chỉ chạy một lần, với cấu hình đã chốt.
+Chạy. FR05 (như 1.5) chạy trên bộ đề. FR06 (như 1.7) chạy trên các mệnh đề giải tích và giải tích thực của ProverBench, sau khi lọc theo phạm vi kiến thức (Bảng 1.2) và chuyển sang phiên bản Lean, Mathlib của hệ thống, với giới hạn tài nguyên như khi chạy thật.
+Chấm. Với đề: mệnh đề hệ thống chọn được so với mệnh đề chuẩn bằng BEq+, tức Lean chứng minh hai mệnh đề suy ra nhau. BEq+ bỏ sót khoảng một nửa số bản dịch đúng, nên người kiểm chấm tay thêm một mẫu các đề BEq+ chưa xác nhận. Kết quả được báo kèm tỉ lệ đề được xác nhận, vì độ chính xác chỉ tính trên các đề được xác nhận. Với chứng minh tự động: mệnh đề được tính là chứng minh được khi Lean chấp nhận chứng minh theo QT18.
+Chỉ số. Tỉ lệ mệnh đề chứng minh được trong giới hạn đã đặt, ghi rõ giới hạn; tỉ lệ thành công theo từng cách tìm chứng minh; thời gian và chi phí trung bình cho một mệnh đề. Kết quả trên bộ dữ liệu công khai chỉ để tham chiếu, vì bộ dữ liệu có thể đã có trong dữ liệu huấn luyện của mô hình; chỉ số chính vẫn là tỉ lệ đáp án và lời giải được chứng minh trên chính câu hỏi của hệ thống (MT2, MT4). Kết quả trên tập test của ProofNet# được so với kết quả đã công bố theo cùng thước đo (BEq+ so với BEq+).
+4.3 Thống kê ngân hàng
+Tác nhân
+Giảng viên, Quản trị viên
+Đầu vào
+Nhật ký; dữ liệu câu hỏi, chỗ, lần kiểm mẫu và lần duyệt
+Kết quả
+Thống kê ngân hàng, gồm phần A (ngân hàng hiện có) và phần B (chất lượng sinh và kiểm)
+Yêu cầu, quy tắc
+FR04; QT09, QT12, QT14, QT23; RB6; NFR04, NFR05
+Một nguồn số liệu, một cách nhóm. Mọi số liệu tính từ nhật ký và dữ liệu hiện có lúc lập báo cáo; không lưu sẵn số liệu thống kê (RB6). Mọi bảng nhóm theo cùng một cách: chuyên đề → dạng bài → nguồn sinh (khuôn và phiên bản, hoặc tự do) → hình thức. Các tỉ lệ tính riêng cho phiên bản quy trình hiện hành; số của phiên bản cũ được giữ để so sánh.
+Phần A – Ngân hàng hiện có. Theo nhóm: số câu “Trong ngân hàng” theo nhãn đáp án (“Đã chứng minh”, “Chỉ kiểm số, đã duyệt”, “Chỉ kiểm số” chưa duyệt) và nhãn lời giải (“Đã chứng minh”, “Không có”); số câu chờ duyệt, tạm khóa; chuyên đề và phiên bản khuôn đang tạm dừng.
+Phần B – Chất lượng sinh và kiểm. Dành cho quản trị viên sửa hệ thống, và là số liệu đánh giá MT1, MT2, MT4, NFR04:
+Mục
+Nội dung
+1. Phễu sinh câu
+Theo nhóm: số câu mới sinh → số bị loại ở từng bước, kèm lý do → số câu qua các lớp kiểm. Từ đó có tỉ lệ qua các lớp kiểm, bước làm rơi nhiều câu nhất, số câu không đạt vì lời giải; kèm tỉ lệ đáp án “Đã chứng minh”, tỉ lệ lời giải “Đã chứng minh”, và chi phí trung bình cho một câu qua các lớp kiểm, tính cả lần thử bị loại. Chỉ tính câu mới sinh. Ví dụ: dạng “tích phân từng phần”, tự luận: 15 câu sinh → 1 loại ở kiểm cấu trúc, 2 ở kiểm đáp án, 8 ở kiểm lời giải → 4 câu qua; chỗ cần sửa là lời giải (thêm định lý vào từ điển hoặc sửa khuôn), không phải đáp án
+2. Kiểm mẫu
+Theo nguồn sinh và phiên bản quy trình: số câu đã kiểm, số câu sai, tỉ lệ sai kèm cận trên 95% (QT12); câu sai phát hiện ngoài kiểm mẫu (duyệt, gỡ) đếm riêng; trạng thái chuyên đề và phiên bản khuôn; số lần bị tạm dừng; tỉ lệ khuôn đã qua kiểm chứng mà về sau bị quay về “Chưa kiểm chứng”
+3. Lỗi lớp kiểm
+Theo lớp (CAS, tính số, lời giải độc lập, Lean và bộ chuyển) và dạng bài: số lần bị đa số bác bỏ khi phân xử (QT25); số lần Lean và CAS mâu thuẫn ở lời giải; số câu sai đã lọt qua mà người phát hiện, theo mục sai; tỉ lệ duyệt sai (QT09)
+4. Kiểm lại
+Theo từng lần thay đổi (sửa định nghĩa, lớp kiểm, khuôn, nâng phiên bản) và theo sửa câu: số câu kiểm lại, số câu đạt, số câu bị gỡ
+5. Đánh giá
+Kết quả các lần chạy đánh giá (4.2)
+Bảng 2.5. Nội dung phần B của thống kê ngân hàng
+5.1 Chứng minh lại
+Tác nhân
+Dịch vụ LLM, Lean
+Đầu vào
+Câu có đáp án “Chỉ kiểm số”, lý do (a) hoặc (b), có mệnh đề đã xác nhận
+Kết quả
+Chứng minh mới và nhãn đáp án mới; hoặc câu bị gỡ khi Lean bác bỏ đáp án
+Yêu cầu, quy tắc
+FR01, FR06; QT06, QT09, QT22, QT25, QT26
+Chứng minh lại. Khi hệ thống rảnh, đáp án “Chỉ kiểm số” lý do (b) được thử chứng minh lại với giới hạn lớn hơn, ưu tiên chuyên đề còn ít câu ở mức cao nhất; đáp án lý do (a), chứng minh hết hiệu lực sau khi nâng phiên bản, được chứng minh lại tự động (QT22). Chứng minh được thì nhãn đáp án lên “Đã chứng minh”, trạng thái của câu không đổi. Chức năng này chỉ chứng minh lại đáp án; lời giải không có mức “Chỉ kiểm số” nên không cần chứng minh lại.
+Lean bác bỏ đáp án. Đáp án đã qua kiểm đáp án mà Lean bác bỏ thì câu bị gỡ, cùng lý do và ngưỡng riêng như ở 1.7 (QT25, QT26); câu bị gỡ vẫn sửa được (2.4). Câu đã duyệt mà bị bác bỏ thì lần duyệt được tính là duyệt sai (QT09).
+Ưu tiên thấp nhất. Yêu cầu chứng minh lại chỉ chạy khi không còn yêu cầu khác (NFR03); riêng lý do (a) được chạy ngay sau khi nâng phiên bản.
+5.2 Nâng phiên bản Lean, Mathlib
+Tác nhân
+Quản trị viên, Lean
+Đầu vào
+Yêu cầu nâng phiên bản; chứng minh đã lưu, thư viện định nghĩa, từ điển định lý, các phiên bản khuôn và bộ ví dụ kiểm thử
+Kết quả
+Kết quả kiểm phiên bản mới gửi quản trị viên; phiên bản hệ thống mới; nhãn và trạng thái được đặt lại cho phần không còn hợp lệ
+Yêu cầu, quy tắc
+FR02; QT20, QT22; RB1; NFR08
+Kiểm trước khi chuyển. Toàn bộ chứng minh đã lưu, thư viện định nghĩa bổ sung, từ điển định lý giáo trình, các phiên bản khuôn và bộ ví dụ kiểm thử được kiểm trên phiên bản mới trong khi hệ thống vẫn chạy phiên bản cũ; hệ thống chỉ chuyển khi đã có kết quả này, và kết quả được báo cho quản trị viên (QT22).
+Sau khi chuyển. Đáp án có chứng minh không còn hợp lệ hạ về “Chỉ kiểm số”, lý do (a), và được chứng minh lại ở 5.1. Lời giải có nghĩa vụ mất chứng minh được kiểm lại bằng bộ chiến thuật cố định; không được thì lời giải về “Chưa kiểm” và được sinh lại theo 1.6, như một nguồn kiểm lại (QT20): câu trắc nghiệm giữ trạng thái, câu tự luận đang trong ngân hàng sang “Tạm khóa”. Phiên bản khuôn không còn đạt về “Chưa kiểm chứng”. Phiên bản mới được ghi thành một phiên bản hệ thống.
+Không đổi phiên bản quy trình. Nâng phiên bản Lean, Mathlib không bắt đầu phiên bản quy trình mới và không làm chuyên đề tạm dừng (QT27).
+5.3 Cập nhật lớp kiểm, mô hình và prompt
+Tác nhân
+Quản trị viên
+Đầu vào
+Yêu cầu thay đổi hệ thống: sửa lớp kiểm, đổi mô hình, đổi prompt, hoặc ghi lý do không sửa khi xử lý một nguồn sinh tạm dừng; cách xử lý lô câu tạm khóa của phiên bản cũ
+Kết quả
+Kết quả kiểm lớp mới gửi quản trị viên; phiên bản hệ thống và phiên bản quy trình mới; câu cần kiểm lại; nguồn sinh hoạt động lại
+Yêu cầu, quy tắc
+FR02; QT14, QT20, QT22, QT27; NFR08
+Sửa lớp kiểm. Lớp mới phải qua bộ ví dụ kiểm thử (NFR08) trước khi áp dụng. Các câu đã qua lớp đó, và câu tạm khóa vì lỗi đã sửa, được kiểm lại tự động qua lớp đã sửa (QT20); câu đạt thuộc phiên bản quy trình mới. Nguồn sinh dùng lớp đó bắt đầu phiên bản quy trình mới, trừ khi lớp chỉ được làm chặt hơn, tức mọi câu đạt lớp mới đều đạt lớp cũ (QT27).
+Đổi mô hình hoặc prompt. Nguồn sinh dùng mô hình hoặc prompt đó bắt đầu phiên bản quy trình mới; câu cũ vẫn thuộc phiên bản cũ. Nếu có lô câu tạm khóa của phiên bản cũ, quản trị viên chọn: kiểm mẫu riêng lô ở 2.1 hoặc 2.2, hoặc gỡ cả lô ngay (Bảng 3.7).
+Không sửa. Với lỗi lẻ, quản trị viên ghi lý do không sửa; nguồn sinh hoạt động lại với cùng phiên bản quy trình, và 10 câu đầu được đếm lại; câu tạm khóa nằm trong tập chọn của 10 câu này (QT14).
+Ghi nhận. Mỗi quyết định được ghi vào nhật ký kèm lý do; mỗi lần nguồn sinh tạm dừng hoặc hoạt động lại cũng vậy (QT23).
+3. Quy tắc nghiệp vụ
+Chương này gom các quy tắc nghiệp vụ mà các chức năng ở chương 2 dẫn chiếu. Mã QT01–QT23 giữ số của bản trước; QT24–QT27 là quy tắc mới. Mục 3.7 định nghĩa lời giải có cấu trúc; mục 3.8 viết các quyết định nhiều nhánh thành bảng quyết định; mục 3.9 gom các bảng chuyển trạng thái.
+Nhóm
+Mã
+3.1 Lập kế hoạch và lượt thử
+QT24, QT05
+3.2 Kiểm câu hỏi
+QT01–QT04, QT25, QT26
+3.3 Mức bảo đảm và đưa câu vào ngân hàng
+QT06–QT09
+3.4 Kiểm mẫu và câu sai
+QT10–QT14, QT27
+3.5 Hình thức hóa và chấp nhận chứng minh
+QT15–QT19
+3.6 Sửa câu và thay đổi hệ thống
+QT20–QT23
+3.7 Lời giải có cấu trúc
+P1–P5; dùng cho QT04, QT07
+3.8 Bảng quyết định
+QT02, QT04, QT06–QT08, QT25, QT26
+3.9 Bảng chuyển trạng thái
+QT05, QT10, QT14, QT20–QT22
+Bảng 3.1. Các nhóm quy tắc nghiệp vụ
+3.1 Lập kế hoạch và lượt thử
+Mã
+Quy tắc
+QT24
+Dạng bài sinh được và chia số câu. Với mỗi chuyên đề, hình thức và dạng bài, xét theo thứ tự: có khuôn có phiên bản “Đã kiểm chứng” hỗ trợ hình thức đó thì sinh theo khuôn; nếu không, dạng bài cho phép sinh tự do và chuyên đề “Đang sinh” thì sinh tự do; còn lại thì không sinh được, kèm lý do. Dạng bài có kiểu đáp án chưa có trong Bảng 3.15 không sinh được. N câu yêu cầu của một chuyên đề và một hình thức được chia đều cho k dạng bài sinh được; r câu dư dành cho r dạng bài đang có ít câu “Trong ngân hàng” nhất, bằng nhau thì xét theo mã dạng bài; trong một dạng bài có nhiều khuôn, số câu được chia giữa các khuôn theo cùng cách. N < k thì chọn N dạng bài ít câu nhất; k = 0 thì phần yêu cầu bị từ chối, kèm lý do. Việc chia do mã thực hiện, không ngẫu nhiên, nên cùng yêu cầu và cùng ngân hàng cho cùng kế hoạch. Ví dụ: 10 câu, ba dạng bài, dạng “0/0” ít câu nhất: 4, 3, 3. Mỗi câu được chia là một chỗ của kế hoạch đợt sinh.
+QT05
+Thứ tự kiểm và lượt thử. Lớp kiểm rẻ chạy trước: kiểm cấu trúc (1.3), kiểm đáp án và phương án nhiễu (1.4), hình thức hóa câu tự do (1.5), rồi kiểm lời giải (1.6). Chứng minh đáp án (1.7), bước tốn kém nhất, chỉ chạy khi cần: câu cần phân xử (chạy trước 1.6, QT25), câu trắc nghiệm có lời giải “Không có”, hoặc khi chứng minh ráp từ lời giải không biên dịch được; với các câu khác, lời giải “Đã chứng minh” được ráp thành chứng minh đáp án. Câu tự luận có lời giải không đạt bị loại trước 1.7, nên không tốn công chứng minh đáp án. Lượt thử đếm theo từng chỗ: mỗi chỗ có tối đa K lần thử (cấu hình được, ví dụ 3); câu mới không đạt thì chỗ dùng lần thử tiếp; hết lượt thì chỗ “Thiếu”, kèm lý do của lần thử cuối. Không tính lượt: câu bị loại vì nguồn sinh mất hiệu lực trong khi kiểm, và lỗi của dịch vụ ngoài (LLM mất kết nối, Lean treo, NFR06). Chuyển chỗ: khi nguồn sinh của chỗ không còn dùng được (phiên bản khuôn mất kiểm chứng hoặc tạm dừng; chuyên đề tạm dừng, với chỗ sinh tự do), chỗ chuyển theo thứ tự: khuôn khác có phiên bản “Đã kiểm chứng” cùng dạng bài, hỗ trợ hình thức của chỗ; sinh tự do nếu dạng bài cho phép và chuyên đề “Đang sinh”; nếu không, chỗ “Thiếu” kèm lý do. Câu không thuộc lần thử nào của một đợt sinh đang chạy (câu kiểm lại; câu bị loại hoặc bị gỡ sau khi đợt sinh xong) không được sinh câu thay. Chi phí của một đợt sinh vì vậy có trần K lần thử nhân số câu yêu cầu.
+Bảng 3.2. Quy tắc lập kế hoạch và lượt thử
+3.2 Kiểm câu hỏi
+Mã
+Quy tắc
+QT01
+Thành phần, miền tham số và điều kiện xác định. Mỗi câu có một bản ghi gồm: đại lượng cần tính hoặc giá trị các trường của khuôn, miền tham số, đáp án, lời giải có cấu trúc, và ba phương án nhiễu với câu trắc nghiệm; mọi biểu thức viết theo văn phạm (FR07). Câu tự do có thêm đề bài do LLM viết. Miền tham số hữu hạn. Ở mỗi giá trị tham số, mọi phép toán trong đại lượng cần tính, đáp án và các phương án phải xác định theo Bảng 3.13, và đại lượng cần tính phải tồn tại, trừ khi sự tồn tại là một phần của đáp án (kiểu “Không tồn tại”, câu biện luận hội tụ). Mã của hệ thống kiểm điều kiện xác định ở từng giá trị tham số và bỏ giá trị vi phạm khỏi miền (1.4). Câu thiếu thành phần, có biểu thức sai văn phạm, có miền không hợp lệ hoặc còn ít giá trị hơn số tối thiểu (cấu hình được) thì không đạt; với câu theo khuôn, mệnh đề sinh từ khuôn còn phải biên dịch được. Lời giải thiếu hoặc sai văn phạm không làm câu không đạt ở bước này, mà được sinh lại ở bước kiểm lời giải (QT04).
+QT02
+Kiểm đáp án bằng hai cách độc lập. Từ bản ghi, hệ thống kiểm đáp án theo kiểu đáp án (Bảng 3.15), ở mọi giá trị tham số, bằng hai cách do mã của hệ thống thực hiện: (a) CAS tính đại lượng cần tính và so với đáp án; (b) tính số trực tiếp, độ chính xác cao. Cả hai chạy trên số thực: phép tính sinh ra số phức thì cách đó coi như không cho kết quả dùng được; đạo hàm tại một điểm được tính số bằng sai phân từng phía. Đáp án đạt khi cả hai cách khớp; một cách không tính được thì cách còn lại phải khớp, và bằng chứng được ghi vào nhật ký. Câu tìm tham số và câu biện luận bắt buộc có điều kiện dạng ký hiệu từ CAS; chỉ lấy mẫu số thì chưa đạt. Với câu tự do, thêm (c): một lời giải độc lập do mô hình hoặc prompt khác viết, chỉ được xem đề bài, phải cho cùng đáp án. Xử lý: đáp án do LLM sinh, hoặc (c), lệch với kết quả của (a) và (b) thì câu không đạt; (a) và (b) lệch nhau thì tính số lại với độ chính xác cao hơn và cách tính khác, vẫn lệch thì câu được phân xử (QT25); cả hai cách đều không cho kết quả dùng được thì câu chỉ được giữ khi có mệnh đề đã xác nhận và Lean chứng minh được đáp án. Cách kiểm đã qua được ghi kèm câu và hiển thị khi duyệt câu (Bảng 3.16).
+QT03
+Phương án nhiễu. Ở mọi giá trị tham số được dùng, bốn phương án phải khác nhau từng đôi một và không phương án nhiễu nào bằng đáp án, so bằng CAS. Giá trị tham số vi phạm điều này bị bỏ khỏi miền; nếu số giá trị còn lại ít hơn số tối thiểu thì câu không đạt. Miền đã kiểm của một câu là miền tham số sau khi đã bỏ các giá trị theo QT01, QT03 và QT04.
+QT04
+Kiểm lời giải như kiểm một bài chứng minh. Lời giải có cấu trúc là một cây khối đi từ đích gốc đến bước kết luận khớp đích đó (mục 3.7). Đích gốc là mệnh đề đáp án đã xác nhận của câu, nên đáp án và lời giải được kiểm trên cùng một mệnh đề; với câu tự do có mệnh đề không được xác nhận, đích gốc được hệ thống sinh từ đại lượng cần tính theo Bảng 3.13, ở dạng khẳng định cả sự tồn tại. Ngữ cảnh của mỗi bước do hệ thống tính từ cây theo P1–P5, không do LLM khai. Mỗi bước sinh nghĩa vụ chứng minh theo loại bước, cùng nghĩa vụ điều kiện xác định và điều kiện của định lý được dùng (Bảng 3.12, Bảng 3.13); nghĩa vụ do bộ chuyển sinh (FR07). Chỉ Lean quyết định một nghĩa vụ đúng hay sai: CAS chỉ tìm phản ví dụ ở từng giá trị tham số; Lean kiểm từng nghĩa vụ với mọi giá trị tham số trong miền, giả định các nghĩa vụ khác đúng, chỉ bằng bộ chiến thuật tự động cố định kèm định lý mà bước ghi, không dùng LLM; CAS thấy phản ví dụ thì Lean thử chiều sai với phản ví dụ đó. Kết luận của nghĩa vụ theo Bảng 3.14; kết luận của bước là kết luận kém nhất trong các nghĩa vụ của bước. Lời giải chưa đạt được sinh lại từ bước hỏng đầu tiên, giữ các bước trước, kèm phản hồi cụ thể về bước hỏng, tối đa M lần cho mỗi câu (cấu hình được, ví dụ 3); lời giải chỉ sai ở một số giá trị tham số thì các giá trị đó có thể được bỏ khỏi miền, nếu miền còn đủ giá trị như ở QT03. Lời giải hiển thị do hệ thống sinh từ cây; lời dẫn của LLM không được kiểm, nên không được chứa nội dung toán. Nhãn lời giải xét theo QT07.
+QT25
+Phân xử khi các nguồn kiểm mâu thuẫn. Việc phân xử do một bảng quy tắc cố định của mã thực hiện, không dùng LLM (RB4); thứ tự tin cậy là Lean, CAS, tính số. Lean được tin theo chiều “chứng minh được thì đúng”, nhưng mệnh đề đưa cho Lean có thể sai nghĩa đề, nên khi có mâu thuẫn, Lean không được một mình giữ câu: câu chỉ được giữ khi Lean chứng minh được đáp án và ít nhất một trong CAS, tính số cũng đồng ý với đáp án (Bảng 3.17). Lean bác bỏ đáp án mà CAS và tính số cùng xác nhận thì câu không đạt; ở 5.1, câu bị gỡ. Câu tự do có mệnh đề không được xác nhận không có Lean phân xử, nên câu cần phân xử bị loại. Khi CAS và tính số đều không tính được thì không có bằng chứng ngược, và Lean được đứng một mình. Mỗi lần một nguồn bị đa số bác bỏ được ghi vào nhật ký và tính vào thống kê lỗi lớp kiểm (4.3), để quản trị viên sửa lớp kiểm qua 5.3. Câu đúng có thể bị loại oan khi có mâu thuẫn; trường hợp này ít, và chỗ của câu có lần thử tiếp.
+QT26
+Tạm dừng theo ngưỡng. Hệ thống thống kê từ nhật ký các câu không đạt của mỗi phiên bản khuôn theo từng lý do (bước và loại lỗi, QT23). Một lý do xuất hiện ở 5 câu trong 10 câu gần nhất của phiên bản khuôn thì phiên bản bị tạm dừng: không sinh câu mới, phần kế hoạch còn lại chuyển theo QT05, và quản trị viên được báo kèm các câu bị loại. Đếm riêng từng lý do, vì 5 câu sai cùng một kiểu mới là dấu hiệu của khuôn, còn sai 5 kiểu khác nhau thường là LLM sai ngẫu nhiên. Lý do “Lean bác bỏ đáp án đã qua kiểm số” dùng ngưỡng riêng thấp hơn, 2 trong 10 câu gần nhất của phiên bản khuôn, hoặc của câu tự do của chuyên đề (khi đó chuyên đề sang “Tạm dừng”), vì đây là dấu hiệu mạnh của mẫu mệnh đề hoặc bản dịch sai. Các số 5, 2 và 10 cấu hình được. Lỗi biên dịch mệnh đề sinh từ khuôn không tính vào thống kê này, vì phiên bản khuôn bị đặt lại ngay (1.3). Máy không tự đặt lại khuôn khi mới nghi; quản trị viên chạy lại bộ ví dụ kiểm thử để quyết định (3.3).
+Bảng 3.3. Quy tắc kiểm câu hỏi
+3.3 Mức bảo đảm và đưa câu vào ngân hàng
+Mã
+Quy tắc
+QT06
+Mức của đáp án. “Đã chứng minh”: có chứng minh Lean chiều đúng, được chấp nhận (QT18), cho mệnh đề đã xác nhận (QT15) mang đúng đáp án và miền đã kiểm của câu; chứng minh do 1.7 tìm, hoặc ráp từ chứng minh các nghĩa vụ của lời giải “Đã chứng minh” (1.6). “Chỉ kiểm số”: đã qua QT02 nhưng chưa có chứng minh như trên; câu ghi kèm lý do, là một trong ba: (a) chứng minh hết hiệu lực sau khi nâng phiên bản (QT22), (b) Lean chưa tìm được chứng minh trong giới hạn (QT19), (c) mệnh đề của câu tự do không được xác nhận (QT15); và ghi cách kiểm đáp án đã qua (QT02). “Chưa kiểm”: chưa qua QT02. Lean không chứng minh được thì câu không bị loại mà giữ ở “Chỉ kiểm số” (QT19); Lean bác bỏ đáp án thì xử lý theo QT25. Câu có lý do (a) được chứng minh lại tự động, không được thì lý do chuyển thành (b); câu có lý do (b) được thử chứng minh lại khi hệ thống rảnh, với giới hạn lớn hơn (5.1). Quyết định theo Bảng 3.18.
+QT07
+Mức của lời giải. “Đã chứng minh”: cây hợp lệ, đóng được đích gốc, mọi nghĩa vụ “Đúng” (QT04), và chứng minh được chấp nhận (QT18); vì bộ chiến thuật cố định chỉ đóng được bước nhỏ, mức này còn cho biết lời giải không bỏ qua bước. “Chưa kiểm”: lời giải đang được kiểm hoặc đang được sinh lại. “Không có”: không lời giải nào đạt sau M lần sinh lại. Lời giải không có mức “Chỉ kiểm số”: CAS chỉ thử ở một số điểm, nên một bước được CAS xác nhận vẫn có thể sai, ví dụ “x² − 3x + 2 > 0 với mọi x > 0” đúng ở x = 0,5; 3; 5 nhưng sai ở x = 1,5. Lời giải không đạt không được lưu kèm câu và không được hiển thị; nó chỉ được ghi vào nhật ký. Câu trắc nghiệm dùng được ở cả hai nhãn “Đã chứng minh” và “Không có”; câu có lời giải “Không có” được hiển thị không kèm lời giải. Câu tự luận chỉ được chờ duyệt hoặc vào ngân hàng khi lời giải “Đã chứng minh”, vì câu tự luận không có phương án để đối chiếu, nên lời giải đã kiểm là phần chính của câu; nếu không, câu không đạt. Quyết định theo Bảng 3.19.
+QT08
+Đưa câu vào ngân hàng. Câu ở mức cao nhất là câu có đáp án và lời giải đều “Đã chứng minh”. Câu theo khuôn sinh từ phiên bản khuôn còn “Đã kiểm chứng”, và câu tự do có mệnh đề đã xác nhận, vào ngân hàng ngay khi qua các lớp kiểm, ở cả hai nhãn đáp án, kèm nhãn lời giải theo QT07. Chất lượng của quy trình sinh được đo bằng kiểm mẫu theo phiên bản quy trình (QT11–QT13), không chặn câu: người chỉ đo và kiểm theo mẫu, không đứng trên đường đi của câu. Câu tự do có mệnh đề không được xác nhận được xử lý theo QT15. Câu “Tạm khóa” không được coi là câu dùng được cho đến khi có lối ra (QT14). Câu chưa kiểm xong không được đưa vào ngân hàng. Quyết định theo Bảng 3.20.
+QT09
+Không trình bày quá mức đã kiểm. Mỗi khía cạnh của câu (đáp án, lời giải) chỉ mang một nhãn, đúng với cách kiểm mạnh nhất mà khía cạnh đó đã qua; mọi nơi hiển thị câu hỏi (ngân hàng, báo cáo) đều kèm nhãn này. Người kiểm hoặc người duyệt xác nhận câu đúng, khi kiểm mẫu hoặc khi duyệt câu, thì câu mang cờ “Người đã duyệt”; cờ không đổi nhãn: nhãn đáp án chỉ lên “Đã chứng minh” khi có chứng minh Lean được chấp nhận. Câu “Chỉ kiểm số” mang cờ được hiển thị là “Chỉ kiểm số, đã duyệt”. Cờ bị bỏ khi câu bị sửa, hoặc khi định nghĩa mà câu dùng bị sửa. Người duyệt thấy sai một câu thì áp dụng QT14. Câu đã duyệt mà về sau được xác định là sai, ví dụ khi Lean bác bỏ đáp án, thì lần duyệt được tính là duyệt sai. Báo cáo đếm số câu theo nhãn đáp án (“Đã chứng minh”, “Chỉ kiểm số, đã duyệt”, “Chỉ kiểm số” chưa duyệt) và theo nhãn lời giải, kèm tỉ lệ duyệt sai.
+Bảng 3.4. Quy tắc về mức bảo đảm
+3.4 Kiểm mẫu và câu sai
+Kiểm mẫu đo chất lượng của quy trình sinh câu, nên câu trong mẫu phải do quy trình đang dùng làm ra; các quy tắc dưới đây vì vậy đều tính theo phiên bản quy trình (QT27). Vòng “phát hiện câu sai → sửa nguyên nhân → đo lại” là đường đi bình thường, không phải ngoại lệ: nếu quy trình sai 10% câu thì khả năng 30 câu đầu đều đúng chỉ khoảng 4% (0,9³⁰).
+Mã
+Quy tắc
+QT10
+Chuyên đề, nguồn sinh và trạng thái. Chuyên đề là một nhóm câu cùng một nội dung kiến thức (Bảng 1.2), gồm một danh mục dạng bài. Nguồn sinh của một câu là chuyên đề, với câu tự do, hoặc phiên bản khuôn, với câu theo khuôn; kiểm mẫu, tạm dừng và phiên bản quy trình đều tính theo nguồn sinh. Với câu tự do, chuyên đề ở “Đang sinh” hoặc “Tạm dừng” (không sinh câu tự do mới; câu theo khuôn của chuyên đề không bị ảnh hưởng); chuyên đề mới bắt đầu ở “Đang sinh”. Phiên bản khuôn ở “Chưa kiểm chứng”, “Đã kiểm chứng” hoặc “Tạm dừng” (Bảng 3.22, Bảng 3.23).
+QT11
+Chọn mẫu và đánh giá câu. Mẫu chỉ gồm câu thuộc phiên bản quy trình hiện hành của nguồn sinh, đang “Trong ngân hàng” hoặc “Tạm khóa”, không đang chờ kiểm lại, chưa từng vào mẫu; hệ thống chọn, người kiểm không tự chọn câu; danh sách mẫu được ghi vào nhật ký. Câu chuyển sang được kiểm lại khi đang nằm trong mẫu chưa chấm thì được rút khỏi mẫu và chọn câu khác bù, không tính là câu sai. Người kiểm đánh giá từng câu theo Bảng 3.6; câu sai ở ít nhất một mục là câu sai và được xử lý theo QT14. Lỗi trình bày nhỏ (chính tả, định dạng) được ghi lại và sửa, nhưng không tính là câu sai. Câu được đánh giá đúng mang cờ “Người đã duyệt”.
+QT12
+10 câu đầu và cận trên của tỉ lệ sai. 10 câu đầu của mỗi phiên bản quy trình được kiểm hết: câu mới sinh, hoặc câu cũ vừa kiểm lại chuyển sang phiên bản; có nhiều hơn 10 câu cùng lúc thì chọn ngẫu nhiên; số 10 cấu hình được. Mọi con số tính theo phiên bản quy trình: số câu đã kiểm, số câu sai, tỉ lệ sai và cận trên ở độ tin cậy 95%. Không thấy câu sai trong n câu thì cận trên khoảng 3/n (quy tắc 3/n): 10 câu khoảng 30%, 30 câu khoảng 10%, 60 câu khoảng 5%; báo cáo ghi cận trên, không ghi “0% sai”. Số liệu của phiên bản cũ được giữ để so sánh. 10 câu đủ để bắt lỗi lớn với ít công người: nếu quy trình sai 30% câu thì khả năng 10 câu đầu đều đúng chỉ khoảng 3% (0,7¹⁰); lỗi nhỏ hơn được bắt dần qua kiểm mẫu định kỳ (QT13).
+QT13
+Kiểm mẫu định kỳ. Sau 10 câu đầu, mỗi đợt sinh, với mỗi nguồn sinh có câu mới, hệ thống chọn ngẫu nhiên khoảng 1 trên 20 câu mới, ít nhất 1 câu, ở mọi nhãn đáp án. Câu không lỗi được cộng dồn vào số câu đã kiểm của phiên bản, nên cận trên chặt dần theo thời gian. Với câu theo khuôn, lỗi không thuộc Bảng 3.6 (câu quá dễ, phương án nhiễu dễ loại, lời văn gượng) được ghi lại để sửa khuôn, không đổi trạng thái khuôn.
+QT14
+Câu sai, từ mọi nguồn phát hiện. Câu sai là cùng một bằng chứng rằng quy trình có lỗi, dù được phát hiện qua kiểm mẫu, duyệt câu hay gỡ câu; mọi đường dùng chung quy tắc sau, đường phát hiện chỉ ảnh hưởng đến cách đếm. (1) Người phát hiện chọn mục sai và loại lỗi theo Bảng 3.6; gỡ vì lý do khác (không muốn dùng, trùng), lỗi trình bày nhỏ và lỗi do bản sửa của người không tính là câu sai và không kéo theo gì. (2) Câu sai bị gỡ nếu đã từng ở ngân hàng, bị loại nếu chưa. (3) Mục “Khuôn và bộ chuyển”: phiên bản khuôn về “Chưa kiểm chứng”; câu khác của phiên bản khuôn đang trong ngân hàng, chưa có cờ “Người đã duyệt”, sang “Tạm khóa”. (4) Mục khác: câu cùng phiên bản quy trình với câu sai, đang trong ngân hàng, chưa có cờ, sang “Tạm khóa”; nếu câu sai thuộc phiên bản quy trình hiện hành thì nguồn sinh sang “Tạm dừng”, còn nếu thuộc phiên bản cũ thì chỉ khóa câu của phiên bản cũ đó. (5) Quản trị viên xử lý nguyên nhân theo loại lỗi, chọn một trong ba: sửa lớp kiểm (ưu tiên, vì máy kiểm lại được câu cũ); đổi prompt hoặc mô hình; hoặc ghi lý do không sửa (lỗi lẻ). Xử lý xong thì nguồn sinh hoạt động lại (chuyên đề về “Đang sinh”, phiên bản khuôn về “Đã kiểm chứng”) và 10 câu đầu được đếm lại; quyết định được ghi vào nhật ký. (6) Câu tạm khóa ra theo Bảng 3.7. (7) Tỉ lệ sai qua kiểm mẫu chỉ tính mẫu chọn theo QT12, QT13; câu sai phát hiện qua duyệt hoặc gỡ được đếm riêng; câu bị gỡ vì không đạt kiểm lại không được tính thêm vào tỉ lệ sai; lớp kiểm đã để câu sai lọt qua được ghi vào thống kê lỗi lớp kiểm (4.3).
+QT27
+Phiên bản quy trình. Phiên bản quy trình của một nguồn sinh gồm mô hình, prompt sinh câu và phiên bản các lớp kiểm mà câu của nguồn đó đi qua; với câu theo khuôn còn gồm phiên bản khuôn. Một phiên bản mới bắt đầu khi một trong các thành phần này đổi; nâng phiên bản Lean, Mathlib không bắt đầu phiên bản mới (QT22), và sửa một lớp kiểm chỉ để làm chặt hơn, tức mọi câu đạt lớp mới đều đạt lớp cũ, cũng không. Mỗi câu ghi phiên bản quy trình của mình: câu mới ghi phiên bản đang dùng; câu cũ kiểm lại đạt qua lớp vừa sửa thì chuyển sang phiên bản mới; còn khi đổi prompt hay mô hình, câu cũ mãi thuộc phiên bản cũ, vì câu đã được sinh ra. Nhờ vậy kiểm mẫu chỉ đo câu do quy trình đang dùng làm ra, và câu cũ không làm nhiễu số liệu của phiên bản mới.
+Bảng 3.5. Quy tắc kiểm mẫu và câu sai
+Bảng 3.6 là tiêu chí chung cho mọi đường phát hiện câu sai: kiểm mẫu, duyệt câu và gỡ câu.
+Mục kiểm
+Câu bị đánh sai khi
+Loại lỗi
+Đề bài
+Sai toán, mơ hồ, hoặc thiếu điều kiện tồn tại
+Lỗi đề
+Đáp án
+Không đúng với đề ở ít nhất một giá trị tham số
+Lỗi đáp án
+Phương án nhiễu
+Trùng đáp án, trùng nhau, hoặc cũng là đáp án đúng
+Lỗi phương án
+Mệnh đề Lean (câu tự do; đọc mệnh đề Lean gốc, đối chiếu bản diễn đạt lại bằng tiếng Việt)
+Không đúng nghĩa đề
+Lỗi hình thức hóa
+Khuôn và bộ chuyển (câu theo khuôn)
+Câu chữ và mệnh đề Lean không cùng nghĩa, do khuôn hoặc bộ chuyển
+Lỗi khuôn
+Lời giải
+Có bước sai về toán, bỏ qua bước cần thiết, lời dẫn có nội dung toán sai, hoặc kết luận không khớp đáp án
+Lỗi lời giải
+Bảng 3.6. Tiêu chí đánh giá một câu
+Bảng 3.7 cho biết câu tạm khóa ra khỏi trạng thái này như thế nào, theo cách quản trị viên xử lý nguyên nhân (QT14). Câu đúng trong mẫu ở lại ngân hàng, mang cờ “Người đã duyệt”, và không bị khóa.
+Cách xử lý nguyên nhân
+Câu tạm khóa (cùng phiên bản với câu sai, chưa có cờ)
+Sửa lớp kiểm
+Kiểm lại qua lớp mới (QT20): đạt thì về “Trong ngân hàng”, thuộc phiên bản quy trình mới và nằm trong tập chọn 10 câu đầu của phiên bản đó; không đạt thì bị gỡ
+Đổi prompt hoặc mô hình
+Quản trị viên chọn khi đổi: kiểm mẫu riêng lô câu tạm khóa của phiên bản cũ (chọn ngẫu nhiên 30 câu, ít hơn thì kiểm hết; không có câu sai thì cả lô về “Trong ngân hàng”, có câu sai thì gỡ cả lô), hoặc gỡ cả lô ngay. Lô dùng mẫu 30 câu, không phải 10, vì lô đã có bằng chứng lỗi; đây là đường phục hồi, không phải đường đi thường ngày
+Không sửa (lỗi lẻ)
+Nằm trong tập chọn 10 câu đầu khi nguồn sinh hoạt động lại; 10 câu đó không có câu sai thì cả nhóm về “Trong ngân hàng”
+Sửa khuôn (lỗi khuôn)
+Sinh lại câu chữ và mệnh đề từ bản ghi bằng phiên bản khuôn mới đã kiểm chứng: bản ghi khớp các trường và ràng buộc thì kiểm lại từ 1.3; không khớp thì bị gỡ
+Mọi trường hợp
+Người duyệt xem riêng một câu theo đủ Bảng 3.6 (2.3) và xác nhận đúng thì câu mang cờ, về “Trong ngân hàng”
+Bảng 3.7. Lối ra của câu tạm khóa
+Ví dụ: chuyên đề “Giới hạn”, phiên bản quy trình P2, có 200 câu tự do trong ngân hàng, 20 câu có cờ. Kiểm mẫu định kỳ thấy một câu có đề viết “log x”, mơ hồ giữa logarit cơ số 10 và ln. Câu sai bị gỡ; chuyên đề sang “Tạm dừng”; 180 câu P2 chưa có cờ sang “Tạm khóa”; đợt sinh đang chạy ghi các chỗ câu tự do của chuyên đề là “Thiếu, chuyên đề tạm dừng”. Quản trị viên thêm luật “cấm log không ghi cơ số” vào kiểm cấu trúc, tức sửa một lớp kiểm, nên phiên bản P3 bắt đầu: 180 câu được kiểm lại, 7 câu có “log x” không đạt và bị gỡ, 173 câu về ngân hàng và thuộc P3; người kiểm xem 10 câu đầu của P3, rồi khoảng 1 trên 20 câu mới. Nếu câu sai đó do giảng viên phát hiện khi gỡ câu, cách xử lý giống hệt; chỉ khác là câu được đếm vào “phát hiện ngoài kiểm mẫu”.
+3.5 Hình thức hóa và chấp nhận chứng minh
+Mã
+Quy tắc
+QT15
+Mệnh đề đã xác nhận. Một mệnh đề Lean chỉ được coi là “đã xác nhận” khi đạt đủ năm điều kiện: (1) biên dịch được; (2) các giả thiết không mâu thuẫn với nhau; (3) đúng dạng theo dạng bài (QT16), do mã của hệ thống kiểm; (4) các bản dịch độc lập của cùng một phát biểu được Lean chứng minh là tương đương; (5) bản diễn đạt lại bằng tiếng Việt khớp với phát biểu gốc. Chỉ mệnh đề đã xác nhận mới được đưa đi chứng minh. Mệnh đề sinh từ một phiên bản khuôn “Đã kiểm chứng” được coi là đã xác nhận khi biên dịch được và qua phép kiểm của QT16, vì nghĩa của mẫu mệnh đề đã được kiểm khi kiểm chứng khuôn (3.4); nghĩa vụ của một bước lời giải, do bộ chuyển sinh, cũng vậy, vì các mẫu sinh nghĩa vụ đã qua bộ ví dụ kiểm thử (NFR08). Câu tự do có mệnh đề không được xác nhận thì không được chứng minh và không tự động vào ngân hàng, vì mệnh đề không được xác nhận có thể là dấu hiệu đề bài mơ hồ. Chỗ còn lần thử thì câu không đạt. Lần thử cuối của chỗ, hoặc câu đang được kiểm lại: nếu đáp án đã qua QT02, câu không cần phân xử và lời giải đạt yêu cầu theo hình thức (QT07), câu chuyển sang “Chờ duyệt” với đáp án “Chỉ kiểm số”, lý do (c), và khi kiểm lại, trường hợp này không tính là không đạt; nếu không, câu không đạt, vì không còn kết quả kiểm nào để người duyệt đối chiếu. Quyết định chỉ phụ thuộc lần thử của chính câu, không phụ thuộc thứ tự xử lý. Người duyệt đánh giá câu (2.3): câu đúng và đề không mơ hồ thì câu vào ngân hàng, mang cờ “Người đã duyệt”; nếu không, câu bị loại và chỗ “Thiếu”.
+QT16
+Yêu cầu theo dạng bài. (a) Điều kiện tồn tại của đại lượng cần tính (giới hạn tồn tại, hàm khả vi, hàm khả tích) luôn nằm trong kết luận của mệnh đề, theo dạng ở Bảng 3.13, không bao giờ là giả thiết; cấm các cách viết có giá trị quy ước của Mathlib (deriv, limUnder, tích phân không kèm khả tích), vì khi đại lượng không tồn tại, Mathlib gán cho nó một giá trị quy ước, thường là 0, nên mệnh đề thiếu điều kiện, hoặc đặt điều kiện làm giả thiết, có thể chứng minh được mà vô nghĩa. Ví dụ: với f(x) = |x|, mệnh đề “deriv f 0 = 0” chứng minh được, dù theo giáo trình f′(0) không tồn tại. (b) Câu tìm tham số và câu biện luận có dạng “với mọi tham số: tính chất ⇔ tham số thuộc tập S”, không được chỉ một chiều. (c) Khái niệm dùng theo định nghĩa của giáo trình; ví dụ, tích phân suy rộng là giới hạn của tích phân xác định. Mã của hệ thống kiểm (a) và (b) trên mẫu mệnh đề khi kiểm chứng khuôn, trên mệnh đề sinh từ khuôn ở 1.3 và trên bản dịch của câu tự do ở 1.5. Phép kiểm của mã chặn được cách viết có giá trị quy ước và điều kiện đặt làm giả thiết, nhưng không chặn được lệch nghĩa, ví dụ gõ nhầm giới hạn hai phía thành một phía; lỗi này dựa vào người kiểm khi kiểm chứng khuôn, năm điều kiện xác nhận và kiểm mẫu.
+QT17
+Phần hệ thống tự điền và khái niệm được dùng. Với câu theo khuôn, toàn bộ mệnh đề do hệ thống sinh từ bản ghi (FR07). Với câu tự do, đáp án và miền tham số do hệ thống điền vào chỗ trống của mệnh đề; LLM không được chọn hay sửa. Nghĩa vụ của các bước lời giải do hệ thống sinh từ cây lời giải (FR07, QT04). Mệnh đề chỉ dùng khái niệm của Mathlib và định nghĩa bổ sung đã kiểm chứng; một định nghĩa bổ sung được coi là đã kiểm chứng khi có định lý tương đương với định nghĩa trong giáo trình, có ví dụ đúng và ví dụ sai, và không còn chứng minh bỏ trống.
+QT18
+Chấp nhận chứng minh. Một chứng minh chỉ được chấp nhận khi đủ bốn điều kiện: không còn chỗ bỏ trống; chỉ dựa vào các tiên đề chuẩn của Lean; chứng minh đúng mệnh đề đã cố định, không bị sửa; không dùng lệnh có thể làm sai lệch kết quả kiểm (khai báo tiên đề mới, bỏ qua kiểm tra, chạy mã trong lúc kiểm). Chứng minh đáp án ráp từ chứng minh các nghĩa vụ của lời giải được Lean biên dịch trọn khung và kiểm theo cùng bốn điều kiện.
+QT19
+Giới hạn và kết luận “không chứng minh được”. Mỗi yêu cầu chứng minh có giới hạn tài nguyên và số lần thử (FR06), thử từ cách rẻ đến cách tốn kém; mỗi bước của lời giải có giới hạn riêng. Hết giới hạn thì kết luận “không chứng minh được”, kèm lý do dừng. Kết luận này không có nghĩa là mệnh đề sai: chỉ khi Lean xác nhận được phản ví dụ, tức chứng minh được phủ định của mệnh đề, thì mới kết luận mệnh đề sai.
+Bảng 3.8. Quy tắc hình thức hóa và chấp nhận chứng minh
+3.6 Sửa câu và thay đổi hệ thống
+Mã
+Quy tắc
+QT20
+Kiểm lại câu. Câu được kiểm lại khi bị sửa (2.4), khi định nghĩa bổ sung mà câu dùng bị sửa (3.1), khi lớp kiểm mà câu đã qua bị sửa (5.3), khi phiên bản khuôn của câu được sửa và kiểm chứng lại sau lỗi khuôn (3.4), hoặc khi lời giải của câu mất chứng minh sau khi nâng phiên bản (5.2); nguồn kiểm lại và bước bắt đầu theo Bảng 3.10. Trong lúc kiểm lại, câu đang trong ngân hàng sang “Tạm khóa”, câu khác sang “Đang kiểm”; riêng câu trắc nghiệm chỉ bị sinh lại lời giải thì giữ trạng thái. Câu đang chờ kiểm lại không được chọn vào mẫu, và kết quả duyệt chỉ được nhận khi câu còn ở trạng thái lúc được đưa vào danh sách duyệt. Kết quả kiểm lại được xử lý theo Bảng 3.11; trong mọi trường hợp không sinh câu thay. Câu bị sửa thì mọi nhãn về “Chưa kiểm” và cờ “Người đã duyệt” bị bỏ; câu theo khuôn chỉ được sửa qua bản ghi (RD09). Câu bị gỡ vẫn được lưu đủ nội dung và có thể được sửa để kiểm lại; câu bị loại là trạng thái cuối. Kết quả được báo cho người yêu cầu: người sửa câu nhận kết quả sửa câu từng câu; kết quả của các thay đổi hệ thống được tổng hợp trong thống kê ngân hàng (4.3).
+QT21
+Sửa định nghĩa bổ sung. Khi một định nghĩa bổ sung bị sửa, mọi mệnh đề dùng định nghĩa đó về “Chưa xác nhận”. Câu dùng định nghĩa đó mất cờ “Người đã duyệt” và được kiểm lại từ bước hình thức hóa theo QT20; câu đang trong ngân hàng sang “Tạm khóa” trong lúc kiểm lại. Phiên bản khuôn dùng định nghĩa đó về “Chưa kiểm chứng”, và câu của nó chỉ được kiểm lại sau khi khuôn được kiểm chứng lại.
+QT22
+Nâng phiên bản Lean, Mathlib. Nâng phiên bản được kiểm trước khi chuyển: toàn bộ chứng minh đã lưu, thư viện định nghĩa bổ sung, từ điển định lý giáo trình, các phiên bản khuôn và bộ ví dụ kiểm thử được kiểm trên phiên bản mới trong khi hệ thống vẫn chạy phiên bản cũ; hệ thống chỉ chuyển sang phiên bản mới khi đã có kết quả kiểm này. Sau khi chuyển: đáp án có chứng minh không còn hợp lệ hạ về “Chỉ kiểm số”, lý do (a), cho đến khi được chứng minh lại (5.1); lời giải có nghĩa vụ mất chứng minh mà kiểm lại bằng bộ chiến thuật cố định không được thì về “Chưa kiểm” và được sinh lại, như một nguồn kiểm lại (QT20); phiên bản khuôn không còn đạt về “Chưa kiểm chứng”. Trạng thái của chuyên đề và phiên bản quy trình không đổi (QT27).
+QT23
+Ghi lý do và phiên bản. Mọi quyết định của hệ thống (kế hoạch đợt sinh, loại câu, kết quả chỗ, xếp mức, phân xử, kết quả kiểm từng bước của lời giải, kết quả kiểm mẫu, chuyển trạng thái của chuyên đề, phiên bản khuôn hoặc câu, kết quả duyệt câu) được ghi vào nhật ký kèm lý do, phiên bản hệ thống và phiên bản quy trình của câu. Số liệu báo cáo chỉ được tính từ nhật ký và dữ liệu hiện có, không lưu sẵn.
+Bảng 3.9. Quy tắc sửa câu và thay đổi hệ thống
+Nguồn kiểm lại
+Sự việc
+Câu được kiểm lại
+Chạy lại từ
+Báo kết quả cho
+Sửa câu (2.4)
+Giảng viên hoặc người kiểm sửa câu
+Câu được sửa, kể cả câu bị gỡ
+1.3
+Người sửa, từng câu
+Sửa định nghĩa (3.1)
+Một định nghĩa bổ sung bị sửa
+Câu dùng định nghĩa
+1.5; câu theo khuôn: 1.3, sau khi khuôn được kiểm chứng lại
+Quản trị viên, qua thống kê ngân hàng
+Sửa lớp kiểm (5.3)
+Một lớp kiểm bị sửa
+Câu đã qua lớp đó; câu tạm khóa vì lỗi đã sửa
+Lớp vừa sửa
+Sửa khuôn (3.4)
+Phiên bản khuôn mới được kiểm chứng sau lỗi khuôn
+Câu tạm khóa của phiên bản lỗi
+1.3, với câu chữ và mệnh đề sinh lại
+Nâng phiên bản (5.2)
+Nghĩa vụ của lời giải mất chứng minh, kiểm lại không được
+Câu có lời giải đó
+1.6, sinh lại lời giải
+Bảng 3.10. Nguồn kiểm lại
+Kết quả kiểm lại
+Câu đã từng ở ngân hàng
+Câu chưa từng ở ngân hàng
+Đạt
+Theo Bảng 3.20 như câu vừa qua các lớp kiểm: vào ngân hàng
+Như cột bên trái
+Không đạt ở bất kỳ bước nào
+Bị gỡ
+Bị loại
+Câu tự do có mệnh đề không được xác nhận, đáp án đã qua QT02
+Chờ duyệt (QT15)
+Như cột bên trái
+Các nguồn kiểm mâu thuẫn nhau
+Phân xử như câu mới (QT25); không đủ căn cứ thì bị gỡ
+Phân xử như câu mới; không đủ căn cứ thì bị loại
+Chỉ sinh lại lời giải, không lời giải nào đạt
+Câu trắc nghiệm: giữ trạng thái, nhãn lời giải “Không có”. Câu tự luận: bị gỡ
+Câu trắc nghiệm: như cột bên trái. Câu tự luận: bị loại
+Bảng 3.11. Xử lý kết quả kiểm lại (QT20)
+3.7 Lời giải có cấu trúc
+Mục này định nghĩa cây lời giải và các nghĩa vụ chứng minh mà QT04 và QT07 dùng; cách định nghĩa giống cách kiểm một bài chứng minh viết từng bước. Lời giải do LLM viết thẳng ở dạng có cấu trúc, nên mỗi bước đã có loại và vị trí trong cây; hệ thống không phải tách bước từ văn bản tự do.
+Bước: một đơn vị lập luận, thuộc đúng một loại ở Bảng 3.12, có nội dung toán viết theo văn phạm (mục 5.9), định lý được dùng, nếu có, và lời dẫn.
+Khối: một đoạn bước liên tiếp, mở bằng một bước mở khối, có một đích (điều khối phải chứng minh), kết thúc khi đích được đóng; khối lồng nhau được. Khối gốc là cả lời giải; đích gốc là mệnh đề đáp án đã xác nhận của câu (QT04), ở dạng khẳng định cả sự tồn tại, ví dụ “giới hạn tồn tại và bằng 2”, không phải “giá trị quy ước của giới hạn bằng 2”.
+Ngữ cảnh của bước: giả thiết của đề và miền tham số, biến và giả thiết của mọi khối đang mở chứa bước, và các khẳng định đứng trước bước trong cùng khối hoặc khối cha. Ngữ cảnh do hệ thống tính từ cây, không do LLM khai.
+Nghĩa vụ chứng minh: một điều Lean phải chứng minh, do một bước sinh ra; một bước có thể sinh không, một hoặc nhiều nghĩa vụ. Nghĩa vụ do bộ chuyển sinh từ cây (FR07); các mẫu sinh nghĩa vụ có bộ ví dụ kiểm thử (NFR08).
+Ngữ cảnh được tính theo năm quy tắc phạm vi:
+P1. Biến và giả thiết do bước mở khối đưa vào chỉ dùng được trong khối đó và các khối con.
+P2. Khi khối đóng, bên ngoài chỉ dùng được kết luận của khối, không dùng được các khẳng định bên trong.
+P3. Tên mới không được trùng tên đang có hiệu lực.
+P4. Biểu thức được chọn chỉ dùng biến đã có hiệu lực tại bước chọn.
+P5. Bước mở khối phải khớp hình dạng của đích hiện tại.
+Bảng 3.12 liệt kê các loại bước, tác dụng của mỗi loại lên cây và nghĩa vụ mà nó sinh ra.
+Loại bước
+Ví dụ trong lời giải
+Tác dụng lên cây
+Nghĩa vụ chứng minh
+Chuỗi biến đổi
+“lim (x² − 1)/(x − 1) = lim (x + 1) = 2 khi x → 1”
+Thêm kết quả vào ngữ cảnh
+Từng mắt xích: hai vế bằng nhau hoặc so sánh được, trên miền mà phép toán bao quanh dùng; mắt xích tính giá trị của giới hạn, đạo hàm, tích phân khẳng định cả sự tồn tại (Bảng 3.13)
+Khẳng định
+“f′(x) = 3x² − 3”; “1 − cos 2x ~ 2x² khi x → 0”
+Thêm một điều vào ngữ cảnh
+Điều khẳng định suy ra từ ngữ cảnh, và từ định lý được ghi, nếu có
+Đặt
+“Đặt t = x − 1”
+Thêm tên mới, hiệu lực đến hết khối
+Chỉ điều kiện xác định của biểu thức
+Chọn
+“Chọn c = 1/2” khi đích là “tồn tại c …”
+Đổi đích “tồn tại” thành đích với giá trị đã chọn
+Phần còn lại của đích
+Lấy bất kỳ
+“Lấy x ∈ (0, 1) bất kỳ”
+Mở khối; dùng khi đích là “với mọi”
+Điều kiện của biến suy ra từ điều kiện trong đích
+Giả sử
+“Giả sử a > 1” (một chiều của câu biện luận)
+Mở khối; dùng khi đích là “nếu … thì …”
+Điều giả sử suy ra từ vế “nếu” của đích
+Phản chứng
+“Giả sử giới hạn tồn tại và bằng L”
+Mở khối; đích trong khối là mâu thuẫn
+Phủ định của đích kéo theo điều giả sử
+Xét trường hợp
+“a > 0, a = 0, a < 0”; “x → 0⁺ và x → 0⁻”
+Mở các khối anh em có cùng đích
+Các trường hợp phủ hết ngữ cảnh
+Quy nạp
+Công thức đạo hàm cấp n
+Mở hai khối: cơ sở và bước quy nạp
+Cơ sở đúng chỉ số; bước quy nạp chỉ dùng giả thiết cho k
+Lấy ra
+“Theo định lý Lagrange, tồn tại c ∈ (a, b) …”
+Thêm biến và tính chất, hiệu lực đến hết khối
+Mệnh đề tồn tại suy ra từ ngữ cảnh và định lý được ghi
+Quy về
+“Ta chỉ cần tính giới hạn của ln f(x)”
+Thay đích bằng điều mới
+Điều mới kéo theo đích
+Nêu đích
+“Ta cần tính …”
+Không đổi cây
+Điều nêu ra khớp đích hiện tại
+Mâu thuẫn
+“Mâu thuẫn với tính duy nhất của giới hạn”
+Đóng khối hiện tại
+Mâu thuẫn, suy ra từ ngữ cảnh
+Kết luận
+“Vậy giới hạn bằng 2”
+Đóng khối hiện tại
+Kết luận khớp đích của khối
+Bảng 3.12. Các loại bước của lời giải
+Ngoài nghĩa vụ ở Bảng 3.12, mọi bước có biểu thức còn sinh nghĩa vụ điều kiện xác định, và bước ghi định lý còn sinh nghĩa vụ điều kiện của định lý, tra qua từ điển định lý giáo trình. Với Lấy bất kỳ, Giả sử và Phản chứng, nghĩa vụ chỉ phát sinh khi điều viết ra khác điều có sẵn trong đích. Mắt xích của chuỗi biến đổi nằm dưới giới hạn hay tích phân suy rộng được hiểu từ cuối lên: mắt xích cuối khẳng định đại lượng tồn tại và bằng giá trị; mỗi mắt xích trước khẳng định vế trước tồn tại và bằng vế sau khi vế sau tồn tại.
+Mathlib gán giá trị quy ước cho biểu thức không xác định và cho đại lượng không tồn tại, nên nghĩa vụ và mệnh đề phải chặn cả hai. Bảng 3.13 dùng chung cho đề bài, đáp án, phương án và lời giải: mã kiểm điều kiện xác định của đại lượng cần tính, đáp án và phương án ở 1.4 theo phần trên của bảng; mệnh đề đáp án, đích gốc và nghĩa vụ dùng dạng ở phần dưới. Quy tắc chung: điều kiện tồn tại luôn nằm trong kết luận, không bao giờ là giả thiết. Ví dụ, bước “nguyên hàm của 2/x là 2 ln x” trên đoạn [−2, −1] được Lean chứng minh nếu chỉ dịch thẳng, vì trong Mathlib ln x = ln|x|; nghĩa vụ điều kiện xác định x > 0 làm bước này bị bác bỏ.
+Phép toán, đại lượng
+Điều kiện, hoặc dạng trong mệnh đề
+Giá trị quy ước bị chặn
+Điều kiện xác định: mỗi lần phép toán xuất hiện trong một biểu thức sinh một điều kiện
+u / v
+v ≠ 0
+u / 0 = 0
+uⁿ, n nguyên âm
+u ≠ 0
+Như phép chia
+ln u; logₐ u
+u > 0; với logₐ u còn a > 0 và a ≠ 1
+ln u = ln|u|; ln 0 = 0
+√u
+u ≥ 0
+√u = 0 khi u < 0
+uᵛ, v không nguyên
+u > 0
+(−8)^(1/3) = 1
+tan u; cot u
+cos u ≠ 0; sin u ≠ 0
+tan u = 0 khi cos u = 0
+arcsin u; arccos u
+−1 ≤ u ≤ 1
+u ngoài [−1, 1] được cắt về đầu mút gần nhất
+∛u, |u|, sin u, cos u, arctan u, eᵘ; uⁿ, n nguyên không âm
+Không có điều kiện: xác định với mọi u
+—
+Đại lượng giải tích: viết ở dạng khẳng định cả sự tồn tại, ở kết luận của mệnh đề
+Giới hạn bằng L (hai phía, một phía, tại ±∞)
+f dần tới L theo lân cận bỏ điểm, lân cận một phía hoặc ra ±∞ (Tendsto)
+limUnder vẫn có giá trị khi giới hạn không tồn tại
+Giới hạn bằng +∞ hoặc −∞
+f dần ra +∞ hoặc −∞ (Tendsto tới atTop, atBot)
+—
+Giới hạn không tồn tại
+Không có số L nào để f dần tới L, và f không dần ra +∞ hay −∞
+—
+Hai vô cùng bé tương đương
+Thương f/g dần tới 1, với g ≠ 0 trong lân cận bỏ điểm
+—
+Đạo hàm bằng d (tại một điểm, một phía, cấp cao)
+f có đạo hàm và đạo hàm bằng d (HasDerivAt; một phía: HasDerivWithinAt; cấp cao: chuỗi HasDerivAt)
+deriv = 0 khi f không khả vi
+Tích phân xác định bằng I
+f khả tích trên đoạn, và tích phân bằng I
+Tích phân = 0 khi f không khả tích
+Tích phân suy rộng bằng I; hội tụ; phân kỳ
+Tích phân trên đoạn có cận biến thiên dần tới I; hội tụ: có I như vậy; phân kỳ: không có I nào
+Tích phân Lebesgue trên khoảng vô hạn, khác định nghĩa của giáo trình
+Nguyên hàm
+F có đạo hàm bằng f tại mọi điểm của miền
+—
+Tiếp tuyến y = kx + m tại x₀
+f có đạo hàm tại x₀ bằng k, và f(x₀) = kx₀ + m
+—
+Tiệm cận
+Xiên hoặc ngang y = ax + b: f(x) − (ax + b) dần tới 0 khi x → +∞ hoặc −∞; đứng x = a: f dần ra +∞ hoặc −∞ khi x dần tới a từ ít nhất một phía
+—
+Khai triển Taylor đến cấp n
+Hiệu giữa hàm và đa thức là o((x − x₀)ⁿ)
+—
+Liên tục, khả vi, cực trị, đơn điệu
+Khái niệm tương ứng của Mathlib (ContinuousAt, DifferentiableAt, IsLocalMax, MonotoneOn, …)
+—
+Câu tìm tham số, câu biện luận
+Với mọi tham số: tính chất ⇔ tham số thuộc tập S (QT16)
+Chỉ một chiều thì đáp án sai vẫn có thể chứng minh được
+Đáp án nhiều phần
+Hội của các mệnh đề của từng phần, mỗi phần theo dạng của kiểu của nó
+—
+Cách viết bị cấm trong mệnh đề: deriv, limUnder, tích phân không kèm điều kiện khả tích, và điều kiện tồn tại đặt làm giả thiết
+Bảng 3.13. Điều kiện xác định và dạng khẳng định tồn tại, dùng cho đề, đáp án, phương án và lời giải
+Bảng 3.13 phủ mọi phép toán và đại lượng của văn phạm (mục 5.9) và mọi kiểu đáp án ở Bảng 3.15, nên đích gốc của mọi câu đều sinh được. Một phép toán hay đại lượng mới chỉ được thêm vào văn phạm sau khi đã có dòng tương ứng trong bảng và ví dụ kiểm thử (NFR08).
+Kết luận của một nghĩa vụ được xác định theo Bảng 3.14; các dòng được xét từ trên xuống, dừng ở dòng đầu tiên khớp.
+Điều kiện
+Kết luận của nghĩa vụ
+Ngữ cảnh của bước mâu thuẫn
+Chưa kiểm được: từ ngữ cảnh mâu thuẫn, điều gì cũng chứng minh được
+Lean chứng minh được điều ngược lại (với phản ví dụ do CAS tìm, hoặc tổng quát)
+Sai
+Lean chứng minh được, nhưng CAS thấy phản ví dụ
+Mâu thuẫn: không nhận; ghi vào nhật ký để xem lại bộ chuyển hoặc CAS
+Lean chứng minh được, CAS không thấy phản ví dụ
+Đúng
+Lean không quyết được trong giới hạn của bước
+Chưa kiểm được: bước nhảy quá xa, cần thêm bước trung gian
+Bảng 3.14. Kết luận của một nghĩa vụ chứng minh (QT04)
+3.8 Bảng quyết định
+Các bảng dưới đây viết các quyết định nhiều nhánh của 1.4, 1.6, 1.7 và 1.8. Trong các bảng, “không đạt” nghĩa là: câu mới bị loại và chỗ của câu dùng lần thử tiếp nếu còn lượt (QT05); câu đang được kiểm lại được xử lý theo QT20. Mọi phép kiểm do mã của hệ thống thực hiện trên cây biểu thức, không qua LLM.
+Kiểu đáp án và cách kiểm
+Mỗi kiểu đáp án có cách so riêng. Trước khi tính, mã kiểm điều kiện xác định ở từng giá trị tham số theo Bảng 3.13 (QT01). CAS và tính số chạy trên số thực; phép tính sinh ra số phức thì cách đó coi như không cho kết quả dùng được. CAS và tính số chỉ cho nhãn “Chỉ kiểm số”; nhãn “Đã chứng minh” cần chứng minh Lean. Câu có kiểu đáp án chưa có trong bảng thì chưa được sinh, kể cả câu tự do.
+Kiểu đáp án
+Ví dụ
+Cách kiểm (CAS và tính số, do mã của hệ thống)
+Số theo tham số
+Giới hạn của sin(ax)/x khi x → 0 bằng a
+CAS tính đại lượng và so với đáp án: hiệu rút gọn về 0 ở từng giá trị tham số. Tính số: giới hạn tính theo dãy điểm tiến về điểm, ở cả hai phía hoặc ở phía được chỉ định; đạo hàm tại một điểm tính bằng sai phân từng phía, hai phía phải khớp nhau; tích phân tính gần đúng kèm ước lượng sai số; so trong sai số cho phép
+Vô cùng
+Giới hạn của 1/(x − 1) khi x → 1 từ bên phải là +∞
+CAS tính giới hạn kèm dấu của vô cùng. Tính số: giá trị vượt qua các ngưỡng ngày càng lớn, đúng dấu, theo dãy điểm ở phía được chỉ định
+Tập hoặc điều kiện (câu tìm tham số, câu biện luận)
+Tích phân suy rộng của 1/x^a trên [1, +∞) hội tụ khi và chỉ khi a > 1
+CAS phải cho điều kiện dạng ký hiệu; điều kiện này được so với đáp án như so hai tập. Tính số kiểm thêm tại các điểm ở hai bên mỗi điểm biên. Biến được biện luận thường liên tục, nên chỉ lấy mẫu số thì chưa qua QT02
+Hàm (đạo hàm, nguyên hàm, khai triển)
+Đạo hàm của x·e^(ax) là (1 + ax)·e^(ax)
+CAS: hiệu rút gọn về 0; với nguyên hàm, đạo hàm của đáp án bằng hàm dưới dấu tích phân trên miền xác định; với khai triển, so từng hệ số. Tính số: so tại một lưới điểm trong miền xác định
+Đường thẳng (tiếp tuyến, tiệm cận)
+Tiếp tuyến của y = x² tại x = 1 là y = 2x − 1
+So hệ số với đường thẳng do CAS tính: tiếp tuyến từ giá trị và đạo hàm tại tiếp điểm; tiệm cận xiên y = ax + b từ a = lim f(x)/x và b = lim (f(x) − ax). Tính số tại các điểm gần tiếp điểm hoặc xa dần
+Nhiều phần
+Cực trị của x³ − 3ax: hoành độ, tung độ và loại cực trị
+Kiểm từng phần theo kiểu của phần đó; đáp án đạt khi mọi phần đạt
+Không tồn tại
+Giới hạn của sin(1/x) khi x → 0 không tồn tại; đạo hàm của |x| tại 0 không tồn tại
+CAS hoặc tính số chỉ ra hai dãy cùng tiến về điểm mà cho hai giới hạn khác nhau, hoặc hai giới hạn một phía khác nhau, hoặc hai sai phân một phía khác nhau. Đây chỉ là bằng chứng số; nhãn “Đã chứng minh” cần chứng minh Lean
+Bảng 3.15. Kiểu đáp án và cách kiểm
+Kiểm đáp án (QT02)
+“Khớp” nghĩa là kết quả của cách kiểm trùng đáp án do LLM sinh ở mọi giá trị tham số còn trong miền. Với câu theo khuôn, cột lời giải độc lập không áp dụng.
+Quy tắc
+Kết quả của CAS (a) và tính số (b)
+Lời giải độc lập (c)
+Hành động
+1
+Cả hai tính được, trùng nhau và khớp đáp án
+Khớp
+Đạt; cách kiểm đã qua: CAS và tính số
+2
+Chỉ một cách tính được, và khớp đáp án
+Khớp
+Đạt; cách kiểm đã qua: chỉ CAS hoặc chỉ tính số; bằng chứng ghi vào nhật ký. Câu tìm tham số, câu biện luận chỉ có tính số: theo quy tắc 6
+3
+Cả hai tính được, trùng nhau nhưng lệch đáp án; hoặc chỉ một cách tính được và lệch đáp án
+—
+Đáp án do LLM sinh sai: không đạt
+4
+Cả hai tính được nhưng khác nhau
+—
+Tính số lại với độ chính xác cao hơn và cách tính khác: khớp CAS thì xét lại từ quy tắc 1, ghi là sai số làm tròn; vẫn khác thì câu cần phân xử (Bảng 3.17)
+5
+Như quy tắc 1 hoặc 2
+Lệch
+Đề bài không khớp bản ghi: không đạt
+6
+Cả hai không cho kết quả dùng được; hoặc câu tìm tham số, câu biện luận mà CAS không cho được điều kiện dạng ký hiệu
+—
+Chưa qua QT02; câu chỉ được giữ khi có mệnh đề đã xác nhận và Lean chứng minh được đáp án (Bảng 3.18). Câu tự do có mệnh đề không được xác nhận thì không đạt, không được chờ duyệt (QT15)
+Bảng 3.16. Bảng quyết định kiểm đáp án (QT02)
+Phân xử khi các nguồn kiểm mâu thuẫn (QT25)
+Câu cần phân xử được chứng minh đáp án (1.7) trước khi kiểm lời giải. Câu chỉ được giữ theo đa số 2 trên 3: Lean chứng minh được đáp án và ít nhất một trong CAS, tính số đồng ý.
+CAS
+Tính số
+Lean (1.7 hoặc 5.1)
+Kết quả
+Khớp đáp án
+Lệch
+Chứng minh được
+Giữ, đáp án “Đã chứng minh”; tính số được ghi là lớp kiểm sai
+Lệch
+Khớp đáp án
+Chứng minh được
+Giữ, đáp án “Đã chứng minh”; CAS được ghi là lớp kiểm sai
+Lệch
+Lệch
+Chứng minh được
+Không đạt: Lean một mình chống lại cả hai, khả năng cao mệnh đề sai; lý do được đếm vào ngưỡng (QT26)
+Bất kỳ
+Bất kỳ
+Bác bỏ, hoặc không quyết được
+Không đạt
+Khớp đáp án
+Khớp đáp án
+Bác bỏ
+Không đạt (ở 5.1: bị gỡ); lý do “Lean bác bỏ đáp án đã qua kiểm số”, ngưỡng riêng (QT26)
+Không tính được
+Không tính được
+Chứng minh được
+Giữ, đáp án “Đã chứng minh”: không có bằng chứng ngược, Lean được đứng một mình
+Câu tự do có mệnh đề không được xác nhận không có Lean phân xử: câu cần phân xử không đạt
+Bảng 3.17. Bảng quyết định phân xử khi các nguồn kiểm mâu thuẫn (QT25)
+Nhãn đáp án (QT06)
+Quy tắc
+Điều kiện
+Kết quả chứng minh
+Nhãn đáp án, xử lý
+1
+Mệnh đề đã xác nhận; lời giải “Đã chứng minh” (1.6)
+Chứng minh ráp từ lời giải được chấp nhận (QT18)
+Đã chứng minh; không chạy 1.7
+2
+Mệnh đề đã xác nhận; đáp án đã qua QT02; câu cần 1.7 (câu trắc nghiệm có lời giải “Không có”, hoặc chứng minh ráp không biên dịch được)
+Chứng minh được
+Đã chứng minh
+3
+Không chứng minh được trong giới hạn
+Chỉ kiểm số, lý do (b); thử chứng minh lại khi rảnh (5.1)
+4
+Lean bác bỏ
+Không đạt (Bảng 3.17); ngưỡng riêng (QT26)
+5
+Mệnh đề đã xác nhận; đáp án chưa qua QT02 (Bảng 3.16, quy tắc 6), hoặc câu cần phân xử
+Chứng minh được
+Đã chứng minh, nếu Bảng 3.17 giữ câu; nếu không, không đạt
+6
+Không chứng minh được, hoặc bác bỏ
+Không đạt
+7
+Câu tự do có mệnh đề không được xác nhận; đáp án đã qua QT02
+Không có mệnh đề để chứng minh
+Chỉ kiểm số, lý do (c); “Chờ duyệt” ở lần thử cuối của chỗ hoặc khi kiểm lại (QT15)
+Bảng 3.18. Bảng quyết định nhãn đáp án (QT06)
+Lý do (a), chứng minh hết hiệu lực sau khi nâng phiên bản, được gắn ở 5.2.
+Nhãn lời giải (QT07)
+Các quy tắc được xét từ trên xuống, dừng ở quy tắc đầu tiên khớp.
+Quy tắc
+Điều kiện
+Nhãn lời giải, xử lý
+1
+Cây không hợp lệ (sai văn phạm, khối không đóng, sai quy tắc phạm vi, khung Lean không biên dịch được), hoặc không đóng được đích gốc
+Chưa đạt: sinh lại từ bước hỏng đầu tiên
+2
+Có nghĩa vụ “Sai” chỉ ở một số giá trị tham số, và miền còn đủ giá trị khi bỏ chúng (QT03)
+Bỏ các giá trị đó khỏi miền, xét lại từ quy tắc 1
+3
+Có nghĩa vụ “Sai”, “Mâu thuẫn” hoặc “Chưa kiểm được” (Bảng 3.14)
+Chưa đạt: sinh lại đoạn hỏng, kèm phản hồi về bước hỏng
+4
+Mọi nghĩa vụ “Đúng”, chứng minh được chấp nhận (QT18)
+Đã chứng minh; ráp thành chứng minh đáp án nếu câu có mệnh đề đã xác nhận
+5
+Hết M lần sinh lại mà chưa đạt
+Không có: câu trắc nghiệm đi tiếp đến 1.7, hiển thị không kèm lời giải; câu tự luận không đạt
+Bảng 3.19. Bảng quyết định nhãn lời giải (QT04, QT07)
+Đưa câu vào ngân hàng (QT08)
+“Lời giải đạt yêu cầu theo hình thức” nghĩa là: với câu trắc nghiệm, lời giải “Đã chứng minh” hoặc “Không có”; với câu tự luận, lời giải “Đã chứng minh” (QT07).
+Loại câu
+Kết quả kiểm
+Điều kiện
+Xử lý
+Theo khuôn
+Đáp án “Đã chứng minh” hoặc “Chỉ kiểm số”; lời giải đạt yêu cầu theo hình thức
+Phiên bản khuôn còn “Đã kiểm chứng”
+Trong ngân hàng ngay, kèm nhãn đáp án và nhãn lời giải
+Tự do
+Mệnh đề đã xác nhận; đáp án “Đã chứng minh” hoặc “Chỉ kiểm số”; lời giải đạt yêu cầu theo hình thức
+Chuyên đề “Đang sinh”
+Trong ngân hàng ngay, kèm nhãn; chất lượng đo bằng kiểm mẫu (QT12, QT13)
+Tự do
+Mệnh đề không được xác nhận; đáp án đã qua QT02, không cần phân xử; lời giải đạt yêu cầu theo hình thức
+Lần thử cuối của chỗ, hoặc câu đang kiểm lại
+Chờ duyệt (2.3), đáp án “Chỉ kiểm số”, lý do (c)
+Tự do
+Mệnh đề không được xác nhận
+Chỗ còn lần thử
+Không đạt
+Tự do
+Mệnh đề không được xác nhận; đáp án chưa qua QT02, hoặc câu cần phân xử
+—
+Không đạt: không còn kết quả kiểm nào để người duyệt đối chiếu (QT15)
+Mọi loại
+Bất kỳ
+Nguồn sinh mất hiệu lực trong khi câu đang kiểm
+Bị loại, không tính lượt; chỗ chuyển theo QT05
+Mọi loại
+Câu tự luận có lời giải “Không có”
+—
+Không đạt (QT07)
+Mọi loại
+Không đạt ở một lớp kiểm
+—
+Không đạt; ghi lý do
+Bảng 3.20. Bảng quyết định đưa câu hỏi vào ngân hàng (QT08)
+Phân loại lỗi và tạm dừng (QT26)
+Khi một câu không đạt, máy xác định nguyên nhân theo Bảng 3.21, để chỉ đặt lại hoặc tạm dừng nguồn sinh khi có căn cứ.
+Dấu hiệu
+Kết luận
+Xử lý
+Bản ghi sai văn phạm, thiếu thành phần, vi phạm ràng buộc của khuôn (1.3)
+Lỗi của LLM
+Không đạt
+Bản ghi hợp lệ nhưng mệnh đề sinh từ khuôn không biên dịch được (1.3)
+Lỗi chắc chắn của khuôn hoặc bộ chuyển
+Phiên bản khuôn về “Chưa kiểm chứng” ngay; câu bị loại, không tính lượt; chỗ chuyển theo QT05
+Đáp án bị bác ở 1.4 (CAS và tính số khớp nhau, lệch đáp án), lẻ tẻ
+Lỗi của LLM
+Không đạt
+Cùng một lý do không đạt ở 5 trong 10 câu gần nhất của một phiên bản khuôn
+Nghi lỗi khuôn
+Phiên bản khuôn “Tạm dừng”, báo quản trị viên
+Lean bác bỏ đáp án đã qua kiểm số ở 2 trong 10 câu gần nhất của một phiên bản khuôn, hoặc của câu tự do của một chuyên đề
+Dấu hiệu mạnh của mẫu mệnh đề hoặc bản dịch sai
+Phiên bản khuôn hoặc chuyên đề “Tạm dừng”, báo quản trị viên
+CAS lệch tính số; hoặc Lean bác bỏ đáp án mà CAS, tính số đã xác nhận
+Mâu thuẫn giữa các nguồn kiểm
+Phân xử theo Bảng 3.17
+Bảng 3.21. Bảng phân loại lỗi khi câu không đạt
+3.9 Bảng chuyển trạng thái
+Các bảng dưới đây gom mọi sự kiện làm thay đổi trạng thái của chuyên đề (với câu tự do), phiên bản khuôn, đợt sinh và chỗ, và câu hỏi, ở mọi chức năng.
+Trạng thái
+Ý nghĩa
+Chuyển trạng thái khi
+Đang sinh
+Sinh câu tự do cho chuyên đề; câu tự do qua các lớp kiểm vào ngân hàng ngay; kiểm mẫu đo chất lượng theo phiên bản quy trình
+Phát hiện câu tự do sai thuộc phiên bản quy trình hiện hành (QT14), hoặc vượt ngưỡng riêng của QT26 → Tạm dừng
+Tạm dừng
+Không sinh câu tự do mới; chỗ sinh tự do của chuyên đề chuyển theo QT05, thường thành “Thiếu, chuyên đề tạm dừng”; câu theo khuôn của chuyên đề không bị ảnh hưởng
+Quản trị viên xử lý nguyên nhân: sửa lớp kiểm, đổi prompt hoặc mô hình, hoặc ghi lý do không sửa (5.3) → Đang sinh; 10 câu đầu được đếm lại
+Bảng 3.22. Trạng thái của chuyên đề, với câu tự do
+Trạng thái
+Ý nghĩa
+Chuyển trạng thái khi
+Chưa kiểm chứng
+Phiên bản vừa tạo hoặc bị đặt lại; không dùng để sinh câu
+Đạt ba bước kiểm chứng (3.4) → Đã kiểm chứng; một phiên bản quy trình mới bắt đầu
+Đã kiểm chứng
+Được dùng để sinh câu nếu là phiên bản mới nhất đã kiểm chứng của khuôn
+Mệnh đề sinh từ khuôn không biên dịch được (1.3); câu sai mục “Khuôn và bộ chuyển” (QT14); sửa khuôn vì lỗi; sửa định nghĩa mà khuôn dùng (QT21); không còn đạt sau khi nâng phiên bản (QT22) → Chưa kiểm chứng. Vượt ngưỡng (QT26), hoặc câu sai mục khác thuộc phiên bản quy trình hiện hành (QT14) → Tạm dừng
+Tạm dừng
+Nghi lỗi; không sinh câu mới; phần kế hoạch còn lại chuyển theo QT05
+Quản trị viên chạy lại bộ ví dụ kiểm thử (3.3): thấy lỗi khuôn → Chưa kiểm chứng, khuôn được sửa thành phiên bản mới; khuôn không sai, hoặc nguyên nhân đã xử lý ở 5.3 → Đã kiểm chứng
+Bảng 3.23. Trạng thái của một phiên bản khuôn
+Trạng thái
+Ý nghĩa
+Chuyển trạng thái khi
+Đợt sinh
+Đang chạy
+Các chỗ đang được sinh và kiểm
+Hệ thống dừng giữa chừng → Bị dừng; mọi chỗ đã có kết quả (Có câu, Đang chờ người hoặc Thiếu) → Hoàn thành
+Bị dừng
+Đợt sinh dừng giữa chừng, dữ liệu đã có được giữ (NFR06)
+Chạy tiếp, không sinh lại các chỗ đã xong → Đang chạy
+Hoàn thành
+Báo cáo đợt sinh đã lập (1.9)
+—
+Chỗ của kế hoạch đợt sinh
+Đang sinh
+Có câu đang kiểm, hoặc sắp sinh lần thử tiếp
+Câu vào ngân hàng → Có câu; câu chờ duyệt → Đang chờ người; hết K lần thử, hoặc không còn nguồn sinh để chuyển (QT05) → Thiếu, kèm lý do
+Đang chờ người
+Câu của chỗ đang “Chờ duyệt”; không sinh câu thay
+Duyệt đúng → Có câu; duyệt sai, hoặc câu bị loại khi kiểm lại → Thiếu, không sinh câu bù
+Có câu
+Câu của chỗ đã vào ngân hàng
+—; câu bị gỡ về sau không làm đổi kết quả của chỗ và không được bù tự động
+Thiếu
+Chỗ không có câu, kèm lý do
+—
+Bảng 3.24. Trạng thái của đợt sinh và của chỗ
+Câu hỏi có sáu trạng thái: Đang kiểm, Chờ duyệt, Trong ngân hàng, Tạm khóa, Bị loại, Bị gỡ. Bị loại là trạng thái cuối; Bị gỡ chỉ ra được khi câu được sửa. Bảng 3.25 gom các sự kiện làm đổi trạng thái hoặc nhãn của câu.
+Sự kiện
+Câu bị ảnh hưởng
+Kết quả
+Sinh câu cho một lần thử của chỗ (1.2)
+—
+Đang kiểm
+Không đạt một lớp kiểm (QT01–QT07, QT15, QT25)
+Câu mới đang kiểm
+Bị loại, kèm lý do; chỗ dùng lần thử tiếp, hết lượt thì “Thiếu” (QT05)
+Nguồn sinh mất hiệu lực trong khi kiểm: phiên bản khuôn mất kiểm chứng hoặc tạm dừng, chuyên đề tạm dừng
+Câu mới đang kiểm của nguồn đó
+Bị loại, không tính lượt; chỗ chuyển (QT05)
+Qua các lớp kiểm: câu theo khuôn, hoặc câu tự do có mệnh đề đã xác nhận
+Câu đang kiểm
+Trong ngân hàng, kèm nhãn; “Đã từng ở ngân hàng” thành Có
+Mệnh đề của câu tự do không được xác nhận; đáp án đã qua QT02, không cần phân xử; lời giải đạt yêu cầu (QT15)
+Lần thử cuối của chỗ, hoặc câu đang kiểm lại
+Chờ duyệt, đáp án “Chỉ kiểm số”, lý do (c)
+Người kiểm hoặc người duyệt xác nhận câu đúng (2.1, 2.2, 2.3)
+Câu được đánh giá
+Mang cờ “Người đã duyệt”; Chờ duyệt hoặc Tạm khóa → Trong ngân hàng; nhãn không đổi
+Phát hiện câu sai theo Bảng 3.6, từ mọi nguồn: kiểm mẫu, duyệt câu, gỡ câu (QT14)
+Câu sai; câu cùng phiên bản khuôn hoặc cùng phiên bản quy trình, chưa có cờ
+Câu sai: Bị gỡ nếu đã từng ở ngân hàng, Bị loại nếu chưa. Câu khác đang trong ngân hàng: Tạm khóa. Nguồn sinh: Chưa kiểm chứng (lỗi khuôn) hoặc Tạm dừng (mục khác, phiên bản hiện hành)
+Gỡ câu vì lý do khác (2.4)
+Câu trong ngân hàng hoặc tạm khóa
+Bị gỡ; không tính là câu sai
+Lean bác bỏ đáp án khi chứng minh lại (5.1)
+Câu trong ngân hàng
+Bị gỡ; ngưỡng riêng (QT26); lần duyệt trước đó, nếu có, tính là duyệt sai
+Chứng minh lại được (5.1)
+Câu có đáp án “Chỉ kiểm số”, lý do (a) hoặc (b)
+Nhãn đáp án “Đã chứng minh”; trạng thái không đổi
+Bắt đầu kiểm lại từ mọi nguồn (QT20, Bảng 3.10)
+Câu cần kiểm lại
+Câu trong ngân hàng: Tạm khóa; câu khác: Đang kiểm. Câu trắc nghiệm chỉ sinh lại lời giải: giữ trạng thái. Câu bị sửa: nhãn về “Chưa kiểm”, mất cờ
+Kết thúc kiểm lại
+Câu đang kiểm lại
+Theo Bảng 3.11; không sinh câu thay
+Quản trị viên xử lý nguyên nhân của câu sai (5.3, 3.4)
+Câu tạm khóa cùng phiên bản với câu sai
+Theo Bảng 3.7
+Nâng phiên bản Lean, Mathlib (QT22)
+Câu có chứng minh Lean
+Đáp án có chứng minh không còn hợp lệ: “Chỉ kiểm số”, lý do (a), trạng thái không đổi. Lời giải mất chứng minh, kiểm lại không được: bắt đầu kiểm lại từ 1.6
+Sửa một định nghĩa bổ sung (QT21)
+Câu dùng định nghĩa
+Bắt đầu kiểm lại từ 1.5 (câu theo khuôn: sau khi khuôn được kiểm chứng lại), mất cờ
+Bảng 3.25. Bảng chuyển trạng thái của câu hỏi
+4. Yêu cầu phi chức năng
+4.1 Danh sách yêu cầu phi chức năng
+Yêu cầu phi chức năng ràng buộc cách hệ thống thực hiện các chức năng ở chương 2. Mỗi yêu cầu có tiêu chí kiểm tra, đo được trên hệ thống hoặc trên nhật ký.
+Mã
+Nhóm
+Yêu cầu chính
+Liên quan
+NFR01
+Độ tin cậy của kết quả
+Lean là giám khảo cuối cùng; không trình bày kết quả quá mức đã kiểm; chất lượng của quy trình sinh được đo theo phiên bản
+MT2, MT3, MT4, RB4
+NFR02
+An toàn và bảo mật
+Mã do LLM sinh chạy cách ly; biểu thức do LLM viết không được thực thi; chặn lệnh làm sai lệch kết quả kiểm; bảo vệ khóa truy cập
+RB4
+NFR03
+Hiệu năng
+Mọi lần kiểm có giới hạn; chạy được trên máy cá nhân; sinh câu theo đợt
+RB2
+NFR04
+Chi phí
+Giới hạn lượt gọi LLM và lần thử; lớp kiểm rẻ trước, bước tốn kém chỉ chạy khi cần; ghi chi phí thật
+RB3, RB6
+NFR05
+Tái lập và truy vết
+Ghi phiên bản hệ thống và phiên bản quy trình; lưu đủ dữ liệu để kiểm lại; số liệu tính từ nhật ký
+RB1, RB6
+NFR06
+Khả năng phục hồi
+Lỗi dịch vụ ngoài không làm mất dữ liệu và không tính lượt; chạy tiếp được từ chỗ dừng
+RB2, RB3
+NFR07
+Dễ dùng
+Tiếng Việt, thuật ngữ giáo trình, nhãn mức bảo đảm rõ ràng
+MT6
+NFR08
+Bảo trì và mở rộng
+Thêm chuyên đề, dạng bài, khuôn; thay mô hình; nâng phiên bản Lean mà không sửa lõi
+RB1, RB5
+Bảng 4.1. Danh sách yêu cầu phi chức năng
+4.2 Đặc tả yêu cầu phi chức năng
+NFR01. Độ tin cậy của kết quả
+Lean là giám khảo cuối cùng. Mọi kết luận “đúng” phải có chứng minh được Lean chấp nhận theo QT18. Với lời giải, chỉ Lean quyết định một bước đúng hay sai; CAS chỉ giúp tìm phản ví dụ (QT04).
+Không trình bày quá mức đã kiểm. Kết quả chưa được Lean xác nhận vẫn được giữ, nhưng gắn nhãn đúng mức; việc người duyệt xác nhận một câu không làm đổi nhãn (QT09).
+Đo chất lượng theo phiên bản. Câu vào ngân hàng ngay khi qua các lớp kiểm; chất lượng của quy trình sinh được đo bằng kiểm mẫu theo phiên bản quy trình, và báo cáo kèm cận trên của tỉ lệ sai (QT12).
+Tiêu chí kiểm tra. Mỗi phiên bản khuôn qua ba bước kiểm chứng (3.4) trước khi dùng. Với mỗi phiên bản quy trình, tỉ lệ câu sai qua kiểm mẫu được báo cáo kèm cận trên 95%: không có câu sai trong 10 câu đầu cho cận trên khoảng 30%, trong 60 câu khoảng 5% (QT12). Ít nhất 90% mệnh đề được chọn tương đương mệnh đề chuẩn (MT3). Mọi lời giải “Đã chứng minh” có chứng minh Lean được chấp nhận cho mọi nghĩa vụ của mọi bước, tìm bằng bộ chiến thuật cố định (MT4, RD12); mọi đáp án “Đã chứng minh” thỏa RD02.
+NFR02. An toàn và bảo mật
+Chạy cách ly. Mã do LLM sinh, gồm chứng minh Lean và các bản dịch Lean, chạy trong môi trường cách ly, có giới hạn thời gian và bộ nhớ, không truy cập mạng và không truy cập tệp ngoài thư mục làm việc.
+Không thực thi biểu thức của LLM. Biểu thức do LLM viết chỉ được đọc bằng bộ phân tích của FR07 thành cây biểu thức, không được thực thi như mã; CAS và tính số chạy trên cây biểu thức đó. Bản ghi câu hỏi do LLM viết được lưu như dữ liệu, không bao giờ được ghép vào câu lệnh truy vấn cơ sở dữ liệu.
+Chặn lệnh làm sai lệch kết quả. Chứng minh có khai báo tiên đề mới, lệnh bỏ qua kiểm tra hoặc lệnh chạy mã trong lúc kiểm đều bị từ chối.
+Bảo vệ khóa truy cập. Khóa của dịch vụ LLM không nằm trong mã nguồn, nhật ký hay thông báo lỗi.
+Tiêu chí kiểm tra. Mọi trường hợp trong bộ ví dụ vi phạm (biểu thức chứa lời gọi ngoài văn phạm, mã đọc tệp hoặc gọi mạng, chứng minh có tiên đề lạ, chứng minh đổi mệnh đề) đều bị chặn hoặc bị từ chối; quét mã nguồn và nhật ký không tìm thấy khóa truy cập.
+NFR03. Hiệu năng
+Giới hạn. Mỗi lần gọi Lean, mỗi bước của lời giải và mỗi lần thử có giới hạn, cấu hình được. Hết giới hạn thì hệ thống dừng và gắn kết luận đúng mức, ví dụ đáp án “Chỉ kiểm số” hoặc nghĩa vụ “Chưa kiểm được”, không để treo. Giới hạn của FR06 đo bằng heartbeat của Lean để kết quả không phụ thuộc tốc độ máy, kèm giới hạn thời gian thực để phòng treo.
+Chạy trên máy cá nhân. Số tiến trình Lean chạy cùng lúc được đặt theo bộ nhớ của máy (RB2); chứng minh lại chỉ chạy khi hệ thống rảnh (5.1).
+Sinh câu hỏi theo đợt. Giảng viên không phải chờ từng câu; tiến độ của đợt sinh, theo từng chỗ, được hiển thị.
+Tiêu chí kiểm tra. Không lần chạy nào vượt giới hạn mà không được dừng. Thời gian trung bình cho một câu có được và cho một bước của lời giải được đo và báo cáo theo chuyên đề và dạng bài. Mục tiêu ban đầu: không quá 15 phút cho một câu có được.
+NFR04. Chi phí
+Giới hạn lượt gọi và lần thử. Mỗi lần thử có giới hạn số lượt gọi LLM và lượng token; mỗi chỗ có tối đa K lần thử, và mỗi lời giải tối đa M lần sinh lại, nên chi phí của một đợt sinh có trần (QT05).
+Rẻ trước, tốn kém sau. Các lớp kiểm rẻ (kiểm cấu trúc, tính toán) chạy trước các lớp tốn kém, nên câu bị loại sớm không tốn chi phí cho các lớp sau. Kiểm lời giải chạy trước chứng minh đáp án; lời giải đạt thì được ráp thành chứng minh đáp án, nên với phần lớn câu, bước tốn kém nhất được bỏ qua; câu tự luận có lời giải không đạt bị loại trước khi chứng minh đáp án (QT05).
+Ghi chi phí thật. Số token và thời gian thực tế của mỗi lần thử, mỗi lần kiểm được ghi vào nhật ký, kèm tên mô hình do dịch vụ trả về.
+Tiêu chí kiểm tra. Báo cáo được chi phí của từng đợt sinh và chi phí trung bình cho một câu có được, theo chuyên đề và dạng bài, tính cả các lần thử bị loại, từ nhật ký; không lần chạy nào vượt giới hạn đã đặt.
+NFR05. Tái lập và truy vết
+Ghi phiên bản. Mỗi kết quả ghi kèm phiên bản hệ thống (Lean, Mathlib, mô hình, prompt, các lớp kiểm, văn phạm, bộ chuyển); mỗi câu còn ghi phiên bản khuôn và phiên bản quy trình của nó (QT27).
+Lưu đủ để kiểm lại. Mỗi câu lưu bản ghi đầu vào, mệnh đề Lean của đề và của từng nghĩa vụ của lời giải, chứng minh, kết quả từng lớp kiểm và lý do; người khác kiểm lại được mà không cần gọi lại LLM.
+Số liệu từ nhật ký. Mọi số liệu báo cáo được tính từ nhật ký và dữ liệu hiện có; không có chỉ số gán tay, không lưu sẵn số liệu thống kê (RB6).
+Tiêu chí kiểm tra. Kiểm lại toàn bộ chứng minh đã lưu bằng Lean cùng phiên bản cho cùng kết quả; mỗi số trong báo cáo truy ngược được về các bản ghi trong nhật ký.
+NFR06. Khả năng phục hồi
+Chịu lỗi dịch vụ ngoài. Khi dịch vụ LLM mất kết nối, hết hạn mức hoặc trả về sai định dạng, hoặc khi Lean treo hay hết bộ nhớ, dữ liệu đã có không bị mất, và lần thử bị lỗi không tính vào lượt của chỗ (QT05).
+Chạy tiếp từ chỗ dừng. Đợt sinh bị dừng được chạy tiếp mà không sinh lại các chỗ đã xong; các hàng đợi (lần thử tiếp, câu cần kiểm lại) nằm trong cơ sở dữ liệu nên không mất khi hệ thống dừng.
+Cô lập lỗi. Lỗi ở một câu không làm dừng cả đợt; câu lỗi được ghi lý do.
+Không lưu kết quả dở dang. Câu chưa kiểm xong không được đưa vào ngân hàng; mỗi lần chuyển trạng thái của câu và cập nhật chỗ tương ứng được ghi trong cùng một giao dịch.
+Tiêu chí kiểm tra. Ngắt dịch vụ LLM hoặc dừng tiến trình Lean giữa đợt sinh rồi chạy tiếp: không mất câu đã xong, không có câu dở dang trong ngân hàng, và số lần thử của các chỗ không tăng vì lỗi đó.
+NFR07. Dễ dùng
+Tiếng Việt. Giao diện, câu hỏi, lời giải và báo cáo bằng tiếng Việt, dùng thuật ngữ của giáo trình Giải tích.
+Nhãn rõ ràng. Mọi kết quả kèm nhãn mức bảo đảm và lý do ngắn gọn; câu trắc nghiệm không kèm lời giải được ghi rõ.
+Công thức dễ đọc. Công thức hiển thị dạng ký hiệu toán học; mã Lean chỉ hiển thị cho người kiểm hoặc khi người dùng chọn xem.
+Tiêu chí kiểm tra. Mọi màn hình và thông báo bằng tiếng Việt; mọi kết quả hiển thị đều có nhãn mức bảo đảm. Khảo sát nhỏ với giảng viên về mức dễ hiểu của câu hỏi và lời giải (Nên có).
+NFR08. Bảo trì và mở rộng
+Thêm chuyên đề, dạng bài, khuôn. Dạng bài mới được thêm vào danh mục; khuôn mới được kiểm chứng theo 3.4. Không phải sửa hai chức năng lõi FR05 và FR06, và chỉ phải sửa văn phạm, bộ chuyển (FR07) khi dạng bài cần thêm hàm hoặc phép toán, kèm dòng mới ở Bảng 3.13.
+Thay mô hình LLM hoặc prompt. Không phải sửa các lớp kiểm; nguồn sinh dùng mô hình hoặc prompt đó bắt đầu phiên bản quy trình mới, và 10 câu đầu của phiên bản được kiểm (QT27).
+Nâng phiên bản Lean, Mathlib. Toàn bộ chứng minh đã lưu, thư viện định nghĩa bổ sung và các phiên bản khuôn được kiểm lại trên phiên bản mới trước khi chuyển (QT22); đáp án có chứng minh không còn hợp lệ quay về “Chỉ kiểm số” cho đến khi được chứng minh lại.
+Kiểm thử từng lớp kiểm. Mỗi lớp kiểm, bộ phân tích, bộ chuyển (FR07) và mỗi khuôn có bộ ví dụ đúng và sai để kiểm thử riêng; ví dụ kèm kết quả mong đợi.
+Tiêu chí kiểm tra. Thêm được một chuyên đề, một dạng bài hoặc một khuôn mới mà không sửa FR05, FR06; mỗi lớp kiểm, bộ phân tích, bộ chuyển và mỗi khuôn vượt qua bộ ví dụ đúng và sai của nó.
+5. Cơ sở dữ liệu
+Chương này thiết kế dữ liệu của hệ thống ở hai mức. Mức khái niệm gồm thực thể, thuộc tính, liên kết, mô hình thực thể – liên kết, trạng thái và ràng buộc (mục 5.1 đến 5.6). Mức logic gồm lược đồ quan hệ với khóa chính, khóa ngoại và kiểu dữ liệu chính (mục 5.7), kèm ma trận cho biết mỗi chức năng tạo, đọc, sửa bảng nào (mục 5.8) và từ điển dữ liệu (mục 5.9). So với bản trước: thêm Dạng bài, Chỗ sinh và Phiên bản quy trình; tách Khuôn câu hỏi thành Khuôn câu hỏi và Phiên bản khuôn, vì trạng thái kiểm chứng gắn với từng phiên bản; bỏ các số liệu thống kê lưu sẵn (RB6); câu hỏi còn sáu trạng thái; các liên kết được đánh số lại.
+5.1 Thực thể và khóa
+Nhóm
+Thực thể
+Khóa
+Mỗi bản ghi là
+Danh mục
+Chuyên đề
+Mã chuyên đề
+Một nhóm câu cùng một nội dung kiến thức (Bảng 1.2), gồm một danh mục dạng bài
+Dạng bài
+Mã dạng bài
+Một dạng toán của một chuyên đề, có kiểu đáp án, hình thức cho phép và mô tả dùng làm hướng dẫn cho LLM
+Khuôn câu hỏi
+Mã khuôn
+Một khuôn của một dạng bài, hỗ trợ một hoặc cả hai hình thức
+Phiên bản khuôn
+Mã khuôn, Phiên bản
+Một phiên bản của khuôn, gồm mẫu câu chữ, mẫu mệnh đề Lean, kịch bản chứng minh và bộ ví dụ kiểm thử, đã hoặc chưa kiểm chứng
+Khái niệm
+Mã khái niệm
+Một thuật ngữ, định lý giáo trình hoặc định nghĩa bổ sung, và khái niệm hoặc định lý Lean tương ứng
+Sinh câu
+Đợt sinh
+Mã đợt sinh
+Một lần giảng viên yêu cầu sinh câu cho một hoặc nhiều chuyên đề, kèm kế hoạch
+Chỗ sinh
+Mã đợt sinh, Thứ tự chỗ
+Một câu được yêu cầu trong kế hoạch của đợt sinh, với dạng bài, hình thức, nguồn sinh và kết quả
+Phiên bản quy trình
+Mã phiên bản quy trình
+Một tổ hợp mô hình, prompt và phiên bản các lớp kiểm (với câu theo khuôn, cả phiên bản khuôn) của một nguồn sinh, trong một khoảng thời gian (QT27)
+Câu hỏi
+Câu hỏi
+Mã câu hỏi
+Một lần thử của một chỗ: một câu có tham số, kể cả câu bị loại hoặc bị gỡ
+Bước lời giải
+Mã câu hỏi, Thứ tự
+Một bước trong cây khối của lời giải hiện hành của câu, kèm loại bước, khối chứa và kết luận của bước
+Kiểm chứng
+Mệnh đề Lean
+Mã mệnh đề
+Một mệnh đề Lean: bản dịch của một đề, mệnh đề sinh từ khuôn, một nghĩa vụ của bước lời giải, hoặc mệnh đề của một mục đánh giá
+Chứng minh Lean
+Mã chứng minh
+Một lần Lean chứng minh một mệnh đề, phủ định của nó, hoặc mâu thuẫn trong giả thiết của nó
+Kiểm mẫu
+Lần kiểm mẫu
+Mã lần kiểm mẫu
+Một lần người kiểm đánh giá một mẫu câu của một phiên bản quy trình
+Đánh giá
+Mục đánh giá
+Mã mục
+Một đề kèm mệnh đề chuẩn, hoặc một mệnh đề Lean dùng để đánh giá chứng minh tự động
+Lần chạy đánh giá
+Mã lần chạy
+Một lần chạy hệ thống trên bộ dữ liệu để tính chỉ số
+Hỗ trợ
+Người dùng
+Mã người dùng
+Một giảng viên, người kiểm hoặc quản trị viên
+Phiên bản hệ thống
+Mã phiên bản
+Một tổ hợp phiên bản Lean, Mathlib, mô hình, prompt, lớp kiểm, văn phạm và bộ chuyển
+Nhật ký
+Mã sự kiện
+Một sự kiện hoặc quyết định của hệ thống, kèm lý do
+Bảng 5.1. Các thực thể và khóa
+Phiên bản khuôn, Chỗ sinh và Bước lời giải là thực thể yếu: mỗi bản ghi chỉ tồn tại trong một khuôn, một đợt sinh hoặc một câu hỏi, nên khóa gồm khóa của thực thể chủ và một số thứ tự. Câu hỏi có khóa riêng, vì câu được nhiều thực thể khác tham chiếu.
+5.2 Thuộc tính
+Thực thể
+Thuộc tính chính
+Chuyên đề
+Tên; phần kiến thức (Bảng 1.2); nội dung kiến thức; trạng thái với câu tự do (Đang sinh / Tạm dừng); lý do tạm dừng
+Dạng bài
+Tên; mô tả, dùng làm hướng dẫn cho LLM khi sinh tự do; kiểu đáp án (Bảng 3.15); hình thức cho phép (Trắc nghiệm / Tự luận / Cả hai); cho phép sinh tự do (Có / Không)
+Khuôn câu hỏi
+Tên; hình thức hỗ trợ (Trắc nghiệm / Tự luận / Cả hai)
+Phiên bản khuôn
+Số phiên bản; các trường của bản ghi và ràng buộc; mẫu câu chữ; mẫu mệnh đề Lean; kịch bản chứng minh; bộ ví dụ kiểm thử, mỗi ví dụ kèm kết quả mong đợi, gồm đáp án; trạng thái (Chưa kiểm chứng / Đã kiểm chứng / Tạm dừng); lý do mất kiểm chứng hoặc tạm dừng; thời điểm tạo
+Khái niệm
+Loại (Thuật ngữ / Định lý giáo trình); tên; nguồn (Mathlib / Định nghĩa bổ sung); khái niệm Lean tương ứng; riêng định nghĩa bổ sung: định lý tương đương, ví dụ đúng và sai, trạng thái kiểm chứng (Chưa kiểm chứng / Đã kiểm chứng)
+Đợt sinh
+Thời điểm; trạng thái (Đang chạy / Bị dừng / Hoàn thành)
+Chỗ sinh
+Thứ tự chỗ; hình thức; kết quả chỗ (Đang sinh / Có câu / Đang chờ người / Thiếu); lý do thiếu
+Phiên bản quy trình
+Mô hình; phiên bản prompt; phiên bản các lớp kiểm; thời điểm bắt đầu, thời điểm kết thúc (trống khi đang dùng); lý do mở phiên bản
+Câu hỏi
+Lần thử thứ; bản ghi có cấu trúc (đề bài với câu tự do; giá trị các trường hoặc đại lượng cần tính; miền tham số; đáp án; phương án nhiễu); câu chữ hiển thị; miền đã kiểm; nhãn đáp án; lý do “Chỉ kiểm số”; cách kiểm đáp án đã qua; nhãn lời giải; cờ “Người đã duyệt”; trạng thái; đã từng ở ngân hàng (Có / Không); lý do bị loại hoặc bị gỡ, kèm chi tiết; nguồn kiểm lại và bước bắt đầu kiểm lại, khi câu đang chờ kiểm lại
+Bước lời giải
+Thứ tự; loại bước (Bảng 3.12); nội dung bước theo loại bước; lời dẫn; kết luận của bước (Đúng / Sai / Sai cấu trúc / Mâu thuẫn / Chưa kiểm được)
+Mệnh đề Lean
+Nguồn (Hình thức hóa / Sinh từ khuôn / Nghĩa vụ của bước / Đánh giá); nội dung Lean; bản diễn đạt lại bằng tiếng Việt; kết quả năm điều kiện xác nhận; trạng thái (Chưa xác nhận / Đã xác nhận); được chọn (Có / Không)
+Chứng minh Lean
+Chiều (Đúng / Sai / Mâu thuẫn); kết quả (Được chấp nhận / Không chứng minh được); nội dung chứng minh; cách tìm được; tài nguyên đã dùng, số lần thử, chi phí; phản ví dụ (với chiều sai); lý do dừng; đích còn lại; hiệu lực (Còn / Hết)
+Lần kiểm mẫu
+Loại (10 câu đầu / Định kỳ / Lô phiên bản cũ); thời điểm; kết quả (Đang kiểm / Không có câu sai / Có câu sai)
+Mục đánh giá
+Loại (Đề / Mệnh đề Lean); nguồn (ProofNet#, bộ đề Giải tích 1 tiếng Việt, ProverBench); đề bài và mệnh đề chuẩn thống nhất (với đề); bộ dữ liệu (Bộ điều chỉnh / Bộ kiểm tra); trạng thái nhãn
+Lần chạy đánh giá
+Loại (Hình thức hóa / Chứng minh tự động); thời điểm; chỉ số và chi phí
+Người dùng
+Họ tên; vai trò (Giảng viên / Người kiểm / Quản trị viên)
+Phiên bản hệ thống
+Phiên bản Lean, Mathlib; tên mô hình do dịch vụ trả về; phiên bản prompt, lớp kiểm, văn phạm và bộ chuyển; thời điểm áp dụng
+Nhật ký
+Thời điểm; loại sự kiện; loại và mã đối tượng; kết quả; lý do; chi phí; nội dung trước khi sửa
+Bảng 5.2. Thuộc tính của các thực thể
+Một số thông tin không được lưu thành thuộc tính vì suy ra được: chuyên đề, dạng bài và hình thức của câu lấy qua chỗ của câu; kiểu đáp án lấy từ dạng bài; loại câu (theo khuôn hay tự do) suy ra từ việc câu có phiên bản khuôn hay không; câu đang giữ chỗ là câu có lần thử lớn nhất của chỗ; số lần thử đã dùng của chỗ là số câu của chỗ, trừ câu bị loại vì nguồn sinh mất hiệu lực; loại lỗi suy ra từ mục sai (Bảng 3.6); mọi số liệu thống kê tính từ nhật ký (RB6).
+5.3 Liên kết
+Mã
+Liên kết
+Bản số
+Thuộc tính của liên kết
+Hình
+R1
+Chuyên đề – Dạng bài
+1 – n
+—
+Hình 5.1
+R2
+Dạng bài – Khuôn câu hỏi
+1 – n
+—
+R3
+Khuôn câu hỏi – Phiên bản khuôn
+1 – n
+—
+R4
+Người dùng (giảng viên) – Đợt sinh
+1 – n
+—
+R5
+Đợt sinh – Chuyên đề
+n – n
+Yêu cầu của đợt: hình thức, số câu yêu cầu, số câu bị từ chối và lý do
+R6
+Đợt sinh – Chỗ sinh
+1 – n
+—
+R7
+Dạng bài – Chỗ sinh
+1 – n
+—
+R8
+Khuôn câu hỏi – Chỗ sinh
+1 – n
+Khuôn dùng cho lần thử tiếp theo; không có khi chỗ sinh tự do
+R9
+Chỗ sinh – Câu hỏi
+1 – n
+Mỗi câu là một lần thử của chỗ
+R10
+Phiên bản khuôn – Câu hỏi
+1 – n
+Phiên bản đã sinh câu chữ và mệnh đề hiện hành của câu (RD09)
+R11
+Câu hỏi – Bước lời giải
+1 – n
+—
+R12
+Bước lời giải (bước mở khối) – Bước lời giải
+1 – n
+Khối chứa: mỗi bước thuộc khối do nhiều nhất một bước mở khối mở ra; bước của khối gốc không thuộc liên kết này
+R13
+Câu hỏi – Mệnh đề Lean
+1 – n
+Mệnh đề của đề: các bản dịch, hoặc mệnh đề sinh từ khuôn
+Hình 5.2
+R14
+Bước lời giải – Mệnh đề Lean
+1 – n
+Nghĩa vụ chứng minh: thứ tự, loại nghĩa vụ, kết luận, phản ví dụ do CAS tìm
+R15
+Mục đánh giá – Mệnh đề Lean
+1 – n
+—
+R16
+Mệnh đề Lean – Chứng minh Lean
+1 – n
+—
+R17
+Mệnh đề Lean – Khái niệm
+n – n
+—
+R18
+Phiên bản khuôn – Khái niệm
+n – n
+—
+R19
+Khái niệm (định lý giáo trình) – Bước lời giải
+1 – n
+Định lý được dùng ở bước
+R20
+Phiên bản hệ thống – Chứng minh Lean
+1 – n
+—
+R21
+Chuyên đề – Phiên bản quy trình
+1 – n
+Nguồn sinh của câu tự do
+Hình 5.3
+R22
+Phiên bản khuôn – Phiên bản quy trình
+1 – n
+Nguồn sinh của câu theo khuôn
+R23
+Phiên bản quy trình – Câu hỏi
+1 – n
+—
+R24
+Phiên bản quy trình – Lần kiểm mẫu
+1 – n
+—
+R25
+Lần kiểm mẫu – Câu hỏi
+n – n
+Kết luận (Đúng / Sai / Rút khỏi mẫu); mục sai; ghi chú; lỗi trình bày
+R26
+Người dùng (người kiểm) – Lần kiểm mẫu
+1 – n
+—
+R27
+Người dùng (người duyệt) – Câu hỏi
+n – n
+Lần duyệt: thời điểm, trạng thái của câu khi duyệt, kết quả, mục sai, duyệt sai
+R28
+Người dùng – Câu hỏi
+1 – n
+Người yêu cầu kiểm lại câu
+R29
+Người dùng – Mục đánh giá
+n – n
+Nhãn do người gán (mệnh đề chuẩn)
+Hình 5.4
+R30
+Lần chạy đánh giá – Mục đánh giá
+n – n
+Kết quả của hệ thống trên mục; đạt hay không (khớp nhãn, hoặc chứng minh được)
+R31
+Phiên bản hệ thống – Lần chạy đánh giá
+1 – n
+—
+R32
+Phiên bản hệ thống – Nhật ký
+1 – n
+—
+R33
+Người dùng – Nhật ký
+1 – n
+Người thực hiện; sự kiện do hệ thống tự thực hiện không có người dùng
+Bảng 5.3. Các liên kết
+R4, R26, R27, R28, R29 và R33 nối Người dùng theo vai trò; vai trò được kiểm bằng ràng buộc RD18. R12 là liên kết đệ quy, ghi cây khối của lời giải (QT04). R21 và R22 loại trừ nhau: mỗi phiên bản quy trình thuộc đúng một nguồn sinh (RD17); tương tự, mỗi mệnh đề thuộc đúng một trong R13, R14, R15 (RD01).
+5.4 Mô hình thực thể – liên kết
+Mô hình được vẽ theo ký hiệu Chen: thực thể là hình chữ nhật ghi tên và khóa (gạch chân), liên kết là hình thoi ghi mã ở Bảng 5.3, bản số ghi ở hai phía của hình thoi. Thuộc tính được liệt kê ở Bảng 5.2 thay vì vẽ. Vì có 18 thực thể, mô hình được vẽ thành bốn hình theo nhóm nghiệp vụ; thực thể nối nhiều nhóm (Câu hỏi, Người dùng, Phiên bản khuôn, Phiên bản hệ thống) được vẽ lại ở mỗi hình có liên kết của nó, và mỗi liên kết chỉ được vẽ ở một hình.
+Hình 5.1. Mô hình thực thể – liên kết: danh mục và sinh câu
+Hình 5.2. Mô hình thực thể – liên kết: kiểm chứng
+Hình 5.3. Mô hình thực thể – liên kết: kiểm mẫu và duyệt
+Hình 5.4. Mô hình thực thể – liên kết: đánh giá và hệ thống
+5.5 Trạng thái
+Thực thể
+Trạng thái
+Chuyển trạng thái
+Chuyên đề
+Đang sinh, Tạm dừng (với câu tự do)
+Bảng 3.22
+Phiên bản khuôn
+Chưa kiểm chứng, Đã kiểm chứng, Tạm dừng
+Bảng 3.23
+Đợt sinh
+Đang chạy, Bị dừng, Hoàn thành
+Bảng 3.24
+Chỗ sinh
+Đang sinh, Có câu, Đang chờ người, Thiếu
+Bảng 3.24
+Câu hỏi
+Đang kiểm, Chờ duyệt, Trong ngân hàng, Tạm khóa, Bị loại, Bị gỡ
+Bảng 3.25
+Phiên bản quy trình
+Đang dùng (chưa có thời điểm kết thúc), Đã thay
+QT27
+Lần kiểm mẫu
+Đang kiểm, Không có câu sai, Có câu sai
+QT11–QT14
+Mệnh đề Lean
+Chưa xác nhận, Đã xác nhận
+QT15, QT21
+Chứng minh Lean
+Còn hiệu lực, Hết hiệu lực
+QT22
+Khái niệm
+Chưa kiểm chứng, Đã kiểm chứng (với định nghĩa bổ sung)
+QT17
+Mục đánh giá
+Chưa đủ nhãn → Đủ hai nhãn → Đã thống nhất (với mục loại đề)
+RD07
+Bảng 5.4. Trạng thái của các thực thể
+5.6 Ràng buộc dữ liệu
+Ràng buộc dữ liệu là điều cơ sở dữ liệu phải thỏa ở mọi thời điểm. RD01–RD13 giữ số của bản trước, viết lại cho khớp các quy tắc ở chương 3; RD14–RD18 là ràng buộc mới. Ràng buộc kiểm được bằng khóa và CHECK được cài trong lược đồ (mục 5.7); ràng buộc trên nhiều bảng được kiểm bằng mã của hệ thống trong cùng giao dịch với thao tác ghi.
+Mã
+Ràng buộc
+RD01
+Mỗi đề bài có nhiều nhất một mệnh đề được chọn; mỗi mệnh đề thuộc đúng một trong: một câu hỏi (mệnh đề của đề), một bước lời giải (nghĩa vụ, do bộ chuyển sinh), một mục đánh giá. Mệnh đề được chọn phải “Đã xác nhận”, chỉ dùng khái niệm của Mathlib hoặc định nghĩa bổ sung “Đã kiểm chứng”, và chỉ dùng các dạng cho phép ở Bảng 3.13
+RD02
+Câu có đáp án “Đã chứng minh” phải có mệnh đề được chọn mang đúng đáp án và miền đã kiểm của câu, kèm một chứng minh Lean chiều đúng được chấp nhận, còn hiệu lực; với câu theo khuôn, mệnh đề phải sinh từ bản ghi của câu bằng đúng phiên bản khuôn của câu. Nếu không, nhãn hạ về “Chỉ kiểm số”
+RD03
+Dạng bài của mỗi chỗ thuộc một chuyên đề có trong yêu cầu của đợt sinh, với hình thức của chỗ; số chỗ của mỗi chuyên đề và hình thức bằng số câu yêu cầu trừ số câu bị từ chối
+RD04
+Câu “Chờ duyệt” là câu tự do có mệnh đề không được xác nhận và đáp án “Chỉ kiểm số”, lý do (c); câu “Trong ngân hàng” có nhãn đáp án “Đã chứng minh” hoặc “Chỉ kiểm số”; chỉ câu “Trong ngân hàng” được dùng. Câu đang được kiểm lại ở “Đang kiểm”, hoặc ở “Tạm khóa” nếu câu đang trong ngân hàng (QT20), và khi đó có thể có nhãn “Chưa kiểm”
+RD05
+Mẫu của một lần kiểm mẫu chỉ gồm câu thuộc đúng phiên bản quy trình của lần kiểm đó, do hệ thống chọn; không gồm câu đang chờ kiểm lại; mỗi câu có nhiều nhất một kết luận kiểm mẫu khác “Rút khỏi mẫu”, tức không được chọn lại vào mẫu sau
+RD06
+Lần kiểm mẫu “Định kỳ” của một phiên bản quy trình chỉ có sau khi 10 câu đầu của phiên bản đã được chọn vào lần kiểm “10 câu đầu”; lần kiểm “Lô phiên bản cũ” chỉ gồm câu “Tạm khóa” của một phiên bản quy trình đã thay
+RD07
+Mỗi mục đánh giá loại đề có nhãn của đúng hai người kiểm khác nhau; chỉ mục “Đã thống nhất” được dùng khi chạy đánh giá; mục loại mệnh đề Lean không cần nhãn
+RD08
+Mỗi chứng minh, lần chạy đánh giá và sự kiện nhật ký gắn đúng một phiên bản hệ thống; nhật ký chỉ ghi thêm, không sửa, không xóa; câu bị loại và câu bị gỡ được giữ kèm lý do
+RD09
+Câu theo khuôn được sinh từ một phiên bản khuôn “Đã kiểm chứng” tại thời điểm sinh, và ghi phiên bản khuôn đã sinh ra câu chữ và mệnh đề hiện hành của câu; câu chữ và mệnh đề của câu được sinh từ bản ghi, không do LLM viết; câu theo khuôn chỉ được sửa qua bản ghi
+RD10
+Mọi biểu thức trong bản ghi (đại lượng cần tính, đáp án, phương án, các bước của lời giải) đúng văn phạm (FR07); đáp án thuộc kiểu đáp án của dạng bài; lời giải không đạt, kể cả do sai văn phạm, không được lưu kèm câu (QT07)
+RD11
+Câu có đáp án “Chỉ kiểm số” phải ghi lý do (QT06) và cách kiểm đáp án đã qua (QT02); câu có lý do (c) chỉ ở trong ngân hàng khi mang cờ “Người đã duyệt”. Câu mang cờ phải có một lần duyệt hoặc một kết luận kiểm mẫu “Đúng” sau lần sửa gần nhất của câu; người duyệt và thời điểm lấy từ bản ghi đó. Cờ không làm đổi nhãn (RD02)
+RD12
+Lời giải “Đã chứng minh” phải là cây khối hợp lệ, đóng được đích gốc, có mọi nghĩa vụ của mọi bước là mệnh đề do bộ chuyển sinh, kết luận “Đúng”, kèm chứng minh Lean tìm bằng bộ chiến thuật cố định, được chấp nhận, còn hiệu lực; với câu có mệnh đề đã xác nhận, đích gốc là chính mệnh đề đó. Nếu không, nhãn về “Chưa kiểm” và lời giải được sinh lại
+RD13
+Câu tự luận “Chờ duyệt” hoặc “Trong ngân hàng” có lời giải “Đã chứng minh”. Nhãn lời giải “Không có” chỉ dùng cho câu trắc nghiệm
+RD14
+Khuôn và phiên bản khuôn của câu, và khuôn của chỗ, thuộc dạng bài của chỗ; hình thức của chỗ nằm trong hình thức cho phép của dạng bài và hình thức hỗ trợ của khuôn; chỗ sinh tự do chỉ thuộc dạng bài cho phép sinh tự do
+RD15
+Câu “Tạm khóa” hoặc “Bị gỡ” có “Đã từng ở ngân hàng” là Có; thuộc tính này bật khi câu lần đầu vào “Trong ngân hàng” và không bao giờ tắt
+RD16
+Số lần thử đã dùng của một chỗ không vượt quá K; chỗ “Có câu” có câu ở lần thử cuối đã từng ở ngân hàng; chỗ “Đang chờ người” có câu ở lần thử cuối đang “Chờ duyệt”; chỗ “Thiếu” ghi lý do; đợt sinh “Hoàn thành” không còn chỗ “Đang sinh”
+RD17
+Mỗi phiên bản quy trình thuộc đúng một nguồn sinh: một chuyên đề hoặc một phiên bản khuôn; mỗi nguồn sinh có nhiều nhất một phiên bản quy trình đang dùng; câu mới ghi phiên bản đang dùng của nguồn sinh của nó
+RD18
+Người dùng ở mỗi liên kết có đúng vai trò: người yêu cầu đợt sinh là giảng viên; người kiểm mẫu, người duyệt và người gán nhãn là người kiểm; người yêu cầu kiểm lại là giảng viên, người kiểm hoặc quản trị viên
+Bảng 5.5. Ràng buộc dữ liệu
+5.7 Lược đồ quan hệ
+Mô hình thực thể – liên kết được chuyển thành lược đồ quan hệ theo các quy tắc sau:
+Thực thể thành một bảng; khóa của thực thể là khóa chính. Thực thể yếu (Phiên bản khuôn, Chỗ sinh, Bước lời giải) có khóa chính gồm khóa của thực thể chủ và một số thứ tự.
+Liên kết 1 – n thành khóa ngoại ở bảng phía n. Liên kết đệ quy R12 thành khóa ngoại tham chiếu chính bảng BUOC_LOI_GIAI. Riêng R14 (nghĩa vụ chứng minh, có thuộc tính) thành bảng riêng NGHIA_VU, để bảng MENH_DE_LEAN không có các cột chỉ dùng cho nghĩa vụ.
+Liên kết n – n thành bảng riêng, khóa chính là cặp khóa ngoại (R5, R17, R18, R25, R29, R30). R27 (lần duyệt) dùng khóa riêng, vì một người có thể duyệt cùng một câu nhiều lần.
+Liên kết loại trừ (mệnh đề thuộc câu hỏi, bước lời giải hoặc mục đánh giá; phiên bản quy trình thuộc chuyên đề hoặc phiên bản khuôn) thành các khóa ngoại cho phép trống, kèm ràng buộc CHECK “đúng một khóa có giá trị”.
+Thuộc tính có cấu trúc thay đổi theo khuôn (bản ghi câu hỏi, các trường của khuôn, bộ ví dụ kiểm thử, nội dung bước) lưu kiểu JSON và được kiểm bằng bộ phân tích của FR07, không bằng hệ quản trị cơ sở dữ liệu; các thuộc tính dùng để tìm và lọc (trạng thái, nhãn, khóa) là cột riêng.
+Miền giá trị liệt kê (trạng thái, nhãn, loại) lưu kiểu chuỗi, kèm ràng buộc CHECK theo miền ở Bảng 5.15. Thuộc tính suy ra (mục 5.2) không được lưu.
+Các bảng ở dạng chuẩn 3: mọi cột không khóa phụ thuộc đầy đủ vào khóa chính và không phụ thuộc bắc cầu qua cột khác; ví dụ, chuyên đề của câu không lưu ở CAU_HOI vì phụ thuộc vào dạng bài của chỗ, và loại lỗi không lưu cạnh mục sai vì suy ra từ mục sai. Bảng 5.6 liệt kê 26 bảng; Bảng 5.7 đến Bảng 5.12 mô tả từng cột. Khóa chính in đậm; khóa ngoại ghi “FK →” kèm bảng được tham chiếu. Kiểu dữ liệu là kiểu SQL thông dụng; mã dùng VARCHAR(20).
+STT
+Bảng
+Khóa chính
+Khóa ngoại → bảng được tham chiếu
+Danh mục
+1
+CHUYEN_DE
+MaChuyenDe
+—
+2
+DANG_BAI
+MaDangBai
+MaChuyenDe → CHUYEN_DE
+3
+KHUON
+MaKhuon
+MaDangBai → DANG_BAI
+4
+PHIEN_BAN_KHUON
+MaKhuon, PhienBan
+MaKhuon → KHUON
+5
+KHAI_NIEM
+MaKhaiNiem
+—
+6
+KHUON_KHAI_NIEM (R18)
+MaKhuon, PhienBan, MaKhaiNiem
+(MaKhuon, PhienBan) → PHIEN_BAN_KHUON; MaKhaiNiem → KHAI_NIEM
+Sinh câu
+7
+DOT_SINH
+MaDotSinh
+MaNguoiDung → NGUOI_DUNG
+8
+YEU_CAU_DOT_SINH (R5)
+MaDotSinh, MaChuyenDe, HinhThuc
+MaDotSinh → DOT_SINH; MaChuyenDe → CHUYEN_DE
+9
+CHO_SINH
+MaDotSinh, ThuTuCho
+MaDotSinh → DOT_SINH; MaDangBai → DANG_BAI; MaKhuon → KHUON
+10
+PHIEN_BAN_QUY_TRINH
+MaPBQT
+MaChuyenDe → CHUYEN_DE; (MaKhuon, PhienBan) → PHIEN_BAN_KHUON
+Câu hỏi và lời giải
+11
+CAU_HOI
+MaCauHoi
+(MaDotSinh, ThuTuCho) → CHO_SINH; (MaKhuon, PhienBan) → PHIEN_BAN_KHUON; MaPBQT → PHIEN_BAN_QUY_TRINH; MaNguoiYeuCauKiemLai → NGUOI_DUNG
+12
+BUOC_LOI_GIAI
+MaCauHoi, ThuTu
+MaCauHoi → CAU_HOI; (MaCauHoi, ThuTuMoKhoi) → BUOC_LOI_GIAI; MaDinhLy → KHAI_NIEM
+Kiểm chứng
+13
+MENH_DE_LEAN
+MaMenhDe
+MaCauHoi → CAU_HOI; MaMuc → MUC_DANH_GIA
+14
+NGHIA_VU (R14)
+MaMenhDe
+MaMenhDe → MENH_DE_LEAN; (MaCauHoi, ThuTuBuoc) → BUOC_LOI_GIAI
+15
+MENH_DE_KHAI_NIEM (R17)
+MaMenhDe, MaKhaiNiem
+MaMenhDe → MENH_DE_LEAN; MaKhaiNiem → KHAI_NIEM
+16
+CHUNG_MINH_LEAN
+MaChungMinh
+MaMenhDe → MENH_DE_LEAN; MaPhienBan → PHIEN_BAN_HE_THONG
+Kiểm mẫu và duyệt
+17
+LAN_KIEM_MAU
+MaLanKiemMau
+MaPBQT → PHIEN_BAN_QUY_TRINH; MaNguoiKiem → NGUOI_DUNG
+18
+KIEM_MAU_CAU (R25)
+MaLanKiemMau, MaCauHoi
+MaLanKiemMau → LAN_KIEM_MAU; MaCauHoi → CAU_HOI
+19
+LAN_DUYET (R27)
+MaLanDuyet
+MaCauHoi → CAU_HOI; MaNguoiDuyet → NGUOI_DUNG
+Đánh giá
+20
+MUC_DANH_GIA
+MaMuc
+—
+21
+NHAN_DANH_GIA (R29)
+MaMuc, MaNguoiDung
+MaMuc → MUC_DANH_GIA; MaNguoiDung → NGUOI_DUNG
+22
+LAN_CHAY_DANH_GIA
+MaLanChay
+MaPhienBan → PHIEN_BAN_HE_THONG
+23
+KET_QUA_DANH_GIA (R30)
+MaLanChay, MaMuc
+MaLanChay → LAN_CHAY_DANH_GIA; MaMuc → MUC_DANH_GIA
+Hỗ trợ
+24
+NGUOI_DUNG
+MaNguoiDung
+—
+25
+PHIEN_BAN_HE_THONG
+MaPhienBan
+—
+26
+NHAT_KY
+MaSuKien
+MaNguoiDung → NGUOI_DUNG; MaPhienBan → PHIEN_BAN_HE_THONG
+Bảng 5.6. Danh sách bảng của lược đồ quan hệ
+Cột
+Kiểu
+Khóa, ràng buộc
+Ý nghĩa
+CHUYEN_DE — Chuyên đề
+MaChuyenDe
+VARCHAR(20)
+PK
+Mã chuyên đề
+TenChuyenDe
+VARCHAR(200)
+NOT NULL, UNIQUE
+Tên chuyên đề
+PhanKienThuc
+VARCHAR(30)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Hàm một biến / Tích phân một biến / Hàm nhiều biến
+NoiDung
+TEXT
+NOT NULL
+Nội dung kiến thức (Bảng 1.2)
+TrangThai
+VARCHAR(20)
+NOT NULL, mặc định “Đang sinh”; CHECK: miền ở Bảng 5.15
+Trạng thái với câu tự do (Bảng 3.22)
+LyDoTamDung
+TEXT
+Có giá trị khi “Tạm dừng”
+Câu sai hoặc ngưỡng đã gây tạm dừng
+DANG_BAI — Dạng bài
+MaDangBai
+VARCHAR(20)
+PK
+Mã dạng bài
+MaChuyenDe
+VARCHAR(20)
+FK → CHUYEN_DE, NOT NULL
+Chuyên đề chứa dạng bài
+TenDangBai
+VARCHAR(200)
+NOT NULL; UNIQUE (MaChuyenDe, TenDangBai)
+Ví dụ “giới hạn dạng 0/0”
+MoTa
+TEXT
+NOT NULL
+Hướng dẫn cho LLM khi sinh tự do
+KieuDapAn
+VARCHAR(30)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Kiểu đáp án (Bảng 3.15)
+HinhThucChoPhep
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Trắc nghiệm / Tự luận / Cả hai
+ChoPhepSinhTuDo
+BOOLEAN
+NOT NULL, mặc định FALSE
+Cờ “cho phép sinh tự do”
+KHUON — Khuôn câu hỏi
+MaKhuon
+VARCHAR(20)
+PK
+Mã khuôn, ví dụ TP-02
+MaDangBai
+VARCHAR(20)
+FK → DANG_BAI, NOT NULL
+Dạng bài của khuôn
+TenKhuon
+VARCHAR(200)
+NOT NULL
+Tên khuôn
+HinhThucHoTro
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15; nằm trong hình thức cho phép của dạng bài (RD14)
+Trắc nghiệm / Tự luận / Cả hai
+PHIEN_BAN_KHUON — Phiên bản khuôn
+MaKhuon
+VARCHAR(20)
+PK; FK → KHUON
+Khuôn chủ
+PhienBan
+SMALLINT
+PK; > 0
+Số phiên bản, tăng dần
+CacTruong
+JSON
+NOT NULL
+Các trường của bản ghi và ràng buộc
+MauCauChu
+TEXT
+NOT NULL
+Mẫu câu chữ tiếng Việt
+MauMenhDe
+TEXT
+NOT NULL
+Mẫu mệnh đề Lean
+KichBanChungMinh
+TEXT
+—
+Chiến thuật thử trước khi FR06 tìm chứng minh
+BoViDuKiemThu
+JSON
+NOT NULL
+Bản ghi ví dụ kèm kết quả mong đợi, gồm đáp án; có bản ghi ở biên và bản ghi cố ý sai
+TrangThai
+VARCHAR(20)
+NOT NULL, mặc định “Chưa kiểm chứng”; CHECK: miền ở Bảng 5.15
+Bảng 3.23
+LyDo
+TEXT
+—
+Lý do mất kiểm chứng hoặc tạm dừng
+ThoiDiemTao
+TIMESTAMP
+NOT NULL
+Thời điểm tạo phiên bản
+KHAI_NIEM — Khái niệm
+MaKhaiNiem
+VARCHAR(20)
+PK
+Mã khái niệm
+LoaiKhaiNiem
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Thuật ngữ / Định lý giáo trình
+Ten
+VARCHAR(200)
+NOT NULL
+Thuật ngữ hoặc tên định lý
+NguonKhaiNiem
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Mathlib / Định nghĩa bổ sung
+KhaiNiemLean
+TEXT
+NOT NULL
+Khái niệm hoặc định lý Lean tương ứng
+DinhLyTuongDuong
+TEXT
+NOT NULL khi nguồn là định nghĩa bổ sung
+Định lý tương đương với giáo trình
+ViDuDung, ViDuSai
+JSON
+Như trên
+Ví dụ đúng và ví dụ sai
+TrangThaiKiemChung
+VARCHAR(20)
+CHECK: miền ở Bảng 5.15; NOT NULL khi nguồn là định nghĩa bổ sung
+Chưa kiểm chứng / Đã kiểm chứng
+KHUON_KHAI_NIEM — Khái niệm dùng trong phiên bản khuôn (R18)
+MaKhuon, PhienBan
+VARCHAR(20), SMALLINT
+PK; FK → PHIEN_BAN_KHUON
+Phiên bản khuôn
+MaKhaiNiem
+VARCHAR(20)
+PK; FK → KHAI_NIEM
+Khái niệm được dùng
+Bảng 5.7. Các bảng danh mục
+Cột
+Kiểu
+Khóa, ràng buộc
+Ý nghĩa
+DOT_SINH — Đợt sinh
+MaDotSinh
+VARCHAR(20)
+PK
+Mã đợt sinh
+MaNguoiDung
+VARCHAR(20)
+FK → NGUOI_DUNG, NOT NULL; vai trò giảng viên (RD18)
+Giảng viên yêu cầu
+ThoiDiem
+TIMESTAMP
+NOT NULL
+Thời điểm yêu cầu
+TrangThai
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Đang chạy / Bị dừng / Hoàn thành (Bảng 3.24)
+YEU_CAU_DOT_SINH — Yêu cầu của đợt sinh (R5)
+MaDotSinh
+VARCHAR(20)
+PK; FK → DOT_SINH
+Đợt sinh
+MaChuyenDe
+VARCHAR(20)
+PK; FK → CHUYEN_DE
+Chuyên đề được yêu cầu
+HinhThuc
+VARCHAR(20)
+PK; CHECK: miền ở Bảng 5.15
+Trắc nghiệm / Tự luận
+SoCauYeuCau
+SMALLINT
+NOT NULL; > 0
+Số câu giảng viên yêu cầu
+SoCauTuChoi
+SMALLINT
+NOT NULL, mặc định 0; 0 ≤ SoCauTuChoi ≤ SoCauYeuCau
+Số câu không lập được chỗ (QT24)
+LyDoTuChoi
+TEXT
+NOT NULL khi SoCauTuChoi > 0
+Ví dụ “không có dạng bài sinh được”
+CHO_SINH — Chỗ sinh
+MaDotSinh
+VARCHAR(20)
+PK; FK → DOT_SINH
+Đợt sinh chủ
+ThuTuCho
+SMALLINT
+PK; > 0
+Thứ tự chỗ trong kế hoạch
+MaDangBai
+VARCHAR(20)
+FK → DANG_BAI, NOT NULL
+Dạng bài của chỗ
+HinhThuc
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Trắc nghiệm / Tự luận
+MaKhuon
+VARCHAR(20)
+FK → KHUON; trống khi sinh tự do; thuộc dạng bài của chỗ (RD14)
+Khuôn dùng cho lần thử tiếp theo
+KetQua
+VARCHAR(20)
+NOT NULL, mặc định “Đang sinh”; CHECK: miền ở Bảng 5.15
+Đang sinh / Có câu / Đang chờ người / Thiếu
+LyDoThieu
+TEXT
+NOT NULL khi KetQua là “Thiếu”
+Ví dụ “hết lần thử: không có lời giải đạt”
+PHIEN_BAN_QUY_TRINH — Phiên bản quy trình
+MaPBQT
+VARCHAR(20)
+PK
+Mã phiên bản quy trình
+MaChuyenDe
+VARCHAR(20)
+FK → CHUYEN_DE
+Nguồn sinh là chuyên đề (câu tự do)
+MaKhuon, PhienBan
+VARCHAR(20), SMALLINT
+FK → PHIEN_BAN_KHUON; CHECK: đúng một trong MaChuyenDe và (MaKhuon, PhienBan) có giá trị (RD17)
+Nguồn sinh là phiên bản khuôn
+MoHinh
+VARCHAR(100)
+NOT NULL
+Mô hình sinh câu
+PhienBanPrompt
+VARCHAR(30)
+NOT NULL
+Phiên bản prompt sinh câu
+PhienBanLopKiem
+JSON
+NOT NULL
+Phiên bản của từng lớp kiểm mà câu đi qua
+ThoiDiemBatDau
+TIMESTAMP
+NOT NULL
+Bắt đầu dùng
+ThoiDiemKetThuc
+TIMESTAMP
+Trống khi đang dùng; mỗi nguồn sinh có nhiều nhất một dòng trống (RD17)
+Bị thay bởi phiên bản mới
+LyDoMo
+VARCHAR(30)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Nguồn sinh mới / Phiên bản khuôn mới / Đổi mô hình / Đổi prompt / Sửa lớp kiểm
+Bảng 5.8. Các bảng sinh câu
+Cột
+Kiểu
+Khóa, ràng buộc
+Ý nghĩa
+CAU_HOI — Câu hỏi
+MaCauHoi
+VARCHAR(20)
+PK
+Mã câu hỏi
+MaDotSinh, ThuTuCho
+VARCHAR(20), SMALLINT
+FK → CHO_SINH, NOT NULL
+Chỗ mà câu là một lần thử
+LanThu
+SMALLINT
+NOT NULL; UNIQUE (MaDotSinh, ThuTuCho, LanThu)
+Thứ tự lần thử trong chỗ
+MaKhuon, PhienBan
+VARCHAR(20), SMALLINT
+FK → PHIEN_BAN_KHUON; trống với câu tự do
+Phiên bản khuôn đã sinh câu chữ và mệnh đề (RD09)
+MaPBQT
+VARCHAR(20)
+FK → PHIEN_BAN_QUY_TRINH, NOT NULL
+Phiên bản quy trình của câu (QT27)
+BanGhi
+JSON
+NOT NULL; đúng văn phạm (RD10), kiểm bằng FR07
+Bản ghi có cấu trúc, không gồm lời giải
+CauChu
+TEXT
+—
+Đề hiển thị: do LLM viết (tự do) hoặc sinh từ bản ghi (theo khuôn)
+MienDaKiem
+JSON
+—
+Miền tham số sau khi bỏ giá trị (QT03)
+NhanDapAn
+VARCHAR(20)
+NOT NULL, mặc định “Chưa kiểm”; CHECK: miền ở Bảng 5.15
+Đã chứng minh / Chỉ kiểm số / Chưa kiểm
+LyDoChiKiemSo
+VARCHAR(5)
+CHECK: miền ở Bảng 5.15; NOT NULL khi nhãn là “Chỉ kiểm số” (RD11)
+(a), (b) hoặc (c), QT06
+CachKiemDaQua
+VARCHAR(30)
+CHECK: miền ở Bảng 5.15
+Cách kiểm đáp án đã qua (QT02)
+NhanLoiGiai
+VARCHAR(20)
+NOT NULL, mặc định “Chưa kiểm”; CHECK: miền ở Bảng 5.15
+Đã chứng minh / Chưa kiểm / Không có
+NguoiDaDuyet
+BOOLEAN
+NOT NULL, mặc định FALSE (RD11)
+Cờ “Người đã duyệt”
+TrangThai
+VARCHAR(20)
+NOT NULL, mặc định “Đang kiểm”; CHECK: miền ở Bảng 5.15
+Sáu trạng thái (Bảng 3.25)
+DaTungONganHang
+BOOLEAN
+NOT NULL, mặc định FALSE (RD15)
+Bật khi câu lần đầu vào ngân hàng
+LyDoLoaiGo
+VARCHAR(40)
+CHECK: miền ở Bảng 5.15; NOT NULL khi “Bị loại” hoặc “Bị gỡ”
+Nhóm lý do bị loại hoặc bị gỡ
+ChiTietLyDo
+TEXT
+—
+Ví dụ “1.4: đáp án lệch CAS tại a = 2”
+NguonKiemLai
+VARCHAR(20)
+CHECK: miền ở Bảng 5.15; có giá trị khi câu đang chờ kiểm lại
+Nguồn kiểm lại (Bảng 3.10)
+BuocBatDauKiemLai
+VARCHAR(20)
+NOT NULL khi NguonKiemLai có giá trị
+Bước bắt đầu chạy lại
+MaNguoiYeuCauKiemLai
+VARCHAR(20)
+FK → NGUOI_DUNG
+Người nhận kết quả kiểm lại (R28)
+BUOC_LOI_GIAI — Bước lời giải
+MaCauHoi
+VARCHAR(20)
+PK; FK → CAU_HOI
+Câu chủ
+ThuTu
+SMALLINT
+PK; > 0
+Thứ tự bước trong lời giải
+ThuTuMoKhoi
+SMALLINT
+FK (MaCauHoi, ThuTuMoKhoi) → BUOC_LOI_GIAI; trống với bước của khối gốc; < ThuTu
+Bước mở khối chứa bước này (R12)
+LoaiBuoc
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Loại bước (Bảng 3.12)
+NoiDung
+JSON
+NOT NULL; đúng văn phạm
+Nội dung bước theo loại bước
+MaDinhLy
+VARCHAR(20)
+FK → KHAI_NIEM, loại định lý giáo trình
+Định lý được dùng (R19)
+LoiDan
+TEXT
+—
+Lời dẫn của LLM, không chứa nội dung toán
+KetLuan
+VARCHAR(20)
+CHECK: miền ở Bảng 5.15
+Kết luận của bước; trống khi chưa kiểm
+Bảng 5.9. Các bảng câu hỏi và lời giải
+Cột
+Kiểu
+Khóa, ràng buộc
+Ý nghĩa
+MENH_DE_LEAN — Mệnh đề Lean
+MaMenhDe
+VARCHAR(20)
+PK
+Mã mệnh đề
+NguonMenhDe
+VARCHAR(30)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Hình thức hóa / Sinh từ khuôn / Nghĩa vụ của bước / Đánh giá
+MaCauHoi
+VARCHAR(20)
+FK → CAU_HOI; có giá trị khi là mệnh đề của đề
+Câu có mệnh đề (R13)
+MaMuc
+VARCHAR(20)
+FK → MUC_DANH_GIA; CHECK: đúng một trong MaCauHoi, MaMuc, dòng ở NGHIA_VU (RD01)
+Mục đánh giá (R15)
+NoiDungLean
+TEXT
+NOT NULL
+Mã Lean của mệnh đề
+BanDienDatLai
+TEXT
+—
+Bản diễn đạt lại bằng tiếng Việt (câu tự do)
+KetQuaXacNhan
+JSON
+—
+Kết quả năm điều kiện xác nhận (QT15)
+TrangThai
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Chưa xác nhận / Đã xác nhận
+DuocChon
+BOOLEAN
+NOT NULL; mỗi câu nhiều nhất một mệnh đề được chọn (RD01)
+Mệnh đề được chọn cho đề
+NGHIA_VU — Nghĩa vụ chứng minh của bước (R14)
+MaMenhDe
+VARCHAR(20)
+PK; FK → MENH_DE_LEAN
+Mệnh đề của nghĩa vụ
+MaCauHoi, ThuTuBuoc
+VARCHAR(20), SMALLINT
+FK → BUOC_LOI_GIAI, NOT NULL
+Bước sinh ra nghĩa vụ
+ThuTuNghiaVu
+SMALLINT
+NOT NULL; UNIQUE (MaCauHoi, ThuTuBuoc, ThuTuNghiaVu)
+Thứ tự nghĩa vụ trong bước
+LoaiNghiaVu
+VARCHAR(30)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Nội dung bước / Điều kiện xác định / Điều kiện của định lý / Khớp đích
+KetLuan
+VARCHAR(20)
+CHECK: miền ở Bảng 5.15
+Kết luận nghĩa vụ (Bảng 3.14)
+PhanViDuCAS
+JSON
+—
+Phản ví dụ do CAS tìm, nếu có
+MENH_DE_KHAI_NIEM — Khái niệm dùng trong mệnh đề (R17)
+MaMenhDe
+VARCHAR(20)
+PK; FK → MENH_DE_LEAN
+Mệnh đề
+MaKhaiNiem
+VARCHAR(20)
+PK; FK → KHAI_NIEM
+Khái niệm được dùng
+CHUNG_MINH_LEAN — Chứng minh Lean
+MaChungMinh
+VARCHAR(20)
+PK
+Mã chứng minh
+MaMenhDe
+VARCHAR(20)
+FK → MENH_DE_LEAN, NOT NULL
+Mệnh đề được chứng minh (R16)
+MaPhienBan
+VARCHAR(20)
+FK → PHIEN_BAN_HE_THONG, NOT NULL (RD08)
+Phiên bản hệ thống (R20)
+Chieu
+VARCHAR(10)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Đúng / Sai / Mâu thuẫn
+KetQua
+VARCHAR(30)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Được chấp nhận / Không chứng minh được
+NoiDung
+TEXT
+NOT NULL khi được chấp nhận
+Mã Lean của chứng minh
+CachTimDuoc
+VARCHAR(30)
+CHECK: miền ở Bảng 5.15
+Cách tìm được, gồm “Ráp từ lời giải”
+TaiNguyen, SoLanThu
+BIGINT, SMALLINT
+NOT NULL; ≥ 0
+Heartbeat đã dùng; số lần thử
+ChiPhi
+DECIMAL(10,4)
+≥ 0
+Chi phí gọi LLM
+PhanViDu, DichConLai
+JSON, TEXT
+—
+Phản ví dụ (chiều sai); đích còn lại khi dừng
+LyDoDung
+VARCHAR(30)
+CHECK: miền ở Bảng 5.15; NOT NULL khi không chứng minh được
+Lý do dừng
+HieuLuc
+VARCHAR(5)
+NOT NULL, mặc định “Còn”; CHECK: miền ở Bảng 5.15
+Còn / Hết (QT22)
+Bảng 5.10. Các bảng kiểm chứng
+Cột
+Kiểu
+Khóa, ràng buộc
+Ý nghĩa
+LAN_KIEM_MAU — Lần kiểm mẫu
+MaLanKiemMau
+VARCHAR(20)
+PK
+Mã lần kiểm mẫu
+MaPBQT
+VARCHAR(20)
+FK → PHIEN_BAN_QUY_TRINH, NOT NULL
+Phiên bản quy trình được đo (R24)
+MaNguoiKiem
+VARCHAR(20)
+FK → NGUOI_DUNG, NOT NULL; vai trò người kiểm
+Người kiểm (R26)
+LoaiLanKiem
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15 (RD06)
+10 câu đầu / Định kỳ / Lô phiên bản cũ
+ThoiDiem
+TIMESTAMP
+NOT NULL
+Thời điểm tạo mẫu
+KetQua
+VARCHAR(20)
+NOT NULL, mặc định “Đang kiểm”; CHECK: miền ở Bảng 5.15
+Đang kiểm / Không có câu sai / Có câu sai
+KIEM_MAU_CAU — Câu trong mẫu (R25)
+MaLanKiemMau
+VARCHAR(20)
+PK; FK → LAN_KIEM_MAU
+Lần kiểm mẫu
+MaCauHoi
+VARCHAR(20)
+PK; FK → CAU_HOI; cùng phiên bản quy trình với lần kiểm (RD05)
+Câu được chọn
+KetLuan
+VARCHAR(20)
+CHECK: miền ở Bảng 5.15; trống khi chưa chấm
+Đúng / Sai / Rút khỏi mẫu
+MucSai
+VARCHAR(30)
+CHECK: miền ở Bảng 5.15; NOT NULL khi kết luận là “Sai”
+Mục sai chính (Bảng 3.6)
+GhiChu, LoiTrinhBay
+TEXT
+—
+Mục sai khác; lỗi trình bày nhỏ
+LAN_DUYET — Lần duyệt câu (R27)
+MaLanDuyet
+VARCHAR(20)
+PK
+Mã lần duyệt
+MaCauHoi
+VARCHAR(20)
+FK → CAU_HOI, NOT NULL
+Câu được duyệt
+MaNguoiDuyet
+VARCHAR(20)
+FK → NGUOI_DUNG, NOT NULL; vai trò người kiểm
+Người duyệt
+ThoiDiem
+TIMESTAMP
+NOT NULL
+Thời điểm duyệt
+TrangThaiKhiDuyet
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Chờ duyệt / Tạm khóa / Trong ngân hàng
+KetQua
+VARCHAR(5)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Đúng / Sai
+MucSai, GhiChu
+VARCHAR(30), TEXT
+MucSai NOT NULL khi kết quả là “Sai”
+Mục sai chính; ghi chú
+DuyetSai
+BOOLEAN
+NOT NULL, mặc định FALSE
+Câu duyệt đúng mà về sau được xác định là sai (QT09)
+Bảng 5.11. Các bảng kiểm mẫu và duyệt
+Cột
+Kiểu
+Khóa, ràng buộc
+Ý nghĩa
+MUC_DANH_GIA — Mục đánh giá
+MaMuc
+VARCHAR(20)
+PK
+Mã mục
+LoaiMuc, NguonMuc
+VARCHAR(20), VARCHAR(40)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Đề / Mệnh đề Lean; nguồn của mục
+DeBai
+TEXT
+NOT NULL khi loại là “Đề”
+Đề bài
+MenhDeChuan
+TEXT
+—
+Mệnh đề chuẩn đã thống nhất
+BoDuLieu
+VARCHAR(20)
+CHECK: miền ở Bảng 5.15
+Bộ điều chỉnh / Bộ kiểm tra
+TrangThaiNhan
+VARCHAR(20)
+CHECK: miền ở Bảng 5.15; NOT NULL khi loại là “Đề” (RD07)
+Chưa đủ nhãn / Đủ hai nhãn / Đã thống nhất
+NHAN_DANH_GIA — Nhãn của người kiểm (R29)
+MaMuc
+VARCHAR(20)
+PK; FK → MUC_DANH_GIA
+Mục được gán nhãn
+MaNguoiDung
+VARCHAR(20)
+PK; FK → NGUOI_DUNG; vai trò người kiểm
+Người gán nhãn
+MenhDeChuan
+TEXT
+NOT NULL
+Mệnh đề chuẩn do người này viết
+LAN_CHAY_DANH_GIA — Lần chạy đánh giá
+MaLanChay
+VARCHAR(20)
+PK
+Mã lần chạy
+MaPhienBan
+VARCHAR(20)
+FK → PHIEN_BAN_HE_THONG, NOT NULL
+Phiên bản hệ thống (R31)
+LoaiLanChay
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Hình thức hóa / Chứng minh tự động
+ThoiDiem
+TIMESTAMP
+NOT NULL
+Thời điểm chạy
+ChiSo, ChiPhi
+JSON, DECIMAL(10,4)
+—
+Tên và giá trị các chỉ số; chi phí
+KET_QUA_DANH_GIA — Kết quả trên từng mục (R30)
+MaLanChay
+VARCHAR(20)
+PK; FK → LAN_CHAY_DANH_GIA
+Lần chạy
+MaMuc
+VARCHAR(20)
+PK; FK → MUC_DANH_GIA
+Mục
+KetQua
+JSON
+NOT NULL
+Mệnh đề hệ thống chọn, hoặc kết quả chứng minh
+Dat
+BOOLEAN
+NOT NULL
+Khớp nhãn (đề), hoặc chứng minh được (mệnh đề)
+NGUOI_DUNG — Người dùng
+MaNguoiDung
+VARCHAR(20)
+PK
+Mã người dùng
+HoTen
+VARCHAR(100)
+NOT NULL
+Họ tên
+VaiTro
+VARCHAR(20)
+NOT NULL; CHECK: miền ở Bảng 5.15
+Giảng viên / Người kiểm / Quản trị viên
+PHIEN_BAN_HE_THONG — Phiên bản hệ thống
+MaPhienBan
+VARCHAR(20)
+PK
+Mã phiên bản
+PhienBanLean, PhienBanMathlib
+VARCHAR(30)
+NOT NULL
+Phiên bản Lean, Mathlib (RB1)
+TenMoHinh, PhienBanPrompt
+VARCHAR(100), VARCHAR(30)
+NOT NULL
+Tên mô hình do dịch vụ trả về; phiên bản prompt
+PhienBanLopKiem, PhienBanVanPham, PhienBanBoChuyen
+JSON, VARCHAR(30), VARCHAR(30)
+NOT NULL
+Phiên bản các lớp kiểm, văn phạm, bộ chuyển
+ThoiDiemApDung
+TIMESTAMP
+NOT NULL, UNIQUE
+Thời điểm bắt đầu áp dụng
+NHAT_KY — Nhật ký
+MaSuKien
+BIGINT
+PK, tăng dần
+Mã sự kiện
+ThoiDiem
+TIMESTAMP
+NOT NULL
+Thời điểm
+LoaiSuKien
+VARCHAR(40)
+NOT NULL
+Ví dụ “loại câu”, “phân xử”, “tạm dừng khuôn”
+LoaiDoiTuong, MaDoiTuong
+VARCHAR(30), VARCHAR(20)
+NOT NULL
+Đối tượng của sự kiện, ví dụ câu hỏi C0057
+MaNguoiDung
+VARCHAR(20)
+FK → NGUOI_DUNG; trống khi hệ thống tự thực hiện
+Người thực hiện (R33)
+MaPhienBan
+VARCHAR(20)
+FK → PHIEN_BAN_HE_THONG, NOT NULL
+Phiên bản hệ thống (R32)
+KetQua, LyDo
+TEXT
+NOT NULL
+Kết quả và lý do (QT23)
+ChiPhi
+DECIMAL(10,4)
+≥ 0
+Token, thời gian và chi phí quy đổi
+NoiDungTruoc
+JSON
+—
+Nội dung trước khi sửa. Bảng chỉ được thêm dòng (RD08)
+Bảng 5.12. Các bảng đánh giá và hỗ trợ
+5.8 Ma trận chức năng – bảng
+Bảng 5.14 cho biết mỗi chức năng lá tạo (C), đọc (R), sửa (U) hoặc xóa (D) dữ liệu ở nhóm bảng nào. Mọi chức năng còn ghi sự kiện vào NHAT_KY (QT23) và đọc NGUOI_DUNG, PHIEN_BAN_HE_THONG để ghi người thực hiện và phiên bản; các thao tác này không ghi lại trong ma trận. Câu hỏi không bao giờ bị xóa (RD08); thao tác xóa duy nhất là bỏ lời giải không đạt khỏi câu ở 1.6, sau khi đã ghi lời giải đó vào nhật ký (QT07).
+Cột
+Nhóm bảng
+CĐ
+CHUYEN_DE
+DB
+DANG_BAI
+KH
+KHUON, PHIEN_BAN_KHUON, KHUON_KHAI_NIEM
+ĐS
+DOT_SINH, YEU_CAU_DOT_SINH, CHO_SINH
+CH
+CAU_HOI
+LG
+BUOC_LOI_GIAI, NGHIA_VU
+MĐ
+MENH_DE_LEAN, MENH_DE_KHAI_NIEM, CHUNG_MINH_LEAN
+KN
+KHAI_NIEM
+KM
+PHIEN_BAN_QUY_TRINH, LAN_KIEM_MAU, KIEM_MAU_CAU, LAN_DUYET
+ĐG
+MUC_DANH_GIA, NHAN_DANH_GIA, LAN_CHAY_DANH_GIA, KET_QUA_DANH_GIA
+HT
+PHIEN_BAN_HE_THONG
+Bảng 5.13. Các nhóm bảng dùng trong ma trận
+Chức năng lá
+CĐ
+DB
+KH
+ĐS
+CH
+LG
+MĐ
+KN
+KM
+ĐG
+HT
+1. Sinh và kiểm câu hỏi
+1.1 Tiếp nhận yêu cầu, lập kế hoạch
+R
+R
+R
+C
+R
+1.2 Sinh bản ghi câu hỏi
+R
+R
+R
+RU
+C
+C
+R
+1.3 Kiểm cấu trúc, sinh mệnh đề
+RU
+U
+RU
+R
+C
+1.4 Kiểm đáp án, phương án nhiễu
+R
+RU
+1.5 Hình thức hóa đề
+RU
+CRU
+R
+1.6 Kiểm lời giải
+RU
+CRUD
+CR
+R
+1.7 Chứng minh đáp án
+R
+RU
+CR
+1.8 Xếp mức và xử lý câu
+U
+U
+RU
+RU
+1.9 Lập báo cáo đợt sinh
+RU
+R
+2. Kiểm soát chất lượng ngân hàng
+2.1 Kiểm mẫu theo chuyên đề
+U
+RU
+R
+CRU
+2.2 Kiểm mẫu theo khuôn
+U
+RU
+R
+CRU
+2.3 Duyệt câu
+U
+U
+U
+RU
+C
+2.4 Gỡ và sửa câu
+U
+U
+RU
+U
+3. Quản lý thư viện, dạng bài và khuôn
+3.1 Quản lý định nghĩa bổ sung
+U
+U
+U
+CRU
+3.2 Quản lý từ điển thuật ngữ, định lý
+CRU
+3.3 Quản lý dạng bài và khuôn
+CRU
+CRU
+R
+CU
+3.4 Kiểm chứng khuôn
+RU
+U
+CU
+4. Đánh giá và báo cáo
+4.1 Gán nhãn dữ liệu đánh giá
+CRU
+4.2 Chạy đánh giá
+C
+R
+CR
+4.3 Thống kê ngân hàng
+R
+R
+R
+R
+R
+R
+R
+R
+5. Bảo trì hệ thống
+5.1 Chứng minh lại
+RU
+CR
+U
+5.2 Nâng phiên bản Lean, Mathlib
+U
+U
+U
+RU
+R
+C
+5.3 Cập nhật lớp kiểm, mô hình, prompt
+U
+U
+U
+CU
+C
+Bảng 5.14. Ma trận chức năng – bảng
+5.9 Từ điển dữ liệu
+Từ điển dữ liệu định nghĩa miền giá trị của các phần tử dữ liệu cơ sở mà các bảng ở mục 5.7 dùng, và văn phạm của biểu thức, mệnh đề trong bản ghi. Ký hiệu: [ a | b ] là chọn đúng một trong các giá trị; { } là lặp lại không hoặc nhiều lần; ( ) là có thể có hoặc không; + là “và”; phần đặt giữa hai dấu * là chú thích.
+Phần tử
+Miền giá trị
+Nguồn
+Danh mục và sinh câu
+Mã (mọi loại)
+Chuỗi định danh duy nhất, do hệ thống cấp
+—
+Phần kiến thức
+[Hàm một biến | Tích phân một biến | Hàm nhiều biến]
+Bảng 1.2
+Hình thức
+[Trắc nghiệm | Tự luận]
+mục 1.4
+Hình thức cho phép, hình thức hỗ trợ
+[Trắc nghiệm | Tự luận | Cả hai]
+QT24, RD14
+Kiểu đáp án
+[Số theo tham số | Vô cùng | Tập hoặc điều kiện | Hàm | Đường thẳng | Nhiều phần | Không tồn tại]
+Bảng 3.15
+Trạng thái chuyên đề
+[Đang sinh | Tạm dừng]
+Bảng 3.22
+Trạng thái phiên bản khuôn
+[Chưa kiểm chứng | Đã kiểm chứng | Tạm dừng]
+Bảng 3.23
+Trạng thái đợt sinh
+[Đang chạy | Bị dừng | Hoàn thành]
+Bảng 3.24
+Kết quả chỗ
+[Đang sinh | Có câu | Đang chờ người | Thiếu]
+Bảng 3.24
+Lý do mở phiên bản quy trình
+[Nguồn sinh mới | Phiên bản khuôn mới | Đổi mô hình | Đổi prompt | Sửa lớp kiểm]
+QT27
+Câu hỏi và lời giải
+Trạng thái câu
+[Đang kiểm | Chờ duyệt | Trong ngân hàng | Tạm khóa | Bị loại | Bị gỡ]
+Bảng 3.25
+Nhãn đáp án
+[Đã chứng minh | Chỉ kiểm số | Chưa kiểm]
+Bảng 1.5
+Lý do “Chỉ kiểm số”
+[(a) Chứng minh hết hiệu lực | (b) Chưa tìm được chứng minh trong giới hạn | (c) Mệnh đề không được xác nhận]
+QT06
+Cách kiểm đáp án đã qua
+[CAS và tính số | Chỉ CAS | Chỉ tính số | Không cách nào tính được] *cách cuối chỉ có ở đáp án “Đã chứng minh”*
+QT02
+Nhãn lời giải
+[Đã chứng minh | Chưa kiểm | Không có] *“Không có” chỉ ở câu trắc nghiệm*
+Bảng 1.5
+Lý do bị loại hoặc bị gỡ
+[Không đạt lớp kiểm | Nguồn sinh mất hiệu lực trong khi kiểm | Câu sai | Lean bác bỏ khi chứng minh lại | Không đạt kiểm lại | Lô phiên bản cũ bị gỡ | Lý do khác]
+QT05, QT14, QT20
+Nguồn kiểm lại
+[Sửa câu | Sửa định nghĩa | Sửa lớp kiểm | Sửa khuôn | Nâng phiên bản]
+Bảng 3.10
+Loại bước
+[Khẳng định | Chuỗi biến đổi | Lấy bất kỳ | Giả sử | Phản chứng | Xét trường hợp | Quy nạp | Chọn | Đặt | Lấy ra | Quy về | Nêu đích | Mâu thuẫn | Kết luận]
+Bảng 3.12
+Kết luận của bước
+[Đúng | Sai | Sai cấu trúc | Mâu thuẫn | Chưa kiểm được] *kết luận kém nhất trong các nghĩa vụ của bước*
+QT04
+Miền tham số, miền đã kiểm
+{Bộ giá trị tham số} *hữu hạn*
+QT01, QT03
+Ngữ cảnh của bước
+Tính từ cây theo P1–P5, không lưu
+mục 3.7
+Kiểm chứng
+Nguồn mệnh đề
+[Hình thức hóa | Sinh từ khuôn | Nghĩa vụ của bước | Đánh giá]
+RD01
+Trạng thái mệnh đề
+[Chưa xác nhận | Đã xác nhận]
+QT15
+Loại nghĩa vụ
+[Nội dung bước | Điều kiện xác định | Điều kiện của định lý | Khớp đích]
+Bảng 3.12, Bảng 3.13
+Kết luận nghĩa vụ
+[Đúng | Sai | Mâu thuẫn | Chưa kiểm được]
+Bảng 3.14
+Chiều
+[Đúng | Sai | Mâu thuẫn]
+FR06
+Kết quả chứng minh
+[Được chấp nhận | Không chứng minh được]
+QT18, QT19
+Cách tìm được
+[Kịch bản của khuôn | Chiến thuật tự động | LLM viết và sửa | Chia bước trung gian | Bộ chiến thuật cố định | Ráp từ lời giải]
+1.6, 1.7
+Lý do dừng
+[Hết giới hạn tài nguyên | Hết số lần thử | Hết hạn mức LLM]
+QT19
+Hiệu lực
+[Còn | Hết]
+QT22
+Loại khái niệm; nguồn khái niệm
+[Thuật ngữ | Định lý giáo trình]; [Mathlib | Định nghĩa bổ sung]
+3.1, 3.2
+Kiểm mẫu, duyệt, đánh giá và hỗ trợ
+Loại lần kiểm mẫu
+[10 câu đầu | Định kỳ | Lô phiên bản cũ]
+QT12–QT14
+Kết quả lần kiểm mẫu
+[Đang kiểm | Không có câu sai | Có câu sai]
+QT14
+Kết luận kiểm mẫu; kết quả duyệt
+[Đúng | Sai | Rút khỏi mẫu]; [Đúng | Sai]
+QT11, 2.3
+Mục sai
+[Đề bài | Đáp án | Phương án nhiễu | Mệnh đề Lean | Khuôn và bộ chuyển | Lời giải] *loại lỗi suy ra từ mục sai; câu sai ở nhiều mục thì ghi mục chính, ưu tiên “Khuôn và bộ chuyển”, các mục khác ghi vào ghi chú*
+Bảng 3.6
+Loại mục; nguồn mục
+[Đề | Mệnh đề Lean]; [ProofNet# | Bộ đề Giải tích 1 tiếng Việt | ProverBench]
+4.1
+Bộ dữ liệu; trạng thái nhãn
+[Bộ điều chỉnh | Bộ kiểm tra]; [Chưa đủ nhãn | Đủ hai nhãn | Đã thống nhất]
+4.1, RD07
+Loại lần chạy
+[Hình thức hóa | Chứng minh tự động]
+4.2
+Vai trò
+[Giảng viên | Người kiểm | Quản trị viên]
+Bảng 2.1
+Biểu thức, mệnh đề
+Cây biểu thức, cây mệnh đề đúng văn phạm (dưới đây)
+FR07
+Bảng 5.15. Phần tử dữ liệu cơ sở
+Văn phạm biểu thức và mệnh đề
+Mọi biểu thức và mệnh đề trong bản ghi (đại lượng cần tính, đáp án, phương án, nội dung các bước của lời giải) phải đúng văn phạm của FR07. Viết bằng ký hiệu của từ điển dữ liệu, cấu trúc của cây mà bộ phân tích đọc ra như sau; cách viết cụ thể của từng ký hiệu được chọn ở bước thiết kế. Phần mệnh đề dùng cho nội dung các bước của lời giải (mục 3.7) và cho mệnh đề đáp án của câu biện luận.
+Biểu thức = [Số | Tham số | Biến | Vô cùng | Phép toán hai ngôi | Đổi dấu | Hàm sơ cấp | Hàm từng khúc | Giới hạn | Đạo hàm | Tích phân]
+Phép toán hai ngôi = Biểu thức + [Cộng | Trừ | Nhân | Chia | Lũy thừa] + Biểu thức
+Đổi dấu = Biểu thức
+Hàm sơ cấp = [Lượng giác | Lượng giác ngược | Mũ | Logarit | Căn bậc hai | Căn bậc ba | Giá trị tuyệt đối] + Biểu thức
+Hàm từng khúc = {Biểu thức + Điều kiện}
+Điều kiện = Biểu thức + [< | ≤ | > | ≥ | = | ≠] + Biểu thức
+Giới hạn = Biểu thức + Biến + [Điểm + Hướng | +∞ | −∞]
+Hướng = [Hai phía | Bên trái | Bên phải]
+Đạo hàm = Biểu thức + Biến + (Điểm + (Phía)) + (Cấp)
+Tích phân = Biểu thức + Biến + Cận dưới + Cận trên  *cận là ±∞ thì là tích phân suy rộng*
+Vô cùng = [+∞ | −∞]
+Mệnh đề = [Điều kiện | Mệnh đề ghép | Phủ định | Lượng từ | Tính chất | Tương đương vô cùng bé]
+Mệnh đề ghép = Mệnh đề + [và | hoặc | kéo theo | khi và chỉ khi] + Mệnh đề
+Phủ định = Mệnh đề
+Lượng từ = [Với mọi | Tồn tại] + Biến + (Tập) + Mệnh đề
+Tính chất = [Tính chất hàm + Biểu thức + Biến + [Điểm | Tập] | [Hội tụ | Phân kỳ] + Tích phân | Tồn tại + [Giới hạn | Đạo hàm | Tích phân]]
+Tính chất hàm = [Liên tục | Khả vi | Khả tích | Đồng biến | Nghịch biến | Đạt cực đại | Đạt cực tiểu]
+Tương đương vô cùng bé = Biểu thức + Biểu thức + Biến + [Điểm + Hướng | +∞ | −∞]
+Tập = [Khoảng | {Khoảng}  *hợp của các khoảng* | {Biểu thức}  *tập hữu hạn*]
+Khoảng = Biểu thức + Biểu thức + [Mở | Đóng | Nửa mở bên trái | Nửa mở bên phải]  *đầu mút có thể là ±∞*
+Nội dung bước = [Chuỗi biến đổi | Mệnh đề | Tên + Biểu thức | {Mệnh đề}  *các trường hợp*]
+Chuỗi biến đổi = Biểu thức + {[= | ≤ | < | ≥ | >] + Biểu thức}
+Ràng buộc kèm theo (FR07): phép nhân phải viết tường minh; cách viết có thể hiểu theo hai nghĩa bị cấm, ví dụ sin x² phải viết sin(x²) hoặc (sin x)²; lũy thừa có số mũ không nguyên chỉ dùng cho cơ số dương; căn bậc ba là một hàm riêng; giới hạn phải ghi rõ hướng; đạo hàm tại một điểm có thể ghi phía. Mọi phép toán và đại lượng của văn phạm đều có dòng tương ứng trong Bảng 3.13.
