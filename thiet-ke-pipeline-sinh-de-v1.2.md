@@ -171,9 +171,10 @@ flowchart TD
 ### 5.2 Môi trường
 - Chạy trên Linux hoặc WSL2. Docker phải chạy được với người dùng thường.
 - **Trên Windows** (máy phát triển hiện tại là Windows 11 Home):
-  - dùng WSL2 và Docker Desktop với backend WSL2;
+  - dùng WSL2, với Docker Engine cài thẳng trong Ubuntu (gói `docker.io`). Cách này nhẹ RAM hơn Docker Desktop, và ảnh Docker nằm trên ổ ảo của Ubuntu. Vẫn có thể dùng Docker Desktop với backend WSL2, nhưng khi đó phải đặt ổ ảo của Docker Desktop ngoài ổ C: nếu ổ C: ít chỗ;
+  - nếu ổ C: ít chỗ, chuyển ổ ảo của distro sang ổ khác bằng `wsl --manage <distro> --move <thư mục>`, và đặt `swapFile` trong `.wslconfig` ra ổ khác. Máy hiện tại dùng `D:\WSL\Ubuntu-24.04`;
   - đặt toàn bộ dự án **trong hệ tệp của WSL2**, ví dụ `~/sinh-de-gt1`. Không đặt ở ổ Windows như `D:\` rồi truy cập qua `/mnt/d`: truy cập chéo hệ tệp chậm hơn nhiều, trong khi Mathlib có hàng nghìn module và vài GB tệp `.olean`;
-  - WSL2 mặc định chỉ dùng khoảng một nửa RAM của máy. Chỉnh `memory` trong `%UserProfile%\.wslconfig` cho đủ `lean.so_tien_trinh × lean.bo_nho_gb`, cộng thêm phần cho Python và Docker. Nếu máy không đủ RAM, giảm `so_tien_trinh` xuống 1.
+  - WSL2 mặc định chỉ dùng khoảng một nửa RAM của máy. Chỉnh `memory` trong `%UserProfile%\.wslconfig` cho đủ `lean.so_tien_trinh × lean.bo_nho_gb`, cộng thêm phần cho Python và Docker. Nếu máy không đủ RAM, giảm `so_tien_trinh` xuống 1. Máy hiện tại có 15,5 GB RAM và cấp cho WSL 10 GB, nên bắt đầu với `so_tien_trinh: 1`, `bo_nho_gb: 6`, rồi chỉnh theo phép đo ở M0.
 - Sau khi tạo dự án Lean, chạy `lake exe cache get` để tải bản Mathlib đã biên dịch sẵn. **Không** build Mathlib từ mã nguồn, vì việc đó mất nhiều giờ.
 - Ảnh Docker `sinhde-lean` được build từ `sandbox/Dockerfile` và chứa đúng toolchain Lean của dự án.
 
