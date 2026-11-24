@@ -1,6 +1,8 @@
 # Nhật ký cài đặt hệ thống sinh đề có chứng nhận Lean
 
-Thiết kế: `thiet-ke-pipeline-sinh-de-v1.2.md`. Mã nguồn: repo `~/sinh-de-gt1` trong Ubuntu (WSL2), mở từ Windows tại `\\wsl.localhost\Ubuntu-24.04\home\duc_huy\sinh-de-gt1`.
+Thiết kế: `thiet-ke-pipeline-sinh-de-v1.2.md`. Mã nguồn: thư mục `sinh-de-gt1/` của repo này.
+
+**Nơi làm việc** (từ 25/11): bản clone trong Ubuntu `~/MATH_EXAM_SOVEREIGN_WEB`, mở từ Windows tại `\\wsl.localhost\Ubuntu-24.04\home\duc_huy\MATH_EXAM_SOVEREIGN_WEB`. Cache Mathlib và môi trường Python chỉ có ở bản này. Bản ở ổ D: dùng để xem tài liệu; trước khi sửa ở đó, chạy `git pull` để lấy thay đổi mới nhất.
 
 Trạng thái: **xong M0** (1/9 mốc). Chưa sinh được câu hỏi nào; câu đầu tiên có chứng nhận sẽ có ở M4.
 
@@ -52,6 +54,8 @@ Kiểm thử: 6 kiểm thử thường và 16 kiểm thử sandbox, đều đạ
 
 - Đọc hệ thống cũ trong repo này. Các câu hỏi cũ do LLM sinh, chưa kiểm chứng, nên **không dùng làm dữ liệu**. Một số phần code để dành cho các mốc sau: `lean_prover.py` (M6–M7), `llm_generator.py` và `lean_retrieval.py` (M7), các script benchmark (M7–M8), giao diện `app.py`, `static/` (sau M8, bỏ phần sinh câu bằng LLM, randomize và phòng thí nghiệm chạy mã).
 - Bắt đầu M1 rồi dừng theo yêu cầu; đã xóa phần làm dở. Repo mới sạch ở commit `ccc2a26`.
+- **Gộp vào repo chung:** đưa code M0 vào thư mục `sinh-de-gt1/` của repo `MATH_EXAM_SOVEREIGN_WEB` bằng `git subtree`, giữ lịch sử 2 commit; push lên GitHub (commit `0b01f0c`).
+- **Một chỗ làm việc duy nhất:** clone repo chung vào Ubuntu (`~/MATH_EXAM_SOVEREIGN_WEB`); chuyển cache Mathlib (7,5 GB) sang, tạo lại `.venv`; git trong Ubuntu dùng chung đăng nhập GitHub của Windows (Git Credential Manager). Kiểm thử chạy lại ở chỗ mới đều đạt. Đã xóa bản cũ `~/sinh-de-gt1`.
 
 ---
 
@@ -59,6 +63,4 @@ Kiểm thử: 6 kiểm thử thường và 16 kiểm thử sandbox, đều đạ
 - **M1**: văn phạm N1, cây biểu thức, bộ in chuỗi, chuẩn hóa (Python, mục 6).
 
 ## Còn treo
-- Repo `~/sinh-de-gt1` chưa có remote GitHub nên chưa push.
-- Bản sửa mục 5.2 của `thiet-ke-pipeline-sinh-de-v1.2.md` trong repo này chưa commit.
 - Nên tắt `fclauncher` trước khi chạy Lean nhiều; có thể thêm pagefile trên ổ D: để Windows không cạn bộ nhớ.
