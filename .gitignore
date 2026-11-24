@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.hypothesis/
+du_lieu/*.sqlite
+du_lieu/*.sqlite-*
+lean/.lake/
+lean/.khoa_build
+lean/ChungNhan/*
+!lean/ChungNhan/ThuNghiem.lean
+lean/ThuVienKhuon/
+thu_nghiem/vao/
+thu_nghiem/lean_setup.log
+thu_nghiem/**/.lake/
