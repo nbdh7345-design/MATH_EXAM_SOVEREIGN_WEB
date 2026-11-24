@@ -15,3 +15,13 @@ lean_lib ThuVienKhuon where
 
 lean_lib ChungNhan where
   globs := #[.submodules `ChungNhan]
+
+-- Module mẫu cho kiểm thử của tiện ích đối chiếu (không phải chứng nhận thật).
+lean_lib KiemThu where
+  globs := #[.submodules `KiemThu]
+
+-- Tiện ích đối chiếu (TIN CẬY, mục 12.7). Chỉ import Lean;
+-- không import ThuVienKhuon hay ChungNhan: module cần kiểm được nạp lúc chạy.
+-- Bản M0 (thử nghiệm 3); hoàn thiện và duyệt ở M4.
+lean_exe kiem_khop where
+  root := `KiemKhop.Main

@@ -1,5 +1,5 @@
--- Module mẫu cho thử nghiệm rủi ro 3 (M0). Không phải chứng nhận thật.
-namespace ChungNhan.ThuNghiem
+-- Module mẫu cho kiểm thử tiện ích kiem_khop (M0, thử nghiệm 3). Không phải chứng nhận thật.
+namespace KiemThu.ThuNghiem
 
 theorem dung : (2 : Nat) + 2 = 4 := rfl
 
@@ -11,4 +11,4 @@ theorem dungAxiomTuKhai : (2 : Nat) + 2 = 4 := by
   have := tuKhai
   rfl
 
-end ChungNhan.ThuNghiem
+end KiemThu.ThuNghiem

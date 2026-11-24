@@ -1,6 +1,6 @@
 -- Thử nghiệm rủi ro 2 (M0): decide trên chuanHoa với ℚ. Không thuộc ThuVienGT.
 -- Định nghĩa chép theo mục 7.1 và 7.3 của thiết kế v1.2 (chỉ phần tính được).
-import Mathlib
+import Mathlib.Algebra.Order.Field.Rat
 
 namespace ThuNghiem
 

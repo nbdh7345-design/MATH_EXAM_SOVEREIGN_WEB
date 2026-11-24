@@ -15,6 +15,12 @@ cd lean && lake exe cache get && lake build && cd ..
 docker build -t sinhde-lean sandbox/
 ```
 
+## Trước mỗi đợt sinh
+Đọc các tệp `.olean*` mà `ThuVienGT` cần vào cache (thử nghiệm 1, `docs/ket_qua_M0.md`):
+```bash
+.venv/bin/sinhde nen-tang lam-nong
+```
+
 ## Kiểm thử
 ```bash
 .venv/bin/pytest -q

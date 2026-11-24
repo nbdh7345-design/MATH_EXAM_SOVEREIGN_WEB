@@ -18,6 +18,18 @@ def cau_hinh() -> None:
     typer.echo(f"config.yaml hợp lệ. Chế độ: {ch.che_do}.")
 
 
+@nen_tang.command("lam-nong")
+def nen_tang_lam_nong() -> None:
+    """Chạy một lần Lean nạp ThuVienGT trong sandbox để làm nóng cache; chạy đầu mỗi đợt sinh."""
+    from sinhde.lean.chay_lean import LeanRunner
+
+    kq = LeanRunner(nap_cau_hinh()).lam_nong()
+    typer.echo(f"Làm nóng: {'đạt' if kq.dat else 'KHÔNG đạt'} ({kq.thoi_gian_ms / 1000:.1f} s).")
+    if not kq.dat:
+        typer.echo(kq.thong_bao)
+        raise typer.Exit(1)
+
+
 @nen_tang.command("kiem")
 def nen_tang_kiem() -> None:
     """Kiểm môi trường: tạo CSDL và chạy một tệp Lean thử trong sandbox."""
