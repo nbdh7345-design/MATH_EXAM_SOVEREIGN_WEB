@@ -1,0 +1,32 @@
+che_do: phat_trien                # phat_trien | chinh_thuc (mục 3.3)
+llm:
+  nha_cung_cap: anthropic
+  mo_hinh: "<điền tên mô hình>"   # câu hỏi mở 2
+  nhiet_do_de_xuat: 0.8
+  nhiet_do_chung_minh: 0.2
+  so_ung_vien_moi_lan: 3          # mỗi ứng viên là một lần gọi API riêng
+  token_toi_da: 4000
+  ngan_sach_moi_dot_usd: 5.0
+giai_doan_1:
+  so_vong_sua_khuon: 3            # K
+  so_vong_sua_chung_minh: 4
+  thoi_gian_lean_khuon_giay: 300
+  mien_toi_da_tach_gia_tri: 20    # chiến lược tách theo giá trị chỉ dùng khi miền nhỏ hơn mức này
+  so_lan_lhospital_toi_da: 3      # số lần lặp tối đa của chiến lược K2 (mục 11.5)
+giai_doan_2:
+  thoi_gian_lean_cau_giay: 120
+khuon:
+  mien_toi_thieu: 3               # số giá trị tham số tối thiểu sau khi lọc
+  do_sau_toi_da: 8
+  so_nut_toi_da: 40
+  kich_thuoc_mien_toi_da: 50
+lean:
+  so_tien_trinh: 1                # máy 15,5 GB RAM, WSL được 10 GB (mục 5.2)
+  bo_nho_gb: 6                    # giới hạn bộ nhớ mỗi container; chỉnh theo phép đo ở M0
+  anh_docker: sinhde-lean
+kiem_mau:
+  so_cau_dau_moi_khuon: 10
+  ti_le_ngau_nhien: 0.05
+duong_dan:
+  csdl: du_lieu/ngan_hang.sqlite
+  lean: lean/
