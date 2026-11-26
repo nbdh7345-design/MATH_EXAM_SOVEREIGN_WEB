@@ -1,8 +1,8 @@
 # sinh-de-gt1
 
-Hệ thống sinh đề bài Giải tích 1 có chứng nhận Lean. Thiết kế: `docs/thiet-ke-pipeline-sinh-de-v1.2.md`. Thư mục này nằm trong repo `MATH_EXAM_SOVEREIGN_WEB`; làm việc tại `~/MATH_EXAM_SOVEREIGN_WEB/sinh-de-gt1` trong Ubuntu.
+Hệ thống sinh câu trắc nghiệm Giải tích 1 có chứng nhận Lean. Thiết kế đang dùng: `../thiet-ke-v2.1.md` (bản cũ v1.2 ở `docs/`). Thư mục này nằm trong repo `MATH_EXAM_SOVEREIGN_WEB`; làm việc tại `~/MATH_EXAM_SOVEREIGN_WEB/sinh-de-gt1` trong Ubuntu.
 
-Trạng thái: **M0, M1 xong** (khung repo, Lean + Mathlib, sandbox, CSDL; văn phạm và chuẩn hóa N1). Xem `docs/ket_qua_M0.md` và `../nhat-ky-cai-dat.md`.
+Trạng thái: **M0, M1 (theo v2.1) xong**. Xem `docs/ket_qua_M0.md` và `../nhat-ky-cai-dat.md`.
 
 ## Cài đặt (WSL2 Ubuntu)
 ```bash

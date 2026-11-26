@@ -1,12 +1,18 @@
-"""Chuẩn hóa N1 (mục 6.5): một lượt từ lá lên gốc bằng các hàm dựng thông minh.
+"""Chuẩn hóa N1 (mục 6.5 của thiết kế v2.1): một lượt từ lá lên gốc bằng các hàm dựng thông minh.
 
-Thuật toán phải GIỐNG HỆT `chuanHoa` trong Lean (mục 7.3); hai bên được kiểm chéo ở mục 7.9.
+Thuật toán phải GIỐNG HỆT `chuanHoa` trong Lean (mục 7.3); hai bên được kiểm chéo.
 Mỗi hàm dựng thử từng dòng của bảng theo thứ tự và dừng ở dòng đầu tiên khớp.
-Không làm mất chỗ không xác định: không gộp chia cho 0, không gộp 0^n với n ≤ 0,
-không bỏ thừa số 0.
+Ba nguyên tắc: không làm mất chỗ không xác định (không gộp chia cho 0, không gộp 0^n với
+n ≤ 0), không bỏ thừa số 0, không đổi giá trị và điều kiện xác định.
+
+Bản 2.1 thêm hai quy tắc cho lũy thừa của e, vì chuỗi `e^{…}` luôn được đọc là hàm mũ:
+`mk_mu(e, n) = exp(n)` và `mk_luythua(e, b) = exp(b)`.
 """
 
 from __future__ import annotations
+
+from fractions import Fraction
+from typing import Any
 
 from sinhde.nen_tang import cay as C
 
@@ -58,13 +64,21 @@ def mk_mu(a: C.Nut, n: int) -> C.Nut:
         if a.q != 0 or n > 0:
             return C.So(a.q ** n)
         return C.Mu(a, n)
+    if a == C.hang_e():
+        return C.Ham("exp", C.So(Fraction(n)))   # e^n = exp(n)
     if n == 1:
         return a
     return C.Mu(a, n)
 
 
+def mk_luythua(a: C.Nut, b: C.Nut) -> C.Nut:
+    if a == C.hang_e():
+        return C.Ham("exp", b)                    # e^b = exp(b), vì e > 0
+    return C.LuyThua(a, b)
+
+
 def chuan_hoa(t: C.Nut) -> C.Nut:
-    if isinstance(t, (C.So, C.Bien, C.ThamSo)):
+    if isinstance(t, C.LA):
         return t
     if isinstance(t, C.Am):
         return mk_am(chuan_hoa(t.a))
@@ -79,9 +93,11 @@ def chuan_hoa(t: C.Nut) -> C.Nut:
     if isinstance(t, C.Mu):
         return mk_mu(chuan_hoa(t.a), t.n)
     if isinstance(t, C.LuyThua):
-        return C.LuyThua(chuan_hoa(t.a), chuan_hoa(t.b))
+        return mk_luythua(chuan_hoa(t.a), chuan_hoa(t.b))
     if isinstance(t, C.Ham):
         return C.Ham(t.ten, chuan_hoa(t.a))
+    if isinstance(t, C.TichPhanT):
+        return C.TichPhanT(chuan_hoa(t.f), chuan_hoa(t.a), chuan_hoa(t.b))
     raise TypeError(f"Không phải nút biểu thức: {t!r}")
 
 
@@ -89,3 +105,9 @@ def chuan_hoa_dk(dk: C.DieuKien) -> C.DieuKien:
     if isinstance(dk, C.SoSanh):
         return C.SoSanh(dk.op, chuan_hoa(dk.trai), chuan_hoa(dk.phai))
     return type(dk)(chuan_hoa_dk(dk.a), chuan_hoa_dk(dk.b))
+
+
+def chuan_hoa_pa(pa: Any) -> Any:
+    """Chuẩn hóa từng biểu thức con của phương án. Tập hữu hạn không sắp xếp, không bỏ phần
+    tử trùng (để không làm mất lỗi của LLM; phần tử trùng bị A2 loại)."""
+    return C.bien_doi_pa(pa, chuan_hoa)

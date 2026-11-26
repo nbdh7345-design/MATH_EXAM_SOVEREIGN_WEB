@@ -74,23 +74,30 @@ def _ham(ten: str, u: GiaTri) -> GiaTri:
     raise ValueError(f"Hàm không biết: {ten}")
 
 
-def _tinh(t: C.Nut, x: Fraction, g: dict[str, Fraction]) -> GiaTri:
+def _tinh(t: C.Nut, gan: dict[str, Fraction], g: dict[str, Fraction]) -> GiaTri:
+    """gan: giá trị của các biến x, y, t, n và của ẩn m (khóa \"m\"); g: giá trị tham số."""
     if isinstance(t, C.So):
         return t.q
     if isinstance(t, C.Bien):
-        return x
+        return Fraction(gan[t.ten])
+    if isinstance(t, C.An):
+        return Fraction(gan["m"])
+    if isinstance(t, C.Pi):
+        return mp.pi
     if isinstance(t, C.ThamSo):
         return Fraction(g[t.ten])
+    if isinstance(t, C.TichPhanT):
+        raise KhongRo()  # chưa tính số cho tích phân (dùng ở A4, mốc sau)
     if isinstance(t, C.Am):
-        return -_tinh(t.a, x, g)
+        return -_tinh(t.a, gan, g)
     if isinstance(t, C.Ham):
-        return _ham(t.ten, _tinh(t.a, x, g))
+        return _ham(t.ten, _tinh(t.a, gan, g))
     if isinstance(t, C.Mu):
-        a = _tinh(t.a, x, g)
+        a = _tinh(t.a, gan, g)
         if t.n <= 0 and _dau(a) == 0:
             raise KhongXacDinh()  # 0^0 và 0^(−k) không xác định
         return a ** t.n if isinstance(a, Fraction) else mp.power(a, t.n)
-    a, b = _tinh(t.a, x, g), _tinh(t.b, x, g)
+    a, b = _tinh(t.a, gan, g), _tinh(t.b, gan, g)
     if isinstance(t, C.LuyThua):
         if _dau(a) <= 0:
             raise KhongXacDinh()
@@ -108,10 +115,11 @@ def _tinh(t: C.Nut, x: Fraction, g: dict[str, Fraction]) -> GiaTri:
     return a / b
 
 
-def xac_dinh_va_gia_tri(t: C.Nut, x: Fraction,
+def xac_dinh_va_gia_tri(t: C.Nut, gan: dict[str, Fraction],
                         gia_tri_tham_so: dict[str, Fraction] | None = None) -> tuple[bool, GiaTri | None]:
-    """(có xác định không, giá trị). Ném KhongRo nếu không quyết định được."""
+    """(có xác định không, giá trị) tại phép gán `gan` (biến và ẩn m). Ném KhongRo nếu không
+    quyết định được bằng số gần đúng."""
     try:
-        return True, _tinh(t, Fraction(x), gia_tri_tham_so or {})
+        return True, _tinh(t, {k: Fraction(v) for k, v in gan.items()}, gia_tri_tham_so or {})
     except KhongXacDinh:
         return False, None

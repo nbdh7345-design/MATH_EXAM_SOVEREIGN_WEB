@@ -1,45 +1,63 @@
-// N1 — Văn phạm biểu thức (mục 6.1 của thiết kế v1.2).
-// Ba điểm bắt đầu: bieu_thuc, dieu_kien, diem. Phân tích bằng LALR, strict.
+// N1 — Văn phạm biểu thức (mục 6.1 của thiết kế v2.1).
+// Điểm bắt đầu: bieu_thuc, dieu_kien, tap, diem2, dac_biet. Phân tích bằng LALR, strict.
 
 // ===== Biểu thức =====
 ?bieu_thuc: hang_tu
-          | bieu_thuc "+" hang_tu            -> cong
-          | bieu_thuc "-" hang_tu            -> tru
+          | bieu_thuc "+" hang_tu                     -> cong
+          | bieu_thuc "-" hang_tu                     -> tru
 
 ?hang_tu: nhan_tu
-        | hang_tu "*" nhan_tu                -> nhan
-        | hang_tu "/" nhan_tu                -> chia
+        | hang_tu "*" nhan_tu                         -> nhan
+        | hang_tu "/" nhan_tu                         -> chia
 
 ?nhan_tu: luy_thua
-        | "-" nhan_tu                        -> am
+        | "-" nhan_tu                                 -> am
 
 ?luy_thua: nguyen_to
-         | nguyen_to "^" so_mu               -> mu
+         | nguyen_to "^" so_mu                        -> mu
 
-so_mu: SO_NGUYEN                             -> so_mu_duong
-     | "(" "-" SO_NGUYEN ")"                 -> so_mu_am
+so_mu: SO_NGUYEN                                      -> so_mu_duong
+     | "(" "-" SO_NGUYEN ")"                          -> so_mu_am
 
-?nguyen_to: SO_NGUYEN                        -> so
-          | "x"                              -> bien
-          | THAM_SO                          -> tham_so
-          | HAM "(" bieu_thuc ")"            -> ham
-          | "luythua" "(" bieu_thuc "," bieu_thuc ")"   -> luythua
+?nguyen_to: SO_NGUYEN                                 -> so
+          | BIEN                                      -> bien        // x, y, t, n
+          | THAM_SO                                   -> tham_so
+          | "m"                                       -> an          // ẩn m (dạng tìm m)
+          | "pi"                                      -> pi
+          | "e"                                       -> hang_e      // đọc thành exp(1)
+          | HAM "(" bieu_thuc ")"                     -> ham
+          | "luythua" "(" bieu_thuc "," bieu_thuc ")" -> luythua     // số mũ thực
+          | "tp" "(" bieu_thuc "," bieu_thuc "," bieu_thuc ")" -> tich_phan_t   // ∫_a^b f(t) dt
           | "(" bieu_thuc ")"
 
 // ===== Ràng buộc của tham số =====
 ?dieu_kien: dieu_kien_va
-          | dieu_kien "or" dieu_kien_va      -> hoac
+          | dieu_kien "or" dieu_kien_va               -> hoac
 ?dieu_kien_va: so_sanh
-             | dieu_kien_va "and" so_sanh    -> va
+             | dieu_kien_va "and" so_sanh             -> va
 so_sanh: bieu_thuc SO_SANH bieu_thuc
 
-// ===== Điểm của giới hạn =====
-diem: bieu_thuc
+// ===== Tập và khoảng (phương án kiểu T2) =====
+?tap: "rong"                                          -> tap_rong
+    | "{" bieu_thuc ("," bieu_thuc)* "}"              -> tap_huu_han
+    | khoang ("U" khoang)*                            -> hop_khoang
+khoang: KIEU_KHOANG "(" dau_mut "," dau_mut ")"
+?dau_mut: bieu_thuc
+        | "vc"                                        -> duong_vc
+        | "-vc"                                       -> am_vc
+KIEU_KHOANG.2: "kmo" | "kdong" | "ktrai" | "kphai"    // (a,b) [a,b] [a,b) (a,b]
+diem2: "(" bieu_thuc "," bieu_thuc ")"                // điểm trên ℝ² (hàm hai biến)
+
+// ===== Phương án đặc biệt (kiểu T1) =====
+dac_biet: "khong_ton_tai"                             -> khong_ton_tai
+        | "duong_vc"                                  -> duong_vc_pa
+        | "am_vc"                                     -> am_vc_pa
 
 SO_SANH: "<=" | ">=" | "!=" | "<" | ">" | "="
 HAM.2: "sin" | "cos" | "tan" | "cot" | "arcsin" | "arccos" | "arctan"
      | "exp" | "ln" | "sqrt" | "cbrt" | "abs"
-THAM_SO: /[abcdfghkmnpqrstuvwyz]/
+BIEN: "x" | "y" | "t" | "n"
+THAM_SO: /[abcdfghkpqrsuvwz]/
 SO_NGUYEN: /[0-9]+/
 %import common.WS
 %ignore WS

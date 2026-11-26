@@ -1,10 +1,10 @@
 # Nhật ký cài đặt hệ thống sinh đề có chứng nhận Lean
 
-Thiết kế: `thiet-ke-pipeline-sinh-de-v1.2.md`. Mã nguồn: thư mục `sinh-de-gt1/` của repo này.
+Thiết kế đang dùng: **`thiet-ke-v2.1.md`** (câu trắc nghiệm, mọi dạng bài; từ 26/11). Các bản cũ v1.1, v1.2, v2.0 giữ lại để đối chiếu. Mã nguồn: thư mục `sinh-de-gt1/` của repo này.
 
 **Nơi làm việc** (từ 25/11): bản clone trong Ubuntu `~/MATH_EXAM_SOVEREIGN_WEB`, mở từ Windows tại `\\wsl.localhost\Ubuntu-24.04\home\duc_huy\MATH_EXAM_SOVEREIGN_WEB`. Cache Mathlib và môi trường Python chỉ có ở bản này. Bản ở ổ D: dùng để xem tài liệu; trước khi sửa ở đó, chạy `git pull` để lấy thay đổi mới nhất.
 
-Trạng thái: **xong M0, M1** (2/9 mốc). Chưa sinh được câu hỏi nào; câu đầu tiên có chứng nhận sẽ có ở M4.
+Trạng thái: **xong M0, M1 theo v2.1** (lõi M0–M8, mở rộng M9–M15). Chưa sinh được câu hỏi nào; câu trắc nghiệm đầu tiên có chứng nhận sẽ có ở M4.
 
 ---
 
@@ -79,8 +79,29 @@ Toàn bộ 103 kiểm thử không cần Lean đều đạt. Thêm phụ thuộc
 
 ---
 
+## 26/11/2026 — Chuyển sang thiết kế v2.1 và mở rộng M1
+
+**Thiết kế:** người dùng viết bản v2.0 (câu trắc nghiệm 4 phương án, mệnh đề chung `TracNghiemDung`, kiểu đáp án T1–T4, toàn bộ dạng bài trắc nghiệm, lộ trình M0–M15). Sau rà soát, tạo bản v2.1 với 10 sửa đổi (Phụ lục B.3), quan trọng nhất là khôi phục cổng kiểm cuối ở mức `Expr` (`kiem_khop`). Commit `cefe378`.
+
+**M1 theo v2.1** (mục 6): mở rộng từ N1 của bản 1.2, giữ lõi và thêm:
+| Phần | Thay đổi |
+|---|---|
+| Văn phạm `van_pham.lark` | Biến `x, y, t, n`; ẩn `m`; `pi`, `e`; `luythua`; `tp(f, a, b)`; tập (`rong`, `{…}`, khoảng `kmo/kdong/ktrai/kphai`, hợp `U`, vô cùng `vc`, `-vc`); điểm ℝ²; phương án đặc biệt. Điểm bắt đầu: `bieu_thuc`, `dieu_kien`, `tap`, `diem2`, `dac_biet`. Vẫn LALR strict, không xung đột |
+| Bộ đọc `van_pham.py` | Thêm `doc_tap`, `doc_diem2`, `doc_dac_biet`, `doc_phuong_an(chuoi, kieu)`; kiểm chung `E_LUYTHUA_NGUYEN` và `E_BIEN_T`; lỗi mang mã |
+| Cây `cay.py` | Nút `Bien(ten)`, `An`, `Pi`, `TichPhanT`; phương án `DacBiet`, `Khoang`, `VoCung`, `TapHuuHan`, `HopKhoang`, `TapRong`, `Diem2`, `KhangDinh`; `bien_dung`, `bien_tu_do`, `chi_chua_tham_so`; `to_sexpr` cho mọi nút (biến thành `(bien x)`); JSON tổng quát |
+| `in_chuoi.py` | In mọi nút mới và phương án; `exp(1)` in là `e` |
+| `chuan_hoa.py` | Thêm quy tắc v2.1: `e^n → exp(n)`, `luythua(e, b) → exp(b)`; tích phân chuẩn hóa các con; `chuan_hoa_pa` không sắp xếp, không bỏ phần tử trùng |
+| `bieu_thuc_tham_so.py` (thay `da_thuc_tham_so.py`) | Ràng buộc là phân thức hữu tỉ, tự thêm điều kiện "mẫu ≠ 0"; `danh_gia_rang_buoc`, `mien_hop_le`, `la_hang_theo_tham_so` |
+| `danh_gia.py` | Tính giá trị với nhiều biến, ẩn m, π |
+
+Kiểm thử: 124 kiểm thử N1, gồm khứ hồi 5000 cây có đủ nút mới, lũy đẳng, giữ giá trị (nhiều biến, π, m), khứ hồi tập và khoảng (3000), ràng buộc, phương án đặc biệt. Toàn bộ 130 kiểm thử không cần Lean đều đạt.
+
+Ghi lại cho các mốc sau: văn phạm v2.1 chưa có cú pháp cho **hàm từng khúc** (cần ở M12) và **tập điểm trong ℝ²** (cần ở M15).
+
+---
+
 ## Việc tiếp theo
-- **M2**: thư viện Lean `ThuVienGT` (mục 7). Đây là mốc lớn nhất; cần thông tin giáo trình đối chiếu (câu hỏi mở 1) trước khi kết thúc M2.
+- **M2** (theo v2.1): thư viện Lean lõi `ThuVienGT`: `BT` tổng quát, `GanBien`, `XacDinh`, `chuanHoa`, kiểu giá trị đáp án, `TracNghiemDung`, Q và định nghĩa của giới hạn, kẹp số. Đây là mốc lớn nhất; cần thông tin giáo trình đối chiếu (câu hỏi mở 1) trước khi kết thúc M2.
 
 ## Còn treo
 - Nên tắt `fclauncher` trước khi chạy Lean nhiều; có thể thêm pagefile trên ổ D: để Windows không cạn bộ nhớ.
