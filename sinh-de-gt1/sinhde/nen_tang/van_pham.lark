@@ -1,0 +1,45 @@
+// N1 — Văn phạm biểu thức (mục 6.1 của thiết kế v1.2).
+// Ba điểm bắt đầu: bieu_thuc, dieu_kien, diem. Phân tích bằng LALR, strict.
+
+// ===== Biểu thức =====
+?bieu_thuc: hang_tu
+          | bieu_thuc "+" hang_tu            -> cong
+          | bieu_thuc "-" hang_tu            -> tru
+
+?hang_tu: nhan_tu
+        | hang_tu "*" nhan_tu                -> nhan
+        | hang_tu "/" nhan_tu                -> chia
+
+?nhan_tu: luy_thua
+        | "-" nhan_tu                        -> am
+
+?luy_thua: nguyen_to
+         | nguyen_to "^" so_mu               -> mu
+
+so_mu: SO_NGUYEN                             -> so_mu_duong
+     | "(" "-" SO_NGUYEN ")"                 -> so_mu_am
+
+?nguyen_to: SO_NGUYEN                        -> so
+          | "x"                              -> bien
+          | THAM_SO                          -> tham_so
+          | HAM "(" bieu_thuc ")"            -> ham
+          | "luythua" "(" bieu_thuc "," bieu_thuc ")"   -> luythua
+          | "(" bieu_thuc ")"
+
+// ===== Ràng buộc của tham số =====
+?dieu_kien: dieu_kien_va
+          | dieu_kien "or" dieu_kien_va      -> hoac
+?dieu_kien_va: so_sanh
+             | dieu_kien_va "and" so_sanh    -> va
+so_sanh: bieu_thuc SO_SANH bieu_thuc
+
+// ===== Điểm của giới hạn =====
+diem: bieu_thuc
+
+SO_SANH: "<=" | ">=" | "!=" | "<" | ">" | "="
+HAM.2: "sin" | "cos" | "tan" | "cot" | "arcsin" | "arccos" | "arctan"
+     | "exp" | "ln" | "sqrt" | "cbrt" | "abs"
+THAM_SO: /[abcdfghkmnpqrstuvwyz]/
+SO_NGUYEN: /[0-9]+/
+%import common.WS
+%ignore WS

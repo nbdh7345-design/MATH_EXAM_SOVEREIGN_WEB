@@ -4,7 +4,7 @@ Thiết kế: `thiet-ke-pipeline-sinh-de-v1.2.md`. Mã nguồn: thư mục `sinh
 
 **Nơi làm việc** (từ 25/11): bản clone trong Ubuntu `~/MATH_EXAM_SOVEREIGN_WEB`, mở từ Windows tại `\\wsl.localhost\Ubuntu-24.04\home\duc_huy\MATH_EXAM_SOVEREIGN_WEB`. Cache Mathlib và môi trường Python chỉ có ở bản này. Bản ở ổ D: dùng để xem tài liệu; trước khi sửa ở đó, chạy `git pull` để lấy thay đổi mới nhất.
 
-Trạng thái: **xong M0** (1/9 mốc). Chưa sinh được câu hỏi nào; câu đầu tiên có chứng nhận sẽ có ở M4.
+Trạng thái: **xong M0, M1** (2/9 mốc). Chưa sinh được câu hỏi nào; câu đầu tiên có chứng nhận sẽ có ở M4.
 
 ---
 
@@ -57,10 +57,30 @@ Kiểm thử: 6 kiểm thử thường và 16 kiểm thử sandbox, đều đạ
 - **Gộp vào repo chung:** đưa code M0 vào thư mục `sinh-de-gt1/` của repo `MATH_EXAM_SOVEREIGN_WEB` bằng `git subtree`, giữ lịch sử 2 commit; push lên GitHub (commit `0b01f0c`).
 - **Một chỗ làm việc duy nhất:** clone repo chung vào Ubuntu (`~/MATH_EXAM_SOVEREIGN_WEB`); chuyển cache Mathlib (7,5 GB) sang, tạo lại `.venv`; git trong Ubuntu dùng chung đăng nhập GitHub của Windows (Git Credential Manager). Kiểm thử chạy lại ở chỗ mới đều đạt. Đã xóa bản cũ `~/sinh-de-gt1`.
 
+## 26/11/2026 — Mốc M1: nền tảng N1 (mục 6)
+
+| Thành phần | Tệp trong `sinh-de-gt1/` | Nội dung |
+|---|---|---|
+| Văn phạm | `sinhde/nen_tang/van_pham.lark` | Biểu thức, ràng buộc tham số, điểm giới hạn; LALR strict, không xung đột |
+| Bộ đọc | `sinhde/nen_tang/van_pham.py` | `doc_bieu_thuc`, `doc_dieu_kien`, `doc_diem`; lỗi `LoiVanPham` kèm dòng, cột |
+| Cây biểu thức | `sinhde/nen_tang/cay.py` | 11 loại nút, ràng buộc; `to_sexpr` khớp `BT.toSExpr` của Lean; JSON hai chiều; tiện ích (độ sâu, số nút, thay tham số…) |
+| Bộ in chuỗi | `sinhde/nen_tang/in_chuoi.py` | Theo bảng mức ưu tiên đã sửa ở v1.2 (`So` phân số mức 2, `So` âm mức 3) |
+| Chuẩn hóa | `sinhde/nen_tang/chuan_hoa.py` | Đúng bảng 6.5, giống từng dòng `chuanHoa` của Lean |
+| Đa thức theo tham số | `sinhde/nen_tang/da_thuc_tham_so.py` | Kiểm dạng đa thức; tính chính xác bằng `Fraction`; đánh giá ràng buộc |
+| Tính giá trị | `sinhde/nen_tang/danh_gia.py` | Giá trị và điều kiện xác định theo `XacDinh` (Fraction + mpmath); dùng cho kiểm thử và sau này cho phép thử T2 |
+| Công cụ | `tools/kiem_van_pham.py` | Kiểm văn phạm không xung đột LALR, không va chạm token |
+
+Nghiệm thu (mục 6.7): **đạt**, 97 kiểm thử N1:
+- chuỗi hợp lệ cho đúng cây; chuỗi bị cấm (`sin x`, `2x`, `log(x)`, `x^1.5`, `e*x`…) bị từ chối;
+- 12 tên hàm, từ khóa và 20 chữ cái tham số được tách đúng;
+- theo tính chất: khứ hồi chuỗi trên 5000 cây, chuẩn hóa lũy đẳng (2000 cây), chuẩn hóa giữ giá trị và điều kiện xác định tại điểm hữu tỉ (2000 cây), JSON hai chiều, khứ hồi ràng buộc.
+
+Toàn bộ 103 kiểm thử không cần Lean đều đạt. Thêm phụ thuộc `interegular` (Lark cần để kiểm va chạm token ở chế độ strict).
+
 ---
 
 ## Việc tiếp theo
-- **M1**: văn phạm N1, cây biểu thức, bộ in chuỗi, chuẩn hóa (Python, mục 6).
+- **M2**: thư viện Lean `ThuVienGT` (mục 7). Đây là mốc lớn nhất; cần thông tin giáo trình đối chiếu (câu hỏi mở 1) trước khi kết thúc M2.
 
 ## Còn treo
 - Nên tắt `fclauncher` trước khi chạy Lean nhiều; có thể thêm pagefile trên ổ D: để Windows không cạn bộ nhớ.
